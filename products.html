@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Products — ElevAIte Labs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <style>
+    .product-feature { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: stretch; padding: 100px 0; border-bottom: 1px solid var(--border); }
+    .product-feature:nth-child(even) > .product-img { order: -1; }
+    .product-img { border-radius: 16px; min-height: 420px; height: 100%; }
+    .product-feature .badge { display: inline-block; font-family: var(--display); font-size: 14px; font-style: italic; color: var(--accent); margin-bottom: 8px; }
+    .product-feature h2 { font-family: var(--display); font-size: clamp(40px, 5vw, 64px); font-weight: 600; color: var(--text); letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 18px; }
+    .product-feature .tagline { font-size: 19px; line-height: 1.5; color: var(--body); margin-bottom: 28px; max-width: 480px; }
+    .feature-list { list-style: none; margin-bottom: 32px; }
+    .feature-list li { padding: 12px 0; border-bottom: 1px dashed var(--border); display: flex; gap: 12px; font-size: 15px; color: var(--body); }
+    .feature-list li::before { content: "✦"; color: var(--accent); font-size: 12px; margin-top: 4px; }
+    .feature-list li:last-child { border-bottom: none; }
+    .product-cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .arkin-product-wrap { background: var(--card); border-radius: 16px; min-height: 420px; overflow: hidden; }
+    .arkin-product-img  { height: 600px; }
+    @media (max-width: 960px) {
+      .product-feature { grid-template-columns: 1fr; gap: 32px; padding: 56px 0; }
+      .product-feature:nth-child(even) > .product-img { order: 0; }
+      .arkin-product-img { height: 280px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="tag fade-up">Our Products</span>
+      <h1 class="fade-up">Tools We've Built. Ready for You.</h1>
+      <p class="fade-up">Three products born from problems we saw across our client work, productized so any business can use them. Self-serve, fairly priced, and built on the same standards as our custom builds.</p>
+      <div class="hero-badge-row fade-up">
+        <div class="hero-badge">
+          <span class="badge-icon">🎯</span>
+          <div><strong>Kredoo CRM</strong><span class="badge-sub">Lead pipeline · live</span></div>
+        </div>
+        <div class="hero-badge">
+          <span class="badge-icon">⚡</span>
+          <div><strong>LeadFlow AI</strong><span class="badge-sub">Auto follow-up</span></div>
+        </div>
+        <div class="hero-badge">
+          <span class="badge-icon">🤖</span>
+          <div><strong>AI Dispatcher</strong><span class="badge-sub">Route intelligence</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== KREDOO FLAGSHIP ===== -->
+  <section class="kredoo-section">
+    <div class="wrap">
+      <div class="kredoo-flagship">
+        <div class="fade-up">
+          <div class="kredoo-badge"><span class="kredoo-badge-dot"></span> Live product · kredoo.in</div>
+          <img src="Kredoo-black.png" class="kredoo-logo-svg" alt="Kredoo">
+          <p class="kredoo-tagline">The AI-powered lead CRM built specifically for Indian sales teams — pipeline management, smart booking links, WhatsApp automation, and n8n integration in one place.</p>
+          <div class="kredoo-features">
+            <div class="kredoo-feat">
+              <div class="kredoo-feat-icon">📋</div>
+              <h4>Visual Pipeline</h4>
+              <p>Drag-and-drop Kanban board. See every lead, every stage, in real time.</p>
+            </div>
+            <div class="kredoo-feat">
+              <div class="kredoo-feat-icon">🤖</div>
+              <h4>AI Automations</h4>
+              <p>n8n-powered workflows that route, qualify, and follow up automatically.</p>
+            </div>
+            <div class="kredoo-feat">
+              <div class="kredoo-feat-icon">📅</div>
+              <h4>Booking Links</h4>
+              <p>Calendly-style scheduling built into your CRM. No third-party needed.</p>
+            </div>
+            <div class="kredoo-feat">
+              <div class="kredoo-feat-icon">💬</div>
+              <h4>WhatsApp Native</h4>
+              <p>Leads from Meta Ads flow directly in. Follow-ups go out on WhatsApp.</p>
+            </div>
+          </div>
+          <div class="kredoo-stats">
+            <div class="kredoo-stat">
+              <div class="kredoo-stat-num">500+</div>
+              <div class="kredoo-stat-label">Leads tracked</div>
+            </div>
+            <div class="kredoo-stat">
+              <div class="kredoo-stat-num">3×</div>
+              <div class="kredoo-stat-label">Faster follow-up</div>
+            </div>
+            <div class="kredoo-stat">
+              <div class="kredoo-stat-num">₹0</div>
+              <div class="kredoo-stat-label">To start free</div>
+            </div>
+          </div>
+          <div class="kredoo-cta-row">
+            <a href="https://kredoo.in" target="_blank" rel="noopener" class="btn-white">Start Free Trial →</a>
+            <a href="blog-kredoo.html" class="btn-outline-white">Read the story</a>
+          </div>
+        </div>
+        <div class="fade-up">
+          <div class="kredoo-iframe-card">
+            <div class="kredoo-mockup-bar">
+              <div class="kredoo-mockup-dot kd1"></div>
+              <div class="kredoo-mockup-dot kd2"></div>
+              <div class="kredoo-mockup-dot kd3"></div>
+              <span class="kredoo-mockup-title">kredoo.in</span>
+            </div>
+            <div class="kredoo-iframe-wrap">
+              <iframe
+                src="https://kredoo.in"
+                class="kredoo-iframe"
+                scrolling="no"
+                frameborder="0"
+                title="Kredoo CRM — Live Preview"
+                loading="lazy"
+              ></iframe>
+              <a href="https://kredoo.in" target="_blank" rel="noopener" class="kredoo-iframe-overlay">
+                <span class="kredoo-visit-btn">Open Kredoo →</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0;">
+    <div class="wrap">
+      <article class="product-feature fade-up">
+        <div>
+          <span class="badge">01 / LeadFlow AI</span>
+          <h2>Capture every lead. Follow up while you sleep.</h2>
+          <p class="tagline">A self-serve inbound lead engine that captures, qualifies, and follows up across email, WhatsApp, and SMS — with native CRM sync.</p>
+          <ul class="feature-list">
+            <li>Multi-channel capture from your site, ads, and DMs</li>
+            <li>AI qualification scoring tuned to your ICP</li>
+            <li>24/7 follow-up sequences in your brand voice</li>
+            <li>Calendar handoff once a lead is sales-ready</li>
+            <li>Full transparency — every message logged and editable</li>
+          </ul>
+          <div class="product-cta-row">
+            <a href="contact.html" class="btn btn-primary">Start Free Trial</a>
+            <button class="btn btn-demo"><span class="play">▶</span> Watch 90s Demo</button>
+          </div>
+        </div>
+        <div class="product-img arkin-char-wrap arkin-product-wrap">
+          <img src="Arkin-Leftside-Pointing-Grey.png" alt="LeadFlow AI" class="arkin-char arkin-product-img">
+        </div>
+      </article>
+
+      <article class="product-feature fade-up">
+        <div>
+          <span class="badge">02 / ChatDesk</span>
+          <h2>WhatsApp, but it's your best employee.</h2>
+          <p class="tagline">A WhatsApp-first AI agent trained on your business. Books appointments, answers FAQs, escalates the things that actually need a human.</p>
+          <ul class="feature-list">
+            <li>Trained on your docs, FAQs, and product catalog</li>
+            <li>Native WhatsApp Business API — verified and compliant</li>
+            <li>Multi-language: English, Hindi, Telugu, Tamil, more</li>
+            <li>Live handoff to your team with full conversation context</li>
+            <li>Analytics on what customers actually ask</li>
+          </ul>
+          <div class="product-cta-row">
+            <a href="contact.html" class="btn btn-primary">Get Early Access</a>
+            <button class="btn btn-demo"><span class="play">▶</span> See it in action</button>
+          </div>
+        </div>
+        <div class="product-img arkin-char-wrap arkin-product-wrap">
+          <img src="Agent-arkin.png" alt="ChatDesk" class="arkin-char arkin-product-img">
+        </div>
+      </article>
+
+      <article class="product-feature fade-up">
+        <div>
+          <span class="badge">03 / ContentForge</span>
+          <h2>A content engine that sounds like you.</h2>
+          <p class="tagline">Brand-trained drafts for blog, social, and ads — calibrated to your voice, then approved by humans before they ship.</p>
+          <ul class="feature-list">
+            <li>Voice training from your existing best content</li>
+            <li>Blog, LinkedIn, Instagram, ad creative — one engine</li>
+            <li>Approval workflows for marketing teams</li>
+            <li>Integrations with WordPress, Webflow, Buffer, Meta Ads</li>
+            <li>Performance-aware: learns from what actually works</li>
+          </ul>
+          <div class="product-cta-row">
+            <a href="contact.html" class="btn btn-primary">Join Waitlist</a>
+            <button class="btn btn-demo"><span class="play">▶</span> Tour the editor</button>
+          </div>
+        </div>
+        <div class="product-img arkin-char-wrap arkin-product-wrap">
+          <img src="Arkin-Leftside-Pointing-Grey.png" alt="ContentForge" class="arkin-char arkin-product-img">
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="cta-quiz">
+    <div class="wrap fade-up">
+      <span class="tag">Want something custom?</span>
+      <h2>We build bespoke too.</h2>
+      <p>If our products don't quite fit, our custom team can build exactly what your business needs — typically in 4–8 weeks.</p>
+      <a href="services.html" class="btn btn-light">Explore Custom Work →</a>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <div id="tweaks-root"></div>
+  <script src="site.js"></script>
+  <script>injectChrome("products");</script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="tweaks-app.jsx"></script>
+</body>
+</html>

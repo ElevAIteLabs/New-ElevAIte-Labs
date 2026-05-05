@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Work — ElevAIte Labs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <style>
+    .filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
+    .filter-chip { padding: 8px 16px; border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--body); font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    .filter-chip.active { background: var(--text); color: #fff; border-color: var(--text); }
+    .filter-chip:hover:not(.active) { border-color: var(--text); color: var(--text); }
+    .case-row { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; padding: 80px 0; border-bottom: 1px solid var(--border); align-items: center; }
+    .case-row:nth-child(even) > .case-img { order: -1; }
+    .case-img { aspect-ratio: 4/3; }
+    .case-row .industry-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); font-weight: 600; margin-bottom: 14px; }
+    .case-row h2 { font-family: var(--display); font-size: clamp(32px, 4vw, 48px); font-weight: 600; color: var(--text); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 18px; }
+    .case-row p { font-size: 17px; line-height: 1.6; margin-bottom: 24px; max-width: 540px; }
+    .case-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 24px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+    .case-results .num { font-family: var(--display); font-size: 32px; font-weight: 500; color: var(--accent); letter-spacing: -0.02em; }
+    .case-results .lbl { font-size: 12px; color: var(--body); margin-top: 4px; }
+    .arkin-case-wrap { background: var(--card); border-radius: 12px; overflow: hidden; }
+    .arkin-case-img  { height: 95%; max-height: 600px; }
+    @media (max-width: 960px) {
+      .case-row { grid-template-columns: 1fr; gap: 32px; padding: 56px 0; }
+      .case-row:nth-child(even) > .case-img { order: 0; }
+      .arkin-case-img { max-height: 600px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="tag fade-up">Our Work</span>
+      <h1 class="fade-up">Real Projects. Real Results.</h1>
+      <p class="fade-up">A selection of recent work across real estate, healthcare, fintech, D2C, media, and logistics. Most are shipped and live; a few we can only describe under NDA.</p>
+      <div class="hero-stat-row fade-up">
+        <div class="hero-stat-item">
+          <span class="hero-stat-num" data-count="6">0</span>
+          <span class="hero-stat-label">Case Studies</span>
+        </div>
+        <div class="hero-stat-item">
+          <span class="hero-stat-num" data-count="3" data-suffix="×">0</span>
+          <span class="hero-stat-label">Average ROI</span>
+        </div>
+        <div class="hero-stat-item">
+          <span class="hero-stat-num" data-count="5" data-suffix="w">0</span>
+          <span class="hero-stat-label">Average Delivery</span>
+        </div>
+        <div class="hero-stat-item">
+          <span class="hero-stat-num" data-count="100" data-suffix="%">0</span>
+          <span class="hero-stat-label">Shipped & Live</span>
+        </div>
+      </div>
+      <div class="filter-row fade-up">
+        <button class="filter-chip active" onclick="filterCases(this, 'all')">All</button>
+        <button class="filter-chip" onclick="filterCases(this, 'automation')">Automation</button>
+        <button class="filter-chip" onclick="filterCases(this, 'app')">Mobile / Web</button>
+        <button class="filter-chip" onclick="filterCases(this, 'Agents')">AI Agents</button>
+        <button class="filter-chip" onclick="filterCases(this, 'leadgen')">Lead Gen</button>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 0;">
+    <div class="wrap">
+      <div class="case-row fade-up" data-cat="leadgen automation">
+        <div>
+          <div class="industry-tag">Real Estate · Hyderabad</div>
+          <h2>Nivasa Homes — Lead Engine</h2>
+          <p>A property developer drowning in 40+ daily inbound leads from portals. We built an end-to-end pipeline that auto-qualifies, books site visits over WhatsApp, and routes hot leads to the sales team in under two minutes.</p>
+          <div class="case-results">
+            <div><div class="num">3.2×</div><div class="lbl">Site visits</div></div>
+            <div><div class="num">80%</div><div class="lbl">Follow-ups automated</div></div>
+            <div><div class="num">5w</div><div class="lbl">From kickoff to live</div></div>
+          </div>
+          <a href="contact.html" class="link-arrow">Read the full case study <span class="arrow">→</span></a>
+        </div>
+        <div class="case-img arkin-char-wrap arkin-case-wrap">
+          <img src="Arkin-Leftside-Pointing-Grey.png" alt="Lead Engine" class="arkin-char arkin-case-img">
+        </div>
+      </div>
+
+      <div class="case-row fade-up" data-cat="AI Agents">
+        <div>
+          <div class="industry-tag">Healthcare · Multi-clinic</div>
+          <h2>Apex Clinics — WhatsApp Triage Bot</h2>
+          <p>A network of 6 clinics needed to handle appointment booking and basic triage without expanding their front-desk team. The bot speaks English, Hindi, and Telugu, books straight into their EMR, and escalates urgent cases.</p>
+          <div class="case-results">
+            <div><div class="num">200+</div><div class="lbl">Bookings / week</div></div>
+            <div><div class="num">3</div><div class="lbl">Languages</div></div>
+            <div><div class="num">94%</div><div class="lbl">Triage accuracy</div></div>
+          </div>
+          <a href="contact.html" class="link-arrow">Read the full case study <span class="arrow">→</span></a>
+        </div>
+        <div class="case-img arkin-char-wrap arkin-case-wrap">
+          <img src="Agent-arkin.png" alt="WhatsApp Triage Bot" class="arkin-char arkin-case-img">
+        </div>
+      </div>
+
+      <div class="case-row fade-up" data-cat="app">
+        <div>
+          <div class="industry-tag">D2C Food &amp; Beverage</div>
+          <h2>Chai Pani — Loyalty &amp; Ordering App</h2>
+          <p>From wireframe to App Store in six weeks. A native loyalty + ordering experience for a fast-growing chai chain, with AI-powered recommendations based on time of day, weather, and order history.</p>
+          <div class="case-results">
+            <div><div class="num">6w</div><div class="lbl">Design to launch</div></div>
+            <div><div class="num">4.8★</div><div class="lbl">App Store rating</div></div>
+            <div><div class="num">2.4×</div><div class="lbl">Repeat order rate</div></div>
+          </div>
+          <a href="contact.html" class="link-arrow">Read the full case study <span class="arrow">→</span></a>
+        </div>
+        <div class="case-img arkin-char-wrap arkin-case-wrap">
+          <img src="Mobile-arkin.png" alt="Loyalty & Ordering App" class="arkin-char arkin-case-img">
+        </div>
+      </div>
+
+      <div class="case-row fade-up" data-cat="automation">
+        <div>
+          <div class="industry-tag">Fintech · Lending</div>
+          <h2>Lakshmi Capital — Underwriting Copilot</h2>
+          <p>A loan-review copilot that ingests applicant documents, extracts the relevant signals, and surfaces a structured recommendation with citations — keeping the human-in-the-loop for the final call.</p>
+          <div class="case-results">
+            <div><div class="num">65%</div><div class="lbl">Faster reviews</div></div>
+            <div><div class="num">12k+</div><div class="lbl">Apps processed</div></div>
+            <div><div class="num">0</div><div class="lbl">Compliance issues</div></div>
+          </div>
+          <a href="contact.html" class="link-arrow">Read the full case study <span class="arrow">→</span></a>
+        </div>
+        <div class="case-img arkin-char-wrap arkin-case-wrap">
+          <img src="rightside-pointing-arkin.png" alt="Underwriting Copilot" class="arkin-char arkin-case-img">
+        </div>
+      </div>
+
+      <div class="case-row fade-up" data-cat="automation">
+        <div>
+          <div class="industry-tag">Media · Content Studio</div>
+          <h2>Tellus Studio — Content Engine</h2>
+          <p>A content shop scaling to enterprise clients without scaling headcount. We built a brand-trained content pipeline producing on-voice posts, briefs, and ad creative — humans approve, the system drafts.</p>
+          <div class="case-results">
+            <div><div class="num">10×</div><div class="lbl">Output / month</div></div>
+            <div><div class="num">92%</div><div class="lbl">First-draft acceptance</div></div>
+            <div><div class="num">4</div><div class="lbl">Channels covered</div></div>
+          </div>
+          <a href="contact.html" class="link-arrow">Read the full case study <span class="arrow">→</span></a>
+        </div>
+        <div class="case-img arkin-char-wrap arkin-case-wrap">
+          <img src="animations-arkin.png" alt="Content Engine" class="arkin-char arkin-case-img">
+        </div>
+      </div>
+
+      <div class="case-row fade-up" data-cat="automation app">
+        <div>
+          <div class="industry-tag">Logistics · Last-mile</div>
+          <h2>Zenix Freight — AI Dispatcher</h2>
+          <p>An AI dispatcher that re-plans routes in real time as conditions change — traffic, weather, driver availability — and pushes updates straight to the driver app.</p>
+          <div class="case-results">
+            <div><div class="num">47%</div><div class="lbl">Fewer late deliveries</div></div>
+            <div><div class="num">22%</div><div class="lbl">Lower fuel cost</div></div>
+            <div><div class="num">240+</div><div class="lbl">Drivers on platform</div></div>
+          </div>
+          <a href="contact.html" class="link-arrow">Read the full case study <span class="arrow">→</span></a>
+        </div>
+        <div class="case-img arkin-char-wrap arkin-case-wrap">
+          <img src="rightside-pointing-arkin.png" alt="AI Dispatcher" class="arkin-char arkin-case-img">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-quiz">
+    <div class="wrap fade-up">
+      <span class="tag">Have a project in mind?</span>
+      <h2>Let's build the next one together.</h2>
+      <p>Tell us where you want AI to bite. We'll come back with a scope, a timeline, and a price within 48 hours.</p>
+      <a href="contact.html" class="btn btn-light">Start a Conversation →</a>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <div id="tweaks-root"></div>
+  <script src="site.js"></script>
+  <script>
+    injectChrome("work");
+    function filterCases(btn, cat) {
+      document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+      document.querySelectorAll(".case-row").forEach(r => {
+        if (cat === "all" || r.dataset.cat.split(" ").includes(cat)) r.style.display = "";
+        else r.style.display = "none";
+      });
+    }
+  </script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="tweaks-app.jsx"></script>
+</body>
+</html>

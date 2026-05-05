@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>EmailJS Template Reference — ElevAIte Labs</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 860px; margin: 48px auto; padding: 0 24px; color: #111; background: #fafafa; }
+    h1 { font-size: 28px; margin-bottom: 4px; }
+    h2 { font-size: 20px; margin-top: 48px; border-top: 2px solid #e5e7eb; padding-top: 24px; }
+    pre { background: #1a1a2e; color: #e2e8f0; padding: 24px; border-radius: 10px; overflow-x: auto; font-size: 14px; line-height: 1.6; white-space: pre-wrap; }
+    .note { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; padding: 16px; font-size: 14px; margin: 16px 0; }
+    .step { background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 16px; font-size: 14px; margin: 16px 0; }
+    code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 13px; }
+  </style>
+</head>
+<body>
+
+<h1>EmailJS Setup Guide — ElevAIte Labs Contact Form</h1>
+<p>Follow the steps below, then paste your credentials into <code>contact.html</code> inside <code>EMAIL_CONFIG</code>.</p>
+
+<div class="step">
+  <strong>Step 1 — Create a free EmailJS account</strong><br>
+  Go to <a href="https://www.emailjs.com/" target="_blank">emailjs.com</a> → Sign Up → free plan allows 200 emails/month.
+</div>
+
+<div class="step">
+  <strong>Step 2 — Add an Email Service</strong><br>
+  Dashboard → Email Services → Add New Service → choose Gmail (or SMTP) → Connect your <code>hello@elevaitelabs.com</code> account → copy the <strong>Service ID</strong>.
+</div>
+
+<div class="step">
+  <strong>Step 3 — Create Template 1: Client Confirmation</strong><br>
+  Dashboard → Email Templates → Create New → Name it <code>template_client_confirm</code> → paste the HTML below → Save.
+</div>
+
+<h2>Template 1 — Client Confirmation Email</h2>
+<p><strong>Subject:</strong> <code>We received your message — ElevAIte Labs</code></p>
+<p><strong>To email:</strong> <code>{{to_email}}</code></p>
+
+<pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;style&gt;
+    body { margin:0; padding:0; background:#f4f4f5; font-family: -apple-system, 'Inter', sans-serif; }
+    .wrap { max-width:580px; margin:40px auto; background:#ffffff; border-radius:16px; overflow:hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+    .header { background:#0A0A0A; padding:40px 48px; }
+    .logo { color:#ffffff; font-size:22px; font-weight:700; letter-spacing:-0.02em; }
+    .logo span { color:#6366f1; }
+    .body { padding:40px 48px; }
+    h2 { font-size:28px; font-weight:600; color:#111; margin:0 0 16px; letter-spacing:-0.02em; }
+    p { font-size:15px; line-height:1.6; color:#555; margin:0 0 16px; }
+    .highlight { background:#f9fafb; border-left:3px solid #6366f1; border-radius:0 8px 8px 0; padding:16px 20px; margin:24px 0; }
+    .highlight p { margin:4px 0; color:#333; }
+    .highlight strong { color:#111; }
+    .cta { display:inline-block; margin-top:8px; padding:14px 28px; background:#6366f1; color:#fff; border-radius:8px; font-weight:600; font-size:15px; text-decoration:none; }
+    .footer { padding:24px 48px; background:#f9fafb; border-top:1px solid #e5e7eb; }
+    .footer p { font-size:13px; color:#9ca3af; margin:0; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="wrap"&gt;
+    &lt;div class="header"&gt;
+      &lt;div class="logo"&gt;ElevAIte &lt;span&gt;Labs&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="body"&gt;
+      &lt;h2&gt;We got your message, {{from_name}}.&lt;/h2&gt;
+      &lt;p&gt;Thanks for reaching out — you're in the right place. Our team has received your enquiry and we'll come back to you within &lt;strong&gt;one business day&lt;/strong&gt; (usually faster).&lt;/p&gt;
+
+      &lt;div class="highlight"&gt;
+        &lt;p&gt;&lt;strong&gt;Here's what you submitted:&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Looking to build:&lt;/strong&gt; {{service}}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Budget range:&lt;/strong&gt; {{budget}}&lt;/p&gt;
+        &lt;p&gt;&lt;strong&gt;Your message:&lt;/strong&gt; {{message}}&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;p&gt;While you wait, feel free to explore our recent work or browse free AI resources we've put together for founders and operators like you.&lt;/p&gt;
+
+      &lt;a href="https://elevaitelabs.com/work.html" class="cta"&gt;See our work →&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class="footer"&gt;
+      &lt;p&gt;ElevAIte Labs · HITEC City, Hyderabad 500081 · hello@elevaitelabs.com&lt;/p&gt;
+      &lt;p style="margin-top:4px;"&gt;You're receiving this because you filled out our contact form.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+<div class="step">
+  <strong>Step 4 — Create Template 2: Team Notification</strong><br>
+  Dashboard → Email Templates → Create New → Name it <code>template_team_notify</code> → paste the HTML below → Save.
+</div>
+
+<h2>Template 2 — Team / New Lead Notification Email</h2>
+<p><strong>Subject:</strong> <code>🔔 New lead: {{from_name}} from {{company}}</code></p>
+<p><strong>To email:</strong> <code>{{to_email}}</code> (will be <code>hello@elevaitelabs.com</code>)</p>
+
+<pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;style&gt;
+    body { margin:0; padding:0; background:#f4f4f5; font-family: -apple-system, 'Inter', sans-serif; }
+    .wrap { max-width:580px; margin:40px auto; background:#ffffff; border-radius:16px; overflow:hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+    .header { background:#0A0A0A; padding:32px 48px; display:flex; justify-content:space-between; align-items:center; }
+    .logo { color:#ffffff; font-size:20px; font-weight:700; letter-spacing:-0.02em; }
+    .badge { background:#6366f1; color:#fff; font-size:12px; font-weight:700; padding:4px 12px; border-radius:999px; letter-spacing:0.06em; text-transform:uppercase; }
+    .body { padding:36px 48px; }
+    h2 { font-size:24px; font-weight:700; color:#111; margin:0 0 6px; letter-spacing:-0.02em; }
+    .sub { font-size:14px; color:#6b7280; margin:0 0 28px; }
+    .field-row { display:flex; gap:16px; margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid #f3f4f6; }
+    .field-label { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#9ca3af; width:120px; flex-shrink:0; padding-top:2px; }
+    .field-value { font-size:15px; color:#111; line-height:1.5; }
+    .message-box { background:#f9fafb; border-radius:10px; padding:20px; margin-top:8px; }
+    .message-box p { font-size:15px; color:#374151; line-height:1.6; margin:0; }
+    .cta { display:inline-block; margin-top:20px; padding:12px 24px; background:#6366f1; color:#fff; border-radius:8px; font-weight:600; font-size:14px; text-decoration:none; }
+    .footer { padding:20px 48px; background:#f9fafb; border-top:1px solid #e5e7eb; }
+    .footer p { font-size:13px; color:#9ca3af; margin:0; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="wrap"&gt;
+    &lt;div class="header"&gt;
+      &lt;div class="logo"&gt;ElevAIte Labs&lt;/div&gt;
+      &lt;div class="badge"&gt;New Lead&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="body"&gt;
+      &lt;h2&gt;{{from_name}} wants to work with you&lt;/h2&gt;
+      &lt;p class="sub"&gt;Submitted {{submitted_at}} IST via website contact form&lt;/p&gt;
+
+      &lt;div class="field-row"&gt;
+        &lt;div class="field-label"&gt;Name&lt;/div&gt;
+        &lt;div class="field-value"&gt;{{from_name}}&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="field-row"&gt;
+        &lt;div class="field-label"&gt;Email&lt;/div&gt;
+        &lt;div class="field-value"&gt;&lt;a href="mailto:{{from_email}}"&gt;{{from_email}}&lt;/a&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="field-row"&gt;
+        &lt;div class="field-label"&gt;Phone&lt;/div&gt;
+        &lt;div class="field-value"&gt;{{phone}}&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="field-row"&gt;
+        &lt;div class="field-label"&gt;Company&lt;/div&gt;
+        &lt;div class="field-value"&gt;{{company}}&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="field-row"&gt;
+        &lt;div class="field-label"&gt;Role&lt;/div&gt;
+        &lt;div class="field-value"&gt;{{role}}&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="field-row"&gt;
+        &lt;div class="field-label"&gt;Looking for&lt;/div&gt;
+        &lt;div class="field-value"&gt;{{service}}&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="field-row"&gt;
+        &lt;div class="field-label"&gt;Budget&lt;/div&gt;
+        &lt;div class="field-value"&gt;&lt;strong&gt;{{budget}}&lt;/strong&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="field-row" style="border-bottom:none;flex-direction:column;"&gt;
+        &lt;div class="field-label"&gt;Message&lt;/div&gt;
+        &lt;div class="message-box"&gt;&lt;p&gt;{{message}}&lt;/p&gt;&lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;a href="mailto:{{from_email}}" class="cta"&gt;Reply to {{from_name}} →&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class="footer"&gt;
+      &lt;p&gt;Also synced to Kredoo CRM. Reply within 24h for best conversion.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+<div class="step">
+  <strong>Step 5 — Get your Public Key</strong><br>
+  Dashboard → Account → API Keys → copy <strong>Public Key</strong>.
+</div>
+
+<div class="step">
+  <strong>Step 6 — Paste credentials into contact.html</strong><br>
+  Open <code>contact.html</code>, find <code>const EMAIL_CONFIG = {</code> and fill in:
+  <ul>
+    <li><code>publicKey</code> — your Public Key from Step 5</li>
+    <li><code>serviceId</code> — your Service ID from Step 2</li>
+    <li><code>clientTemplateId</code> — <code>template_client_confirm</code> (exact ID from EmailJS)</li>
+    <li><code>teamTemplateId</code> — <code>template_team_notify</code> (exact ID from EmailJS)</li>
+  </ul>
+</div>
+
+<div class="note">
+  <strong>Note:</strong> The Kredoo webhook integration is already live — every form submission will POST to your Kredoo CRM regardless of whether EmailJS is configured. EmailJS emails are an additional layer and will silently skip if the public key is not set.
+</div>
+
+</body>
+</html>

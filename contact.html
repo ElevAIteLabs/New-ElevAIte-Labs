@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact — ElevAIte Labs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <style>
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
+    .contact-info h1 { font-family: var(--display); font-size: clamp(48px, 6vw, 80px); font-weight: 600; color: var(--text); letter-spacing: -0.025em; line-height: 1.05; margin: 18px 0 24px; }
+    .contact-info h1 em { font-style: italic; color: var(--accent); font-weight: 500; }
+    .contact-info .lede { font-size: 19px; line-height: 1.55; color: var(--body); margin-bottom: 36px; max-width: 480px; }
+    .contact-channels { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
+    .channel { display: flex; gap: 16px; padding: 18px 20px; background: #fff; border: 1px solid var(--border); border-radius: 12px; align-items: center; transition: all 0.18s; cursor: pointer; }
+    .channel:hover { border-color: var(--accent); transform: translateX(2px); }
+    .channel-icon { width: 40px; height: 40px; border-radius: 8px; background: var(--card); color: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; }
+    .channel-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--body); font-weight: 600; }
+    .channel-value { font-size: 15px; color: var(--text); font-weight: 500; }
+    .form-card { background: var(--card); border-radius: 20px; padding: 48px; }
+    .form-card h2 { font-family: var(--display); font-size: 32px; font-weight: 500; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; }
+    .form-card p { font-size: 15px; margin-bottom: 28px; }
+    .form-row { display: grid; gap: 18px; margin-bottom: 18px; }
+    .form-row.cols-2 { grid-template-columns: 1fr 1fr; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .form-field label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--body); font-weight: 600; }
+    .form-field input, .form-field select, .form-field textarea {
+      padding: 14px 16px; background: #fff; border: 1px solid var(--border); border-radius: 10px;
+      font-family: inherit; font-size: 15px; color: var(--text); width: 100%; transition: border-color 0.15s;
+    }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: none; border-color: var(--accent); }
+    .form-field textarea { resize: vertical; min-height: 110px; }
+    .budget-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .budget-chip {
+      padding: 12px 8px; background: #fff; border: 1px solid var(--border); border-radius: 8px;
+      font-size: 13px; font-weight: 500; cursor: pointer; text-align: center; font-family: inherit; transition: all 0.15s;
+    }
+    .budget-chip:hover { border-color: var(--accent); }
+    .budget-chip.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .form-success { padding: 36px; background: #fff; border: 1px solid var(--accent); border-radius: 12px; text-align: center; }
+    .form-success h3 { font-family: var(--display); font-size: 28px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
+    .office-strip { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 24px; margin-top: 56px; padding-top: 48px; border-top: 1px solid var(--border); }
+    .office-img { aspect-ratio: 16/9; }
+    .office-info h4 { font-family: var(--display); font-size: 22px; font-weight: 500; color: var(--text); margin-bottom: 10px; letter-spacing: -0.01em; }
+    .office-info p { font-size: 14px; line-height: 1.55; }
+
+    /* Form card polish */
+    .form-card { background: var(--card); border-radius: 24px; padding: 48px; border: 1px solid var(--border); box-shadow: 0 8px 40px rgba(0,0,0,0.06); }
+    .form-card h2 { font-size: 36px; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .form-field input, .form-field select, .form-field textarea {
+      border-radius: 12px; background: #fff; font-size: 15px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+      box-shadow: 0 0 0 3px rgba(27,79,216,0.12);
+    }
+    #cf-submit { border-radius: 12px; font-size: 16px; padding: 16px 24px; letter-spacing: -0.01em; }
+
+    /* Arkin in office strip */
+    .arkin-office-wrap { aspect-ratio: 16/9; border-radius: 12px; background: var(--card); overflow: hidden; }
+    .arkin-office-img  { height: 100%; max-height: 380px; }
+
+    @media (max-width: 960px) {
+      .contact-grid, .office-strip { grid-template-columns: 1fr; gap: 40px; }
+      .form-card { padding: 32px 24px; }
+      .form-row.cols-2 { grid-template-columns: 1fr; }
+      .budget-row { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-nav"></div>
+
+  <section style="padding-top: 80px;">
+    <div class="wrap">
+      <div class="contact-grid fade-up">
+        <div class="contact-info">
+          <span class="tag">Get in Touch</span>
+          <h1>Tell us where you want <em>AI to bite.</em></h1>
+          <p class="lede">We respond within one business day. If your project is in scope, we'll send a 30-minute call invite. If it isn't, we'll tell you who would be a better fit.</p>
+          <div class="response-badge">
+            <span class="response-dot"></span>
+            <div>
+              <strong style="font-size:14px;color:var(--text);font-weight:600;">We're online</strong>
+              <span style="font-size:12px;color:var(--body);display:block;margin-top:1px;">Typical reply in &lt;4 hours on business days</span>
+            </div>
+          </div>
+          <div class="contact-channels">
+            <a href="mailto:hello@elevaitelabs.com" class="channel">
+              <div class="channel-icon">@</div>
+              <div>
+                <div class="channel-label">Email</div>
+                <div class="channel-value">hello@elevaitelabs.com</div>
+              </div>
+            </a>
+            <a href="#" class="channel">
+              <div class="channel-icon">W</div>
+              <div>
+                <div class="channel-label">WhatsApp</div>
+                <div class="channel-value">+91 98765 43210</div>
+              </div>
+            </a>
+            <a href="#" class="channel">
+              <div class="channel-icon">📍</div>
+              <div>
+                <div class="channel-label">Office</div>
+                <div class="channel-value">HITEC City, Hyderabad 500081</div>
+              </div>
+            </a>
+          </div>
+          <button class="link-arrow" onclick="openQuiz()" style="background:none;border:none;font-family:inherit;cursor:pointer;font-size:16px;">Or take the AI readiness quiz first <span class="arrow">→</span></button>
+        </div>
+
+        <div class="form-card" id="contact-form-card">
+          <h2>Start a project</h2>
+          <p>The more you share, the faster we can get to a useful first response.</p>
+          <form id="contact-form" onsubmit="submitContact(event)" novalidate>
+            <div class="form-row cols-2">
+              <div class="form-field">
+                <label for="cf-name">Your name</label>
+                <input id="cf-name" name="from_name" type="text" required placeholder="Aarav Reddy">
+              </div>
+              <div class="form-field">
+                <label for="cf-email">Work email</label>
+                <input id="cf-email" name="from_email" type="email" required placeholder="aarav@company.com">
+              </div>
+            </div>
+            <div class="form-row cols-2">
+              <div class="form-field">
+                <label for="cf-phone">Phone / WhatsApp</label>
+                <input id="cf-phone" name="phone" type="tel" placeholder="+91 98765 43210">
+              </div>
+              <div class="form-field">
+                <label for="cf-company">Company</label>
+                <input id="cf-company" name="company" type="text" placeholder="Nivasa Homes">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="cf-role">What's your role?</label>
+                <select id="cf-role" name="role" required>
+                  <option value="">Select one</option>
+                  <option>Founder / CEO</option>
+                  <option>Operations / COO</option>
+                  <option>Marketing / Growth</option>
+                  <option>Engineering / Product</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="cf-service">What are you looking to build?</label>
+                <select id="cf-service" name="service" required>
+                  <option value="">Select one</option>
+                  <option>AI Automation &amp; Workflows</option>
+                  <option>Web or Mobile App</option>
+                  <option>Custom AI Agents</option>
+                  <option>Lead Generation System</option>
+                  <option>AI Content Engine</option>
+                  <option>Strategy Consulting</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label>Budget range</label>
+                <div class="budget-row">
+                  <button type="button" class="budget-chip" onclick="selectBudget(this)">Under ₹5L</button>
+                  <button type="button" class="budget-chip" onclick="selectBudget(this)">₹5L – ₹15L</button>
+                  <button type="button" class="budget-chip" onclick="selectBudget(this)">₹15L – ₹50L</button>
+                  <button type="button" class="budget-chip" onclick="selectBudget(this)">₹50L+</button>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="cf-message">Tell us about the project</label>
+                <textarea id="cf-message" name="message" required placeholder="What's the problem? What have you tried? What does success look like?"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="cf-submit" style="width:100%;justify-content:center;">Send → We respond in 24h</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="office-strip fade-up">
+        <div class="arkin-char-wrap arkin-office-wrap">
+          <img src="holding-hands.png" alt="Arkin — ElevAIte Labs" class="arkin-char arkin-office-img">
+        </div>
+        <div class="office-info">
+          <h4>Hyderabad HQ</h4>
+          <p>5th Floor, Innov8 Tower<br>HITEC City, Hyderabad<br>Telangana 500081, India</p>
+        </div>
+        <div class="office-info">
+          <h4>Hours</h4>
+          <p>Mon–Fri · 10:00 – 19:00 IST<br>WhatsApp: 24/7 (it's a bot,<br>and a good one)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <div id="tweaks-root"></div>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <script src="site.js"></script>
+  <script>
+    injectChrome("contact");
+
+    /* ─── EmailJS + Kredoo Config ───────────────────────────────────
+       Fill in your EmailJS credentials below.
+       1. Sign up at https://www.emailjs.com/ (free plan covers 200 emails/month)
+       2. Create a service (Gmail / SMTP) → copy Service ID
+       3. Create two email templates (client confirm + team notify) → copy Template IDs
+       4. Copy your Public Key from Account → API Keys
+    ────────────────────────────────────────────────────────────── */
+    const EMAIL_CONFIG = {
+      publicKey:        'YOUR_EMAILJS_PUBLIC_KEY',   // e.g. 'AbCdEf123456'
+      serviceId:        'YOUR_SERVICE_ID',            // e.g. 'service_xyz'
+      clientTemplateId: 'template_client_confirm',    // confirmation to client
+      teamTemplateId:   'template_team_notify',       // notification to your team
+      teamEmail:        'hello@elevaitelabs.com',
+    };
+
+    const KREDOO_WEBHOOK = 'https://kredoo.in/api/webhook/068d9345-b4ee-43ac-82fc-a500790a6990';
+
+    /* Init EmailJS */
+    if (EMAIL_CONFIG.publicKey !== 'YOUR_EMAILJS_PUBLIC_KEY') {
+      emailjs.init({ publicKey: EMAIL_CONFIG.publicKey });
+    }
+
+    /* ─── Budget selection ─────────────────────────────────────── */
+    let selectedBudget = '';
+    function selectBudget(btn) {
+      btn.parentElement.querySelectorAll('.budget-chip').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedBudget = btn.textContent.trim();
+    }
+
+    /* ─── Form submit ──────────────────────────────────────────── */
+    async function submitContact(e) {
+      e.preventDefault();
+
+      const form   = document.getElementById('contact-form');
+      const submit = document.getElementById('cf-submit');
+
+      const name    = document.getElementById('cf-name').value.trim();
+      const email   = document.getElementById('cf-email').value.trim();
+      const phone   = document.getElementById('cf-phone').value.trim();
+      const company = document.getElementById('cf-company').value.trim();
+      const role    = document.getElementById('cf-role').value;
+      const service = document.getElementById('cf-service').value;
+      const message = document.getElementById('cf-message').value.trim();
+      const budget  = selectedBudget || 'Not specified';
+
+      if (!name || !email || !role || !service || !message) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      submit.textContent = 'Sending…';
+      submit.disabled = true;
+
+      const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+
+      /* 1. Post lead to Kredoo CRM */
+      try {
+        await fetch(KREDOO_WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name, email, phone, company, role,
+            service, budget, message,
+            source: 'Website Contact Form',
+            submitted_at: timestamp,
+          }),
+        });
+      } catch (err) {
+        console.warn('Kredoo webhook error (non-blocking):', err);
+      }
+
+      /* 2. Send emails via EmailJS */
+      if (EMAIL_CONFIG.publicKey !== 'YOUR_EMAILJS_PUBLIC_KEY') {
+        const sharedParams = {
+          from_name:    name,
+          from_email:   email,
+          phone:        phone || 'Not provided',
+          company:      company || 'Not provided',
+          role,
+          service,
+          budget,
+          message,
+          submitted_at: timestamp,
+          team_email:   EMAIL_CONFIG.teamEmail,
+        };
+
+        try {
+          /* Client confirmation */
+          await emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.clientTemplateId, {
+            ...sharedParams,
+            to_name:  name,
+            to_email: email,
+          });
+          /* Team notification */
+          await emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.teamTemplateId, {
+            ...sharedParams,
+            to_email: EMAIL_CONFIG.teamEmail,
+          });
+        } catch (err) {
+          console.warn('EmailJS error (non-blocking):', err);
+        }
+      }
+
+      /* 3. Show success state */
+      const card = document.getElementById('contact-form-card');
+      card.innerHTML = `
+        <div class="form-success">
+          <div style="font-size:48px;color:var(--accent);margin-bottom:12px;">✓</div>
+          <h3>Got it. Talk soon.</h3>
+          <p style="margin-bottom:6px;">Your message landed safely — and a confirmation is on its way to <strong>${email}</strong>.</p>
+          <p style="font-size:14px;color:var(--body);">We respond within one business day, usually faster.</p>
+          <a href="index.html" class="link-arrow" style="margin-top:24px;display:inline-flex;">Back to homepage <span class="arrow">→</span></a>
+        </div>
+      `;
+    }
+  </script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="tweaks-app.jsx"></script>
+</body>
+</html>
