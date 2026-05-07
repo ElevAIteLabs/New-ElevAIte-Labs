@@ -1,0 +1,95 @@
+{
+  "services": [
+    {
+      "id": "1",
+      "title": "AI Automation & Workflows",
+      "description": "We replace the repetitive parts of your operation with agents that read, decide, and act.",
+      "eyebrow": "01 / Automation"
+    },
+    {
+      "id": "2",
+      "title": "Web & Mobile App Development",
+      "description": "Production apps for iOS, Android, and the web. Built with React, React Native, and Next.js.",
+      "eyebrow": "02 / Engineering"
+    },
+    {
+      "title": "demo",
+      "description": "demo",
+      "eyebrow": "demo",
+      "id": "1778055790305"
+    }
+  ],
+  "work": [
+    {
+      "id": "1",
+      "title": "FinTech Dashboard",
+      "description": "A complex AI-driven dashboard.",
+      "category": "Web App",
+      "image": "work1.png"
+    },
+    {
+      "id": "2",
+      "title": "AI Lead Gen Agent",
+      "description": "Automated WhatsApp agent for real estate.",
+      "category": "Agent",
+      "image": "work2.png"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Kredoo",
+      "description": "Financial operations autopilot.",
+      "price": "$99/mo",
+      "features": [
+        "Feature A",
+        "Feature B"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Arkin",
+      "description": "Your AI workforce.",
+      "price": "$199/mo",
+      "features": [
+        "Feature C",
+        "Feature D"
+      ]
+    }
+  ],
+  "learn": [
+    {
+      "id": "1",
+      "title": "Getting Started with AI",
+      "content": "Learn the basics of AI integration.",
+      "author": "John Doe",
+      "date": "2024-05-01"
+    },
+    {
+      "id": "2",
+      "title": "Advanced RAG Pipelines",
+      "content": "Deep dive into RAG.",
+      "author": "Jane Doe",
+      "date": "2024-05-15"
+    }
+  ],
+  "contact": {
+    "email": "hello@elevaite.com",
+    "phone": "+1 234 567 890",
+    "address": "123 AI Street, Tech City"
+  },
+  "testimonials": [
+    {
+      "id": "1",
+      "name": "Sarah Jenkins",
+      "company": "TechCorp",
+      "text": "ElevAIte transformed our business!"
+    },
+    {
+      "id": "2",
+      "name": "Mark Smith",
+      "company": "GrowthInc",
+      "text": "The automation saved us hundreds of hours."
+    }
+  ]
+}

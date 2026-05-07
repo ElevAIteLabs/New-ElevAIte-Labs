@@ -1,0 +1,190 @@
+import { Link } from 'react-router-dom';
+
+const BlogWhatsapp = () => {
+  return (
+    <>
+      <style>{`
+        .blog-hero { padding: 80px 0 60px; border-bottom: 1px solid var(--border); }
+        .blog-hero .meta { font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); font-weight: 600; margin-bottom: 18px; }
+        .blog-hero h1 { font-family: var(--display); font-size: clamp(36px, 5vw, 68px); font-weight: 600; color: var(--text); letter-spacing: -0.025em; line-height: 1.05; max-width: 900px; margin-bottom: 24px; }
+        .blog-hero .lede { font-size: 21px; line-height: 1.55; color: var(--body); max-width: 720px; }
+        .blog-cover { width: 100%; aspect-ratio: 21/9; object-fit: cover; border-radius: 16px; margin: 48px 0; }
+        .blog-body { display: grid; grid-template-columns: 1fr 280px; gap: 80px; align-items: start; }
+        .blog-content { max-width: 720px; }
+        .blog-content h2 { font-family: var(--display); font-size: 32px; font-weight: 600; color: var(--text); letter-spacing: -0.02em; margin: 56px 0 16px; }
+        .blog-content h3 { font-family: var(--display); font-size: 24px; font-weight: 500; color: var(--text); margin: 36px 0 12px; }
+        .blog-content p { font-size: 17px; line-height: 1.75; color: var(--body); margin-bottom: 22px; }
+        .blog-content ul, .blog-content ol { padding-left: 24px; margin-bottom: 22px; }
+        .blog-content li { font-size: 17px; line-height: 1.7; color: var(--body); margin-bottom: 8px; }
+        .blog-content blockquote { border-left: 3px solid var(--accent); padding: 12px 0 12px 24px; margin: 32px 0; }
+        .blog-content blockquote p { font-family: var(--display); font-size: 22px; font-style: italic; color: var(--text); margin: 0; }
+        .callout { background: var(--card); border-radius: 12px; padding: 28px 32px; margin: 32px 0; }
+        .callout strong { display: block; font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 10px; }
+        .callout p { font-size: 16px; margin: 0; }
+        .step-block { border-left: 2px solid var(--accent); padding: 0 0 28px 24px; margin-bottom: 4px; position: relative; }
+        .step-block::before { content: attr(data-step); position: absolute; left: -14px; top: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+        .step-block h3 { font-family: var(--display); font-size: 22px; font-weight: 500; color: var(--text); margin: 0 0 10px; }
+        .step-block p { font-size: 16px; line-height: 1.65; color: var(--body); margin: 0; }
+        .blog-sidebar { position: sticky; top: 100px; }
+        .sidebar-card { background: var(--card); border-radius: 12px; padding: 28px 24px; margin-bottom: 20px; }
+        .sidebar-card h4 { font-family: var(--display); font-size: 18px; font-weight: 500; margin-bottom: 12px; color: var(--text); }
+        .sidebar-card p { font-size: 14px; line-height: 1.55; margin-bottom: 16px; }
+        .toc-list { list-style: none; }
+        .toc-list li { border-bottom: 1px solid var(--border); padding: 10px 0; }
+        .toc-list li:last-child { border-bottom: none; }
+        .toc-list a { font-size: 14px; color: var(--body); text-decoration: none; transition: color 0.15s; }
+        .toc-list a:hover { color: var(--accent); }
+        @media (max-width: 960px) { .blog-body { grid-template-columns: 1fr; } .blog-sidebar { position: static; } }
+      `}</style>
+
+      <section className="blog-hero">
+        <div className="wrap">
+          <div className="meta fade-up">Playbook · 12 min read · Ananya Krishnan · April 2025</div>
+          <h1 className="fade-up">The WhatsApp Automation Playbook for Indian Businesses</h1>
+          <p className="lede fade-up">450 million Indians use WhatsApp daily. Most businesses respond manually — or not at all. This is the complete guide to building AI agents that qualify, nurture, and book on WhatsApp without a human in the loop.</p>
+        </div>
+      </section>
+
+      <div className="wrap">
+        <img
+          className="blog-cover fade-up"
+          src="https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=1400&h=600&fit=crop&q=80&auto=format"
+          alt="WhatsApp on phone"
+          loading="lazy"
+        />
+
+        <div className="blog-body">
+          <article className="blog-content fade-up">
+            <p>WhatsApp isn't just a messaging app in India. It's the primary business communication channel for a huge portion of the country's working population. Leads message you on WhatsApp. Customers follow up on WhatsApp. Vendors, partners, and delivery drivers coordinate on WhatsApp. And for most businesses, the response to all of this is either a tired employee manually typing the same answers over and over, or silence.</p>
+            <p>That gap — between the volume of WhatsApp conversations your business needs to handle and the human bandwidth to handle them — is where AI wins.</p>
+            <p>This isn't a theoretical playbook. Every workflow I'm about to describe is running in production, in Indian businesses, today. Some of them we built; some our clients built using our guidance. All of them work.</p>
+
+            <h2>Why WhatsApp First?</h2>
+            <p>Before we get into the "how," it's worth being explicit about why WhatsApp is the right channel to automate before everything else.</p>
+            <p><strong>It's where your leads already are.</strong> Indian consumers are dramatically more comfortable messaging on WhatsApp than filling out web forms or making phone calls. Response rates on WhatsApp outreach are 5–8× higher than email in most categories.</p>
+            <p><strong>The API is mature.</strong> Meta's WhatsApp Business API, which you need for automation at scale, is well-documented, reasonably priced, and has an established ecosystem of providers in India (Interakt, Wati, Aisensy, and others). The compliance path is clear.</p>
+            <p><strong>It reduces call center dependency.</strong> The alternative to WhatsApp automation is usually a call center or a team of WhatsApp operators manually managing inboxes. Both are expensive, don't scale linearly with demand, and create quality control problems.</p>
+
+            <h2>The Four WhatsApp Automation Patterns</h2>
+            <p>Every WhatsApp automation I've ever built falls into one of four patterns. Understanding which pattern you need is more important than picking the right tool.</p>
+
+            <h3>Pattern 1: Inbound Lead Qualification</h3>
+            <p>A lead messages you. Maybe through Click-to-WhatsApp from a Meta ad, maybe via a WhatsApp link on your website, maybe by finding your number somewhere. The automation takes it from there: greets them, asks qualifying questions, scores them against your ICP, and either routes them to a human or books a meeting, depending on what you've set up.</p>
+            <p>This is the highest-ROI automation for most businesses because it works 24/7, responds in under 30 seconds, and never lets a lead slip through because nobody got around to it.</p>
+            <div className="callout">
+              <strong>What you need</strong>
+              <p>WhatsApp Business API access, a way to define your qualification criteria, an AI model to handle the conversation, and an integration with your CRM to log the result. Total build time: 2–4 weeks.</p>
+            </div>
+
+            <h3>Pattern 2: Appointment Booking</h3>
+            <p>This is especially common in healthcare, salons, real estate, and any business that runs on scheduled interactions. The AI handles the full scheduling flow over WhatsApp: checks availability, offers slots, confirms the booking, sends reminders, and handles cancellations and reschedules.</p>
+            <p>The magic is that it integrates with your actual calendar or booking system, not a separate scheduling tool that creates sync problems. When a patient books an appointment through WhatsApp, it appears directly in your clinic's system, the slot is blocked, and the confirmation message goes out automatically.</p>
+
+            <h3>Pattern 3: FAQ and Support</h3>
+            <p>Train the AI on your documents — FAQ pages, product manuals, return policies, pricing tables, service descriptions — and let it handle incoming questions. It answers immediately, in the language the customer messaged in, with a live handoff to a human for anything it can't handle.</p>
+            <p>This one requires good training data and careful design of the handoff flow. "I can't answer that" is a failure mode; "Let me connect you to someone who can help with that" is not. The difference is in how you design the escalation path.</p>
+
+            <h3>Pattern 4: Proactive Outreach and Follow-Up</h3>
+            <p>Rather than responding to inbound, this pattern sends messages to your contacts based on triggers: a lead goes cold, an invoice becomes overdue, a renewal date approaches, a cart is abandoned. The AI crafts the message (personalized to the contact and context), sends it, and handles any response it gets back.</p>
+            <p>This requires permission-based messaging through the Business API — you can only initiate conversations with people who've opted in. But when done correctly, the response rates are extraordinary compared to email.</p>
+
+            <h2>Building a WhatsApp Automation Stack</h2>
+            <p>Here's the stack we've converged on after building roughly a dozen production WhatsApp systems:</p>
+
+            <div className="step-block" data-step="1">
+              <h3>WhatsApp Business API Provider</h3>
+              <p>You need an approved BSP (Business Solution Provider) to access the API. In India, we recommend Interakt or Wati for most businesses. Both have solid onboarding, reasonable pricing, and decent webhook support. The verification process takes 1–3 weeks, so start this first.</p>
+            </div>
+            <div className="step-block" data-step="2">
+              <h3>Conversation AI Layer</h3>
+              <p>This is the brain of the operation. We use Claude (Anthropic) for most implementations because of its instruction-following accuracy and multi-language capability — critical for Hindi, Telugu, and Tamil conversations. You'll need to design the system prompt, define the flow logic, and handle the edge cases.</p>
+            </div>
+            <div className="step-block" data-step="3">
+              <h3>Workflow Orchestration</h3>
+              <p>n8n is our preferred tool for connecting everything together: incoming webhooks from the API provider, AI model calls, CRM updates, calendar integrations, notification triggers. It's visual, it's debuggable, and it handles the async nature of WhatsApp conversations well.</p>
+            </div>
+            <div className="step-block" data-step="4">
+              <h3>CRM Integration</h3>
+              <p>Every conversation, every response, every qualification data point needs to flow into your CRM automatically. If you're using Kredoo (our own product), the WhatsApp integration is native. If you're using HubSpot, Salesforce, or another tool, n8n handles the connection.</p>
+            </div>
+            <div className="step-block" data-step="5">
+              <h3>Human Escalation Layer</h3>
+              <p>This is the most important part most people underinvest in. Define your escalation criteria precisely: what triggers a handoff, who it goes to, what context they receive, and how they hand back to the bot after the human interaction is done. A bad escalation experience undoes everything the automation built.</p>
+            </div>
+
+            <h2>The Multi-Language Reality</h2>
+            <p>This is where Indian WhatsApp automation gets genuinely complex, and where a lot of off-the-shelf solutions fall short.</p>
+            <p>Your leads don't all message in English. Depending on your market, you might get messages in Hindi, Telugu, Tamil, Kannada, Marathi, or a mixture of all of them — sometimes within the same conversation. Transliterated Hinglish ("bhai mujhe property dekhni hai") is extremely common and extremely difficult for models trained primarily on formal text.</p>
+            <p>Our approach: use Claude's native multi-language capability for understanding, respond in the language the customer used (defaulting to the most comfortable language detected), and train on real examples of how your customers actually write — not how a textbook says they should.</p>
+            <blockquote><p>"The bot understood my Telugu and replied in Telugu. I thought I'd have to switch to English. That's when I trusted it."<br/>— Customer of one of our clinic clients</p></blockquote>
+
+            <h2>Compliance: What You Actually Need to Know</h2>
+            <p>The regulatory landscape for WhatsApp Business in India is manageable but not ignorable. A few things you must get right:</p>
+            <ul>
+              <li><strong>Opt-in before proactive messaging.</strong> You can only initiate conversations (template messages) with users who've explicitly opted in. Your AI cannot cold-message a list of numbers.</li>
+              <li><strong>Template approval.</strong> All outbound message templates must be approved by Meta before use. Approval typically takes 24–72 hours. Design your templates with this in mind — you can't iterate instantly.</li>
+              <li><strong>Data storage.</strong> Conversation data containing personal information falls under DPDP (India's Digital Personal Data Protection Act). Store it in India, define retention periods, and have a deletion process.</li>
+              <li><strong>Clear AI disclosure.</strong> We always recommend being upfront that the user is talking to an AI, at least at the start of the conversation. Most users don't care; some prefer it. Hiding it creates trust problems when the bot makes a mistake.</li>
+            </ul>
+
+            <h2>Common Failure Modes</h2>
+            <p>I've watched enough of these implementations go wrong to give you a shortlist of what to watch for:</p>
+            <p><strong>Over-automation.</strong> Trying to automate everything including the parts that need human judgment. A bot that insists on completing the qualification flow even when the customer is clearly frustrated is worse than no bot.</p>
+            <p><strong>Poor handoff design.</strong> The human on the other end of the escalation doesn't know what the bot already discussed, so they ask the customer to repeat themselves. This destroys trust instantly. Pass full conversation context, always.</p>
+            <p><strong>Testing in English only.</strong> Your QA process should include Hindi, regional language, and Hinglish test cases. Models behave differently in different languages; bugs appear in edge cases you won't catch in English-only testing.</p>
+            <p><strong>Template fatigue.</strong> Proactive messages work when they're relevant and timely. A business that sends a WhatsApp message to every contact for every possible trigger will see opt-outs spike within weeks. Be selective.</p>
+
+            <h2>Getting Started</h2>
+            <p>If you're convinced WhatsApp automation is right for your business but don't know where to start, here's the path:</p>
+            <ol>
+              <li>Start with inbound FAQ/support. Lowest risk, fastest to build, immediate value.</li>
+              <li>Add appointment booking if you're a scheduling-heavy business.</li>
+              <li>Layer in lead qualification once you have the basic infrastructure running.</li>
+              <li>Add proactive outreach last — it requires the most careful design and has the highest compliance sensitivity.</li>
+            </ol>
+            <p>Each phase takes 2–4 weeks to build and test properly. Try to do them all at once and you'll end up with something that's partially working everywhere and fully working nowhere.</p>
+            <p>If you want help, we do this. The full stack: API setup, AI training, n8n workflows, CRM integration, and the escalation design that makes it all work. Reach out and we'll tell you what it would look like for your specific business.</p>
+          </article>
+
+          <aside className="blog-sidebar">
+            <div className="sidebar-card">
+              <h4>Table of Contents</h4>
+              <ul className="toc-list">
+                <li><a href="#">Why WhatsApp First?</a></li>
+                <li><a href="#">The Four Patterns</a></li>
+                <li><a href="#">Building the Stack</a></li>
+                <li><a href="#">Multi-Language Reality</a></li>
+                <li><a href="#">Compliance</a></li>
+                <li><a href="#">Common Failures</a></li>
+                <li><a href="#">Getting Started</a></li>
+              </ul>
+            </div>
+            <div className="sidebar-card">
+              <h4>ChatDesk — WhatsApp AI</h4>
+              <p>Our WhatsApp-first AI agent product. Trained on your business, live in days.</p>
+              <Link to="/contact" className="btn btn-primary" style={{ display: 'block', textAlign: 'center' }}>Get Early Access →</Link>
+            </div>
+            <div className="sidebar-card">
+              <h4>Related Reading</h4>
+              <ul className="toc-list">
+                <li><Link to="/blog-automation">30 Hours a Week Lost →</Link></li>
+                <li><Link to="/blog-kredoo">Introducing Kredoo →</Link></li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <section className="cta-quiz" style={{ marginTop: '80px' }}>
+        <div className="wrap fade-up">
+          <span className="tag">Ready to automate WhatsApp?</span>
+          <h2>Let's build your AI agent.</h2>
+          <p>We've built WhatsApp automation systems for healthcare, real estate, D2C, and professional services. Yours is next.</p>
+          <Link to="/contact" className="btn btn-light">Start a Conversation →</Link>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default BlogWhatsapp;
