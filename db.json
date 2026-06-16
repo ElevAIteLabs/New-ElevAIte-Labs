@@ -1,60 +1,268 @@
 {
   "services": [
     {
-      "id": "1",
+      "features": [
+        "Content Generation",
+        "Copywriting",
+        "Brand Asset Generation",
+        "Image & Video Creation",
+        "Social Media Automation",
+        "Creative Workflows"
+      ],
+      "description": "We replace the repetitive parts of your operation with agents that read, decide, and act — across email, CRM, calendars, and the rest of your stack",
       "title": "AI Automation & Workflows",
-      "description": "We replace the repetitive parts of your operation with agents that read, decide, and act.",
-      "eyebrow": "01 / Automation"
+      "eyebrow": "01 / Automation",
+      "id": 1,
+      "image": "animations-arkin.png"
     },
     {
-      "id": "2",
       "title": "Web & Mobile App Development",
-      "description": "Production apps for iOS, Android, and the web. Built with React, React Native, and Next.js.",
-      "eyebrow": "02 / Engineering"
+      "description": "Production apps for iOS, Android, and the web. Built with React, React Native, and Next.js — designed in-house, AI-native by default.",
+      "features": [
+        "Custom Web Applications\nE-commerce Solutions",
+        "API Development",
+        "Database Design",
+        "Cloud Deployment",
+        "Performance Optimization",
+        "Native iOS & Android Development",
+        "AI Integration & Machine Learning",
+        "Cloud Synchronization",
+        "Cross-platform Solutions",
+        "Real-time Data Processing",
+        "Advanced Security Features"
+      ],
+      "eyebrow": "02 / Engineering",
+      "image": "Mobile-arkin.png",
+      "id": 2
     },
     {
-      "title": "demo",
-      "description": "demo",
-      "eyebrow": "demo",
-      "id": "1778055790305"
+      "title": "Custom AI Agents",
+      "description": "Domain-trained assistants that live where your customers already are: WhatsApp, your website, or your team's Slack.",
+      "eyebrow": "03 / Conversational AI",
+      "features": [
+        "Custom ChatBot Development",
+        "Multi-platform Integration",
+        "Sentiment Analysis",
+        "Natural Language Processing",
+        "Voice Recognition",
+        "Continuous Learning"
+      ],
+      "image": "Agent-arkin.png",
+      "id": 3
+    },
+    {
+      "title": "Lead Generation Systems",
+      "eyebrow": "04 / Growth",
+      "description": "End-to-end pipelines that source qualified leads, warm them up, and book the meeting — without burning out your sales team.",
+      "features": [
+        "Outbound prospecting agents",
+        "AI-personalized cold email and LinkedIn",
+        "Inbound qualification + auto-booking",
+        "Pipeline analytics and attribution"
+      ],
+      "image": "arkinleadgeneration.png",
+      "id": 4
+    },
+    {
+      "title": "AI Content Creation",
+      "eyebrow": "05 / Content",
+      "description": "Brand-trained content engines that draft, design, and ship — calibrated to your voice, not generic AI sludge.",
+      "features": [
+        "Content Generation",
+        "Copy Writing",
+        "Brand Asset Generation",
+        "Image & Video Creation",
+        "Social Media Automation",
+        "Creative Workflows"
+      ],
+      "image": "arkincontentcreation.png",
+      "id": 5
+    },
+    {
+      "title": "AI Strategy Consulting",
+      "eyebrow": "06 / Strategy",
+      "description": "A diagnostic, a roadmap, and a 90-day plan — so you stop guessing where AI fits in your business.",
+      "features": [
+        "Operations audit and opportunity mapping",
+        "Vendor/build/buy decision support",
+        "Team training and enablement",
+        "Quarterly review and re-prioritization"
+      ],
+      "image": "strategy.png",
+      "id": 6
     }
   ],
   "work": [
     {
-      "id": "1",
-      "title": "FinTech Dashboard",
-      "description": "A complex AI-driven dashboard.",
-      "category": "Web App",
-      "image": "work1.png"
+      "description": "Bee Echoo is the global marketplace where creators, studios, brands, and advertising services meet. Discover talent, book studios, launch campaigns — and ship work that moves the world.",
+      "title": "Bee Echoo",
+      "industry": "Social Media",
+      "category": "mobile-app",
+      "arkin_image": "Mobile-arkin.png",
+      "url": "https://beeechoo.com/",
+      "image": "Gemini_Generated_Image_sej1tmsej1tmsej1-removebg-preview.png",
+      "id": 1
     },
     {
-      "id": "2",
-      "title": "AI Lead Gen Agent",
-      "description": "Automated WhatsApp agent for real estate.",
-      "category": "Agent",
-      "image": "work2.png"
+      "description": "Bee Echoo is the global marketplace where creators, studios, brands, and advertising services meet. Discover talent, book studios, launch campaigns—and ship work that moves the world.",
+      "industry": "Social Media",
+      "category": "web-app",
+      "arkin_image": "Arkin-Leftside-Pointing-Grey.png",
+      "title": "Bee Echoo",
+      "url": "https://beeechoo.com/",
+      "id": 2,
+      "image": "beeechoo.png"
+    },
+    {
+      "description": "Where passion for cow protection meets traditional craftsmanship. We're dedicated community to preserving the sacred human-cow bond through our products. Our journey begins with high hygiene standards, crafting wholesome sweets and delicacies. We believe in coordination, love, and support. Our mission is to share our values through premium products distributed globally. Each item represents our commitment to purity and sustainability. Explore our range and join us in celebrating cow protection while savoring our lovingly prepared treats. Together, let's make a difference with every bite, promoting a timeless tradition and delicious flavors.",
+      "title": "Sree Nandas",
+      "industry": "food",
+      "category": "web-app",
+      "arkin_image": "rightside-pointing-arkin.png",
+      "url": "https://sreenandas.com/",
+      "image": "sreenandas.png",
+      "id": 3
+    },
+    {
+      "description": "SMS Automation refers to the technology and practice of using software, application programming interfaces (APIs), and pre-set rules or artificial intelligence (AI) to send text messages automatically to users without manual human intervention.",
+      "title": "SMS Automation",
+      "industry": "Social Media",
+      "category": "ai-automation",
+      "arkin_image": "Arkin-Leftside-Pointing-Grey.png",
+      "image": "sms automation.png",
+      "id": 4
+    },
+    {
+      "title": "SmartDoc: OCR Automation",
+      "description": "A smart OCR automation project that automates the extraction and conversion of PDF content into editable .docx formats. This solution focuses on high-precision text recognition and seamless file handling, providing a streamlined user experience for digitizing large-scale document repositories.",
+      "industry": "Education",
+      "category": "ai-automation",
+      "arkin_image": "rightside-pointing-arkin.png",
+      "image": "smart  ocr automation.png",
+      "id": 5
+    },
+    {
+      "title": "AI-Powered Social Media Content Automation",
+      "description": "Built a fully autonomous content engine that scrapes trending topics and industry news daily, generates platform-optimised posts using AI, and automatically publishes them across LinkedIn, Instagram, and other social channels — keeping the brand active and relevant without any manual effort from the client's team.",
+      "industry": "Social Media",
+      "category": "ai-automation",
+      "arkin_image": "Arkin-Leftside-Pointing-Grey.png",
+      "image": "social media automation.png",
+      "id": 6
+    },
+    {
+      "title": "WhatsApp Automation for Kredoo CRM",
+      "description": "Engineered a WhatsApp Business automation system natively connected to the Kredoo CRM platform, enabling automated lead nurturing, lead follow-ups, and real-time conversation over WhatsApp — with all conversation threads synced back to CRM records for complete visibility and context.",
+      "industry": "Social Media",
+      "category": "ai-automation",
+      "arkin_image": "rightside-pointing-arkin.png",
+      "image": "whatspp automation.png",
+      "id": 7
+    },
+    {
+      "title": "GenZ IQ Learning – Smart Learning Management System",
+      "description": "GenZ IQ Learning is a smart LMS that provides students with\ncourses, assignments, mock tests, and classes, while enabling\ncolleges to track and analyze student performance effectively. It\nfosters an interactive and data-driven learning experience for both\nstudents and institutions.",
+      "category": "web-app",
+      "industry": "Education",
+      "arkin_image": "Arkin-Leftside-Pointing-Grey.png",
+      "image": "genziq.png",
+      "id": 8
+    },
+    {
+      "title": "Mamma Magic",
+      "description": "E-commerce mobile application designed for a small business enabling product browsing, purchasing, and order tracking with a seamless user experience.",
+      "industry": "BUSINES",
+      "category": "mobile-app",
+      "arkin_image": "Mobile-arkin.png",
+      "image": "mamma magic.png",
+      "id": 9
+    },
+    {
+      "title": "Chaitan yamrutha-Community Empowerment Platform",
+      "description": "A website promoting a lifestyle of simplicity and mindful growth through initiatives like organic farming, animal welfare, education, healthcare, and food for life, built to inspire and serve communities worldwide.",
+      "industry": "TECH",
+      "category": "web-app",
+      "arkin_image": "rightside-pointing-arkin.png",
+      "url": "https://chaitanyamrutha.org/",
+      "image": "chaintanyaamrutha.png",
+      "id": 10
+    },
+    {
+      "title": "Knowva",
+      "description": "This is a full-stack web application called KNOWva, built as a React + TypeScript frontend with Vite and a PHP/MySQL backend API. The frontend uses modern UI tooling like Tailwind CSS, shadcn-ui components, React Router, React Query, and animations from Framer Motion and GSAP. It includes pages for browsing AI tools, categories, tool details, comparisons, newsletter, consulting, providers, community forum threads, login/signup, profile management, and an admin dashboard.",
+      "industry": "SOFTWARE",
+      "category": "web-app",
+      "arkin_image": "Arkin-Leftside-Pointing-Grey.png",
+      "image": "knowva.png",
+      "id": 11
+    },
+    {
+      "title": "Intelligent SMS Lead Engagement via HubSpot",
+      "description": "Developed a smart SMS automation system integrated with HubSpot CRM that instantly messages new leads the moment they enter the pipeline, handles their follow-up questions with AI-powered responses, and sends timely follow-up messages to keep leads engaged — turning cold entries into warm conversations automatically.",
+      "industry": "tech",
+      "category": "ai-automation",
+      "arkin_image": "Arkin-Leftside-Pointing-Grey.png",
+      "image": "sms automation.png",
+      "id": 12
+    },
+    {
+      "title": "Certification Issuance Automation",
+      "description": "Developed an automated certification generation and distribution system that triggers upon course completion or milestone achievement. The workflow auto-populates personalised certificate templates, converts them to branded PDFs, and delivers them to recipients via email — cutting certificate turnaround from days to seconds.",
+      "industry": "Education",
+      "category": "ai-automation",
+      "arkin_image": "rightside-pointing-arkin.png",
+      "image": "certificate automation.png",
+      "id": 13
+    },
+    {
+      "title": "Email-to-Email Workflow via Monday.com",
+      "description": "Implemented an intelligent email-to-email automation integrated with Monday.com boards. Incoming emails are parsed, categorised, and routed as Monday.com items, which then trigger outbound response emails based on board status changes, assignee updates, or custom rules. The system also automatically sends scheduled follow-up emails to leads based on their pipeline stage — ensuring no lead goes cold — all without any manual forwarding or intervention.",
+      "industry": "tech",
+      "category": "ai-automation",
+      "arkin_image": "Arkin-Leftside-Pointing-Grey.png",
+      "image": "email automation.png",
+      "id": 14
+    },
+    {
+      "title": "AI-Powered Lead Coordinator",
+      "description": "AI-powered lead coordinator that automates the entire process of handling and managing inquiries from potential tenants. It pre-qualifies leads by analyzing their needs.",
+      "industry": "tech",
+      "category": "ai-agent",
+      "arkin_image": "arkinleadgeneration.png",
+      "image": "lead coordinator.png",
+      "id": 15
+    },
+    {
+      "title": "Content Generation Platform",
+      "description": "AI-powered content creation tool for social media, blogs, and marketing materials",
+      "industry": "tech",
+      "category": "content-creation",
+      "arkin_image": "arkincontentcreation.png",
+      "image": "content creation platform.png",
+      "id": 16
+    },
+    {
+      "description": "Benriii is a mobile-first digital advertising and discovery platform where users earn real rewards by engaging with short, high-quality ads. The app delivers a seamless, reel-style experience that connects viewers with brands, events, stores, and offers they care about. Advertisers gain powerful visibility and real-time insights, while users get rewarded for their attention. Benriii transforms advertising into a fun, interactive, and value-driven experience for everyone",
+      "title": "Benriii",
+      "industry": "TECH",
+      "category": "mobile-app",
+      "arkin_image": "Mobile-arkin.png",
+      "image": "benri.png",
+      "id": 17
     }
   ],
   "products": [
     {
       "id": "1",
       "name": "Kredoo",
-      "description": "Financial operations autopilot.",
-      "price": "$99/mo",
+      "description": "Kredoo is the modern sales CRM that auto-captures leads from Meta & Google Ads, automates follow-ups with n8n, and gives your team a real-time view of every deal in flight.",
+      "price": "10000",
       "features": [
-        "Feature A",
-        "Feature B"
-      ]
-    },
-    {
-      "id": "2",
-      "name": "Arkin",
-      "description": "Your AI workforce.",
-      "price": "$199/mo",
-      "features": [
-        "Feature C",
-        "Feature D"
-      ]
+        "Live in 5 minutes",
+        "no credit card",
+        "built for sales teams"
+      ],
+      "image": "kreedo.png"
     }
   ],
   "learn": [

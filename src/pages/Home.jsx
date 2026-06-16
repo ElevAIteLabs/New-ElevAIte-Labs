@@ -13,10 +13,10 @@ const Home = () => {
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [productsError, setProductsError] = useState(null);
 
-  const API_URL = 'https://elevaitelabs.in/api';
+  const apiUrl = (r) => import.meta.env.DEV ? `http://localhost:5000/${r}` : `${import.meta.env.VITE_API_URL}/${r}.php`;
 
   useEffect(() => {
-    fetch(`${API_URL}/services.php`)
+    fetch(apiUrl('services'))
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setServices(data);
@@ -27,7 +27,7 @@ const Home = () => {
         setLoadingServices(false);
       });
 
-    fetch(`${API_URL}/work.php`)
+    fetch(apiUrl('work'))
       .then(res => res.json())
       .then(data => {
         console.log('Home: Fetched projects:', data);
@@ -44,7 +44,7 @@ const Home = () => {
         setLoadingProjects(false);
       });
 
-    fetch(`${API_URL}/products.php`)
+    fetch(apiUrl('products'))
       .then(res => res.json())
       .then(data => {
         console.log('Home: Fetched products:', data);
@@ -181,34 +181,36 @@ const Home = () => {
               </div>
             </div>
             <div className="kredoo-teaser-visual fade-up">
-              <div className="kredoo-anim-box">
-                <img src="/pictures/Kredoo-black.png" alt="Kredoo" className="kredoo-logo-anim" style={{ filter: 'invert(1) brightness(2)' }} />
-                <div className="kredoo-pulse"></div>
-                <div className="kredoo-pulse" style={{ animationDelay: '2s' }}></div>
+              <div className="browser-mockup">
+                <div className="browser-bar">
+                  <div className="browser-dots">
+                    <span style={{ background: '#ff5f57' }}></span>
+                    <span style={{ background: '#febc2e' }}></span>
+                    <span style={{ background: '#28c840' }}></span>
+                  </div>
+                  <div className="browser-url">kredoo.in</div>
+                </div>
+                <div className="browser-content">
+                  <img src="/pictures/kreedo.png" alt="Kredoo CRM Dashboard" style={{ width: '100%', display: 'block' }} />
+                </div>
               </div>
             </div>
           </div>
         </div>
         <style>{`
           .kredoo-teaser-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
-          .kredoo-teaser-visual { position: relative; display: flex; justify-content: center; }
-          .kredoo-anim-box { position: relative; width: 320px; height: 320px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); border-radius: 50%; border: 1px solid rgba(255,255,255,0.08); }
-          .kredoo-logo-anim { width: 180px; position: relative; z-index: 2; animation: kredooFloat 6s ease-in-out infinite; }
-          .kredoo-pulse { position: absolute; inset: 0; border-radius: 50%; background: var(--accent); opacity: 0; animation: kredooPulse 4s linear infinite; }
-          @keyframes kredooPulse {
-            0% { transform: scale(0.8); opacity: 0.4; }
-            100% { transform: scale(1.8); opacity: 0; }
-          }
-          @keyframes kredooFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
-          }
+          .kredoo-teaser-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+          .browser-mockup { width: 100%; max-width: 560px; border-radius: 12px; overflow: hidden; box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08); background: #1e1e1e; }
+          .browser-bar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #2a2a2a; border-bottom: 1px solid rgba(255,255,255,0.06); }
+          .browser-dots { display: flex; gap: 6px; }
+          .browser-dots span { width: 12px; height: 12px; border-radius: 50%; display: block; }
+          .browser-url { flex: 1; background: rgba(255,255,255,0.07); border-radius: 6px; padding: 5px 12px; font-size: 13px; color: rgba(255,255,255,0.5); font-family: monospace; text-align: center; }
+          .browser-content { overflow: hidden; }
           @media (max-width: 960px) {
             .kredoo-teaser-grid { grid-template-columns: 1fr; gap: 48px; text-align: center; }
             .kredoo-teaser-grid p { margin-inline: auto; }
             .kredoo-teaser-grid .hero-cta-row { justify-content: center; }
-            .kredoo-anim-box { width: 260px; height: 260px; }
-            .kredoo-logo-anim { width: 140px; }
+            .browser-mockup { max-width: 100%; }
           }
         `}</style>
       </section>
@@ -267,13 +269,13 @@ const Home = () => {
                   const cardClass = classes[index % classes.length];
                   return (
                     <Link className={`work-card ${cardClass} fade-up`} to="/work" key={project.id || index}>
-                      <div
-                        className="ph"
-                        style={{
-                          backgroundImage: `url('${project.image ? (project.image.startsWith('http') ? project.image : `/pictures/${project.image}`) : 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&h=500&fit=crop&q=80&auto=format'}')`
-                        }}
-                      >
-                        <span className="ph-label">{project.industry}</span>
+                      <div className="ph" style={{ padding: 0, background: 'transparent', border: 'none' }}>
+                        <img
+                          src={project.image ? (project.image.startsWith('http') ? project.image : `/pictures/${project.image}`) : 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&h=500&fit=crop&q=80&auto=format'}
+                          alt={project.title}
+                          style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 'var(--radius-card)' }}
+                        />
+                        <span className="ph-label" style={{ position: 'absolute', bottom: '14px', left: '14px' }}>{project.industry}</span>
                       </div>
                       <div className="work-card-body">
                         <div className="industry">{project.industry}</div>
@@ -381,7 +383,7 @@ const Home = () => {
       </section>
 
       {/* ===== TESTIMONIALS ===== */}
-      <section>
+      {/* <section>
         <div className="wrap">
           <div className="fade-up">
             <span className="tag">What Clients Say</span>
@@ -417,7 +419,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ===== QUIZ CTA ===== */}
       <section className="cta-quiz">

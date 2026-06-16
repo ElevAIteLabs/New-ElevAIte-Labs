@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const API_URL = 'https://elevaitelabs.in/api';
+const apiUrl = (r) => import.meta.env.DEV ? `http://localhost:5000/${r}` : `${import.meta.env.VITE_API_URL}/${r}.php`;
 
 const Work = () => {
   const [filter, setFilter] = useState('mobile-app');
@@ -14,7 +14,7 @@ const Work = () => {
 
   const fetchProjects = async () => {
     try {
-      const res = await fetch(`${API_URL}/work.php`);
+      const res = await fetch(apiUrl('work'));
       const data = await res.json();
       console.log('Fetched projects:', data);
       if (Array.isArray(data)) {
@@ -69,9 +69,9 @@ const Work = () => {
       <section className="page-hero">
         <div className="wrap">
           <span className="tag fade-up">Our Work</span>
-          <h1 className="fade-up">Real Projects. Real Results.</h1>
+          <h1 className="fade-up">Our Projects. Our Results.</h1>
           <p className="fade-up">A selection of recent work across real estate, healthcare, fintech, D2C, media, and logistics. Most are shipped and live; a few we can only describe under NDA.</p>
-          
+
           <div className="filter-row fade-up">
             <button className={`filter-chip ${filter === 'mobile-app' ? 'active' : ''}`} onClick={() => handleFilter('mobile-app')}>Mobile App</button>
             <button className={`filter-chip ${filter === 'web-app' ? 'active' : ''}`} onClick={() => handleFilter('web-app')}>Web App</button>
@@ -93,8 +93,8 @@ const Work = () => {
                   <div className="industry-tag">{project.industry || 'ElevAIte Labs Project'}</div>
                   <h2>{project.title}</h2>
                   <p>{project.description}</p>
-                  
-                  
+
+
                   <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                     {project.url && (
                       <a href={project.url} target="_blank" rel="noopener noreferrer" className="link-arrow" style={{ color: 'var(--accent)' }}>Visit Live Project <span className="arrow">↗</span></a>

@@ -8,10 +8,10 @@ const Products = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_URL = 'https://elevaitelabs.in/api';
+  const apiUrl = (r) => import.meta.env.DEV ? `http://localhost:5000/${r}` : `${import.meta.env.VITE_API_URL}/${r}.php`;
 
   useEffect(() => {
-    fetch(`${API_URL}/products.php`)
+    fetch(apiUrl('products'))
       .then(res => res.json())
       .then(data => {
         console.log('Products Page: Fetched products:', data);
@@ -171,7 +171,7 @@ const Products = () => {
               </div>
             </div>
             <div className="product-img arkin-char-wrap arkin-product-wrap">
-              <img src="/pictures/Arkin-Leftside-Pointing-Grey.png" alt="LeadFlow AI" className="arkin-char arkin-product-img" />
+              <img src="/pictures/productsarkine.png" alt="LeadFlow AI" className="arkin-char arkin-product-img" />
             </div>
           </article>
 
@@ -193,7 +193,7 @@ const Products = () => {
               </div>
             </div>
             <div className="product-img arkin-char-wrap arkin-product-wrap">
-              <img src="/pictures/Agent-arkin.png" alt="ChatDesk" className="arkin-char arkin-product-img" />
+              <img src="/pictures/whatsapparkine.png" alt="ChatDesk" className="arkin-char arkin-product-img" />
             </div>
           </article>
 

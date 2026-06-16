@@ -23,8 +23,8 @@ const About = () => {
   return (
     <>
       <style>{`
-        .about-lead { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; padding-top: 0; padding-bottom: 40px; align-items: end; }
-        .about-lead h1 { font-family: var(--display); font-size: clamp(48px, 6vw, 88px); font-weight: 600; color: var(--text); letter-spacing: -0.025em; line-height: 1.05; }
+        .about-lead { padding-top: 0; padding-bottom: 16px; text-align: center; }
+        .about-lead h1 { font-family: var(--display); font-size: clamp(36px, 5vw, 72px); font-weight: 600; color: var(--text); letter-spacing: -0.025em; line-height: 1.1; max-width: 1100px; margin: 0 auto; }
         .about-lead h1 em { font-style: italic; color: var(--accent); font-weight: 500; }
         .about-lead p { font-size: 19px; line-height: 1.55; color: var(--body); }
         .about-img-strip { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px; height: 360px; }
@@ -91,12 +91,9 @@ const About = () => {
         <div className="wrap">
           <span className="tag fade-up">About Us</span>
           <div className="about-lead fade-up">
-            <h1>An AI studio for businesses that <em>actually want results.</em></h1>
-            <div className="arkin-about-para-wrap">
-              <img src="/pictures/holding-hands.png" alt="Arkin" className="arkin-about-para-img" />
-            </div>
+            <h1>An AI studio for businesses that<br /><em>actually want results.</em></h1>
           </div>
-          <div className="hero-badge-row fade-up" style={{ marginTop: '32px', marginBottom: '16px' }}>
+          <div className="hero-badge-row fade-up" style={{ marginTop: '32px', marginBottom: '0', justifyContent: 'center' }}>
             <div className="hero-badge">
               <span className="badge-icon">📍</span>
               <div><strong>Hyderabad, India</strong><span className="badge-sub">HITEC City HQ</span></div>
@@ -110,43 +107,41 @@ const About = () => {
               <div><strong>10+ industries</strong><span className="badge-sub">Real estate to fintech</span></div>
             </div>
           </div>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '8px' }}>
+            <img src="/pictures/arkin.png" alt="Arkin" style={{ height: '340px', width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 14px 28px rgba(0,0,0,0.12))', animation: 'arkinFloat 5s ease-in-out infinite' }} />
+          </div>
         </div>
       </section>
 
-      <div className="card-fan-section">
-        <div className="card-fan-wrap">
-          <div className="fan-card">
-            <div className="fan-card-bg" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=800&fit=crop&q=80&auto=format')" }}></div>
-            <div className="fan-card-overlay"></div>
-            <div className="fan-card-label"><span className="fan-card-tag">Our Studio</span>Hyderabad HQ</div>
+      <section style={{ background: 'var(--card)' }}>
+        <div className="wrap">
+          <div className="fade-up" style={{ maxWidth: '720px' }}>
+            <span className="tag">The Team</span>
+            <h2 className="display">A small team, by design.</h2>
+            <p style={{ fontSize: '18px', marginTop: '18px' }}>We stay deliberately small so the people you meet on the call are the people writing the code. No layers, no handoffs.</p>
           </div>
-          <div className="fan-card">
-            <div className="fan-card-bg" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop&q=80&auto=format')" }}></div>
-            <div className="fan-card-overlay"></div>
-            <div className="fan-card-label"><span className="fan-card-tag">How We Work</span>Collaborative & Fast</div>
-          </div>
-          <div className="fan-card">
-            <div className="fan-card-bg" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=800&fit=crop&q=80&auto=format')" }}></div>
-            <div className="fan-card-overlay"></div>
-            <div className="fan-card-label"><span className="fan-card-tag">Engineering</span>AI-First Always</div>
-          </div>
-          <div className="fan-card">
-            <div className="fan-card-bg" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=800&fit=crop&q=80&auto=format')" }}></div>
-            <div className="fan-card-overlay"></div>
-            <div className="fan-card-label"><span className="fan-card-tag">The Team</span>Small by Design</div>
-          </div>
-          <div className="fan-card">
-            <div className="fan-card-bg" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=800&fit=crop&q=80&auto=format')" }}></div>
-            <div className="fan-card-overlay"></div>
-            <div className="fan-card-label"><span className="fan-card-tag">With Clients</span>Real Partnerships</div>
-          </div>
-          <div className="fan-card">
-            <div className="fan-card-bg" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=800&fit=crop&q=80&auto=format')" }}></div>
-            <div className="fan-card-overlay"></div>
-            <div className="fan-card-label"><span className="fan-card-tag">Deep Work</span>Problem Solvers</div>
+          <div className="team-grid">
+            <div className="team-card fade-up">
+              <div className="ph" style={{ backgroundImage: "url('/pictures/shanmukh.jpeg')", backgroundPosition: 'center 30%' }}></div>
+              <div className="name">Ramachandruni Anjaneya Shanmukh</div>
+              <div className="role">Founder &amp; CEO</div>
+              <p></p>
+            </div>
+            <div className="team-card fade-up">
+              <div className="ph" style={{ backgroundImage: "url('/pictures/vishnu.jpeg')" }}></div>
+              <div className="name">Vishhnu Saai Gudise</div>
+              <div className="role">CO-Founder &amp; CTO</div>
+              <p></p>
+            </div>
+            <div className="team-card fade-up">
+              <div className="ph" style={{ backgroundImage: "url('/pictures/premsai.png')" }}></div>
+              <div className="name">Premsai Kilaru</div>
+              <div className="role">CO-Founder &amp; CMO</div>
+              <p></p>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
       <section style={{ paddingTop: '56px' }}>
         <div className="wrap">
@@ -170,37 +165,6 @@ const About = () => {
               <h3>Built to outlast us</h3>
               <p>Documented, tested, handover-ready. Your team owns what we build, from day one.</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section style={{ background: 'var(--card)' }}>
-        <div className="wrap">
-          <div className="fade-up" style={{ maxWidth: '720px' }}>
-            <span className="tag">The Team</span>
-            <h2 className="display">A small team, by design.</h2>
-            <p style={{ fontSize: '18px', marginTop: '18px' }}>We stay deliberately small so the people you meet on the call are the people writing the code. No layers, no handoffs.</p>
-          </div>
-          <div className="team-grid">
-            <div className="team-card fade-up">
-              <div className="ph" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1560250097-0b93528c311a?w=480&h=600&fit=crop&q=80&auto=format')" }}><span className="ph-label">portrait</span></div>
-              <div className="name">Vikram Shah</div>
-              <div className="role">Founder &amp; CEO</div>
-              <p>Ex-product lead, ten years building consumer apps across India and SEA.</p>
-            </div>
-            <div className="team-card fade-up">
-              <div className="ph" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=480&h=600&fit=crop&q=80&auto=format')" }}><span className="ph-label">portrait</span></div>
-              <div className="name">Ananya Krishnan</div>
-              <div className="role">Head of AI Engineering</div>
-              <p>LLM systems, RAG, agentic workflows. Previously at a YC-backed AI startup.</p>
-            </div>
-            <div className="team-card fade-up">
-              <div className="ph" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=480&h=600&fit=crop&q=80&auto=format')" }}><span className="ph-label">portrait</span></div>
-              <div className="name">Karthik Rao</div>
-              <div className="role">Design Director</div>
-              <p>Design systems and product UX for B2B SaaS. Likes type more than is healthy.</p>
-            </div>
-
           </div>
         </div>
       </section>

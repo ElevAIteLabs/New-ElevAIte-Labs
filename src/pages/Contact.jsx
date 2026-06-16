@@ -56,7 +56,7 @@ const Contact = () => {
       serviceId: 'service_urz7rpv',            // e.g. 'service_xyz'
       clientTemplateId: 'template_lf58fut',    // confirmation to client
       teamTemplateId: 'template_xgfg4mb',       // notification to your team
-      teamEmail: 'hello@elevaitelabs.com',
+      teamEmail: 'elevaitelabs@gmail.com',
     };
 
     if (EMAIL_CONFIG.publicKey !== 'YOUR_EMAILJS_PUBLIC_KEY') {
@@ -132,11 +132,11 @@ const Contact = () => {
         .form-success { padding: 36px; background: #fff; border: 1px solid var(--accent); border-radius: 12px; text-align: center; }
         .form-success h3 { font-family: var(--display); font-size: 28px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
         #cf-submit { border-radius: 12px; font-size: 16px; padding: 16px 24px; letter-spacing: -0.01em; width: 100%; justify-content: center; }
-        .office-strip { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 24px; margin-top: 56px; padding-top: 48px; border-top: 1px solid var(--border); }
+        .office-strip { display: flex; gap: 24px; margin-top: 16px; padding-top: 0; border-top: none; }
         .office-img { aspect-ratio: 16/9; }
         .office-info h4 { font-family: var(--display); font-size: 22px; font-weight: 500; color: var(--text); margin-bottom: 10px; letter-spacing: -0.01em; }
         .office-info p { font-size: 14px; line-height: 1.55; }
-        .arkin-office-wrap { aspect-ratio: 16/9; border-radius: 12px; background: var(--card); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .arkin-office-wrap { aspect-ratio: 16/9; border-radius: 12px; background: transparent; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .arkin-office-img  { height: 100%; max-height: 380px; }
         @media (max-width: 960px) {
           .contact-grid, .office-strip { grid-template-columns: 1fr; gap: 40px; }
@@ -154,18 +154,18 @@ const Contact = () => {
               <p className="lede">We respond within one business day. If your project is in scope, we'll send a 30-minute call invite. If it isn't, we'll tell you who would be a better fit.</p>
 
               <div className="contact-channels">
-                <a href="mailto:hello@elevaitelabs.com" className="channel">
+                <a href="mailto:elevaitelabs@gmail.com" className="channel">
                   <div className="channel-icon">@</div>
                   <div>
                     <div className="channel-label">Email</div>
-                    <div className="channel-value">hello@elevaitelabs.com</div>
+                    <div className="channel-value">elevaitelabs@gmail.com</div>
                   </div>
                 </a>
-                <a href="#" className="channel">
+                <a href="https://wa.me/917569954054" target="_blank" rel="noopener noreferrer" className="channel">
                   <div className="channel-icon">W</div>
                   <div>
                     <div className="channel-label">WhatsApp</div>
-                    <div className="channel-value">+91 98765 43210</div>
+                    <div className="channel-value">+91 75699 54054</div>
                   </div>
                 </a>
                 <a href="#" className="channel">
@@ -206,7 +206,7 @@ const Contact = () => {
                     <div className="form-row cols-2">
                       <div className="form-field">
                         <label htmlFor="cf-phone">Phone / WhatsApp</label>
-                        <input id="cf-phone" name="phone" type="tel" placeholder="+91 98765 43210" />
+                        <input id="cf-phone" name="phone" type="tel" placeholder="+91 75699 54054" />
                       </div>
                       <div className="form-field">
                         <label htmlFor="cf-company">Company</label>
@@ -268,17 +268,7 @@ const Contact = () => {
           </div>
 
           <div className="office-strip fade-up">
-            <div className="arkin-char-wrap arkin-office-wrap">
-              <img src="/holding-hands.png" alt="Arkin — ElevAIte Labs" className="arkin-char arkin-office-img" />
-            </div>
-            <div className="office-info">
-              <h4>Hyderabad HQ</h4>
-              <p>5th Floor, Innov8 Tower<br />HITEC City, Hyderabad<br />Telangana 500081, India</p>
-            </div>
-            <div className="office-info">
-              <h4>Hours</h4>
-              <p>Mon–Fri · 10:00 – 19:00 IST<br />WhatsApp: 24/7 (it's a bot,<br />and a good one)</p>
-            </div>
+            <img src="/pictures/contactarkine.png" alt="Arkin — ElevAIte Labs" style={{ height: '420px', width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 8px 20px rgba(0,0,0,0.1))', marginTop: '-60px' }} />
           </div>
         </div>
       </section>

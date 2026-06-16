@@ -8,10 +8,10 @@ const Services = () => {
   const [loading, setLoading] = useState(true);
 
   // For PHP backend, adjust this URL depending on your server setup
-  const API_URL = 'https://elevaitelabs.in/api';
+  const apiUrl = (r) => import.meta.env.DEV ? `http://localhost:5000/${r}` : `${import.meta.env.VITE_API_URL}/${r}.php`;
 
   useEffect(() => {
-    fetch(`${API_URL}/services.php`)
+    fetch(apiUrl('services'))
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -76,10 +76,15 @@ const Services = () => {
         .arkin-svc-simple { height: 600px; }
         .arkin-svc-simple-img { height: 600px; }
         @media (max-width: 960px) {
-          .arkin-automation-wrap { height: 600px; }
-          .arkin-svc-img { height: 600px; }
-          .arkin-svc-simple { height: 600px; }
-          .arkin-svc-simple-img { height: 600px; }
+          .svc-detail-img { aspect-ratio: unset; }
+          .arkin-automation-wrap { height: 480px; overflow: visible; }
+          .arkin-svc-img { height: 480px; }
+          .arkin-svc-simple { height: 400px; }
+          .arkin-svc-simple-img { height: 380px; }
+          .tool-logo-n8n    { width: 44px; height: 44px; top: 16px; left: 6%; }
+          .tool-logo-wa     { width: 44px; height: 44px; top: 20px; right: 6%; }
+          .tool-logo-make   { width: 48px; height: 48px; bottom: 40px; left: 4%; }
+          .tool-logo-zapier { width: 44px; height: 44px; bottom: 30px; right: 4%; }
         }
       `}</style>
 
@@ -129,7 +134,7 @@ const Services = () => {
         </div>
       </section>
 
-      <section style={{ background: 'var(--card)' }}>
+      {/* <section style={{ background: 'var(--card)' }}>
         <div className="wrap">
           <div className="fade-up" style={{ maxWidth: '720px' }}>
             <span className="tag">Engagement Models</span>
@@ -175,7 +180,7 @@ const Services = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="cta-quiz">
         <div className="wrap fade-up">

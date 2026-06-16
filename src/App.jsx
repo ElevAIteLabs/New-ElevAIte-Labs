@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -12,14 +12,20 @@ import BlogAutomation from './pages/BlogAutomation';
 import BlogKredoo from './pages/BlogKredoo';
 import BlogWhatsapp from './pages/BlogWhatsapp';
 import Admin from './pages/Admin';
+import AdminLogin from './pages/AdminLogin';
 import useSiteEffects from './hooks/useSiteEffects';
+
+const ProtectedRoute = ({ children }) => {
+  const isAuth = localStorage.getItem('admin_auth') === 'true';
+  return isAuth ? children : <Navigate to="/admin/login" replace />;
+};
 
 // Wrapper component to apply site effects and scroll to top on route change
 function Layout() {
   const location = useLocation();
   useSiteEffects();
 
-  const isAdmin = location.pathname === '/admin';
+  const isAdmin = location.pathname.startsWith('/admin');
 
   return (
     <>
@@ -35,7 +41,8 @@ function Layout() {
         <Route path="/blog-automation" element={<BlogAutomation />} />
         <Route path="/blog-kredoo" element={<BlogKredoo />} />
         <Route path="/blog-whatsapp" element={<BlogWhatsapp />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
       </Routes>
       {!isAdmin && <Footer />}
     </>
