@@ -119,7 +119,9 @@ const Home = () => {
             </div>
             <div className="arkin-hero-wrap">
               <div className="arkin-glow"></div>
-              <img src="/pictures/arkin.webp" alt="Arkin - ElevAIte Labs mascot" className="arkin-hero-img" width="500" height="500" fetchPriority="high" />
+              {/* Intrinsic size is 941x1672 - square attributes reserved a box
+                  that collapsed on decode, shifting the LCP element. */}
+              <img src="/pictures/arkin.webp" alt="Arkin - ElevAIte Labs mascot" className="arkin-hero-img" width="281" height="500" fetchPriority="high" />
             </div>
           </div>
         </div>
