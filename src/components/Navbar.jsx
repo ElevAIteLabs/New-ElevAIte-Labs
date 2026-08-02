@@ -53,7 +53,7 @@ const Navbar = () => {
       <nav className={`nav ${scrolled ? 'scrolled' : ''}`} id="main-nav">
         <div className="nav-inner">
           <Link to="/" className="logo">
-            <img src="/favicon.png" alt="ElevAIte Labs" style={{ height: '100px', width: '160px', display: 'block' }} />
+            <img src="/favicon.png" alt="ElevAIte Labs" style={{ height: '52px', width: 'auto', display: 'block' }} />
           </Link>
           <div className="nav-links">
             {items.map((item) => (

@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="footer-grid">
           <div>
             <Link to="/" className="logo">
-              <img src="/favicon.png" alt="ElevAIte Labs" style={{ height: '100px', width: '160px', display: 'block', background: '#fff', borderRadius: '12px', padding: '8px' }} />
+              <img src="/favicon.png" alt="ElevAIte Labs" style={{ height: '56px', width: 'auto', display: 'block', background: '#fff', borderRadius: '12px', padding: '8px' }} />
             </Link>
             <p className="footer-tag">Building the AI-first future, from Hyderabad.</p>
           </div>

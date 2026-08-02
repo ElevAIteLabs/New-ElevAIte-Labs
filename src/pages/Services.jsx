@@ -32,15 +32,27 @@ const Services = () => {
   return (
     <>
       <style>{`
-        .svc-detail { display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; padding: 80px 0; border-bottom: 1px solid var(--border); align-items: center; opacity: 1 !important; transform: none !important; }
-        .svc-detail:nth-child(even) .svc-detail-img { order: -1; }
-        .svc-detail h2 { font-family: var(--display); font-size: clamp(32px, 4vw, 52px); font-weight: 600; color: var(--text); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 20px; }
+        .svc-detail { display: grid; grid-template-columns: 1.25fr 1fr; gap: 56px; padding: 56px 0; border-bottom: 1px solid var(--border); align-items: center; opacity: 1 !important; transform: none !important; }
+        .svc-detail h2 { font-family: var(--display); font-size: clamp(32px, 4vw, 52px); font-weight: 600; color: var(--text); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 16px; }
         .svc-detail .svc-eyebrow { font-family: var(--display); font-size: 22px; font-style: italic; color: var(--accent); margin-bottom: 8px; font-weight: 500; }
-        .svc-detail p { font-size: 17px; line-height: 1.6; margin-bottom: 18px; }
-        .svc-detail ul { list-style: none; margin-top: 20px; }
-        .svc-detail li { padding-left: 28px; position: relative; margin-bottom: 12px; font-size: 16px; color: var(--body); }
+        .svc-detail p { font-size: 17px; line-height: 1.6; margin-bottom: 16px; }
+        .svc-detail ul { list-style: none; margin-top: 20px; columns: 2; column-gap: 32px; }
+        .svc-detail li { padding-left: 26px; position: relative; margin-bottom: 10px; font-size: 15px; color: var(--body); break-inside: avoid; }
         .svc-detail li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
-        .svc-detail-img { aspect-ratio: 4/3; }
+
+        /* Remaining services — dense grid, no mascot */
+        .svc-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 56px; }
+        .svc-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 32px 28px; display: flex; flex-direction: column; transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease; }
+        .svc-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(0,0,0,0.07); border-color: #cfd6dd; }
+        .svc-card .svc-eyebrow { font-family: var(--display); font-size: 15px; font-style: italic; color: var(--accent); margin-bottom: 10px; font-weight: 500; letter-spacing: 0.01em; }
+        .svc-card h3 { font-family: var(--display); font-size: 25px; font-weight: 600; color: var(--text); letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 12px; }
+        .svc-card p { font-size: 15px; line-height: 1.55; margin-bottom: 18px; }
+        .svc-card ul { list-style: none; margin-top: auto; border-top: 1px solid var(--border); padding-top: 16px; }
+        .svc-card li { padding-left: 20px; position: relative; margin-bottom: 8px; font-size: 14px; color: var(--body); }
+        .svc-card li:last-child { margin-bottom: 0; }
+        .svc-card li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
+        @media (max-width: 1100px) { .svc-cards { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 700px) { .svc-cards { grid-template-columns: 1fr; } .svc-detail ul { columns: 1; } }
         .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
         .price-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 36px 32px; display: flex; flex-direction: column; }
         .price-card.featured { background: var(--text); color: #fff; border-color: var(--text); }
@@ -58,12 +70,11 @@ const Services = () => {
         .price-card li::before { content: "✓"; color: var(--accent); font-weight: 600; }
         .price-card.featured li::before { color: #fff; }
         @media (max-width: 960px) {
-          .svc-detail { grid-template-columns: 1fr; gap: 40px; }
-          .svc-detail:nth-child(even) .svc-detail-img { order: 0; }
+          .svc-detail { grid-template-columns: 1fr; gap: 32px; }
           .pricing-grid { grid-template-columns: 1fr; }
         }
-        .arkin-automation-wrap { position: relative; display: flex; align-items: flex-end; justify-content: center; height: 580px; overflow: visible; }
-        .arkin-svc-img { height: 600px; width: auto; object-fit: contain; object-position: bottom; filter: drop-shadow(0 24px 40px rgba(0,0,0,0.14)); position: relative; z-index: 2; animation: arkinFloat 5s ease-in-out infinite; }
+        .arkin-automation-wrap { position: relative; display: flex; align-items: flex-end; justify-content: center; height: 400px; overflow: visible; }
+        .arkin-svc-img { height: 400px; width: auto; object-fit: contain; object-position: bottom; filter: drop-shadow(0 24px 40px rgba(0,0,0,0.14)); position: relative; z-index: 2; animation: arkinFloat 5s ease-in-out infinite; }
         .tool-logo { position: absolute; z-index: 3; border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); background: #fff; padding: 8px; object-fit: contain; }
         .tool-logo-n8n    { width: 56px; height: 56px; top: 30px;  left: 8%;  animation: floatTool1 6s ease-in-out infinite; }
         .tool-logo-wa     { width: 56px; height: 56px; top: 50px;  right: 6%; animation: floatTool2 7s ease-in-out infinite; padding: 6px; }
@@ -73,14 +84,9 @@ const Services = () => {
         @keyframes floatTool2 { 0%,100%{transform:translateY(0) rotate(3deg)}  50%{transform:translateY(-16px) rotate(-3deg)} }
         @keyframes floatTool3 { 0%,100%{transform:translateY(-6px) rotate(2deg)} 50%{transform:translateY(8px) rotate(-2deg)} }
         @keyframes floatTool4 { 0%,100%{transform:translateY(0) rotate(-2deg)} 50%{transform:translateY(-10px) rotate(3deg)} }
-        .arkin-svc-simple { height: 600px; }
-        .arkin-svc-simple-img { height: 600px; }
         @media (max-width: 960px) {
-          .svc-detail-img { aspect-ratio: unset; }
-          .arkin-automation-wrap { height: 480px; overflow: visible; }
-          .arkin-svc-img { height: 480px; }
-          .arkin-svc-simple { height: 400px; }
-          .arkin-svc-simple-img { height: 380px; }
+          .arkin-automation-wrap { height: 320px; overflow: visible; }
+          .arkin-svc-img { height: 320px; }
           .tool-logo-n8n    { width: 44px; height: 44px; top: 16px; left: 6%; }
           .tool-logo-wa     { width: 44px; height: 44px; top: 20px; right: 6%; }
           .tool-logo-make   { width: 48px; height: 48px; bottom: 40px; left: 4%; }
@@ -96,40 +102,60 @@ const Services = () => {
         </div>
       </section>
 
-      <section style={{ padding: '0' }}>
+      <section style={{ padding: '0 0 var(--section-pad)' }}>
         <div className="wrap">
           {loading ? (
             <div style={{ textAlign: 'center', padding: '50px 0' }}>Loading services...</div>
-          ) : (
-            servicesData.map((svc, i) => (
-              <div className="svc-detail fade-up" key={svc.id || i}>
-                <div>
-                  <div className="svc-eyebrow">{svc.eyebrow}</div>
-                  <h2>{svc.title}</h2>
-                  <p>{svc.description}</p>
-                  {svc.features && svc.features.length > 0 && (
-                    <ul>
-                      {svc.features.map((feature, idx) => (
-                        <li key={idx}>{feature}</li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-                {svc.image === 'animations-arkin.png' ? (
-                  <div className="arkin-automation-wrap svc-detail-img">
-                    <img src="/pictures/n8n.png" alt="n8n" className="tool-logo tool-logo-n8n" />
-                    <img src="/pictures/WhatsApp_Logo_green.svg" alt="WhatsApp" className="tool-logo tool-logo-wa" />
-                    <img src="/pictures/Make_Logo.jpg" alt="Make" className="tool-logo tool-logo-make" />
-                    <img src="/pictures/zapier.png" alt="Zapier" className="tool-logo tool-logo-zapier" />
-                    <img src="/pictures/animations-arkin.png" alt={svc.title} className="arkin-svc-img" />
+          ) : servicesData.length > 0 ? (
+            <>
+              {/* Lead service keeps the mascot — it earns its place once, not six times */}
+              {(() => {
+                const svc = servicesData[0];
+                return (
+                  <div className="svc-detail fade-up" key={svc.id || 'lead'}>
+                    <div>
+                      <div className="svc-eyebrow">{svc.eyebrow}</div>
+                      <h2>{svc.title}</h2>
+                      <p>{svc.description}</p>
+                      {svc.features && svc.features.length > 0 && (
+                        <ul>
+                          {svc.features.map((feature, idx) => (
+                            <li key={idx}>{feature}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                    <div className="arkin-automation-wrap">
+                      <img src="/pictures/n8n.png" alt="n8n" className="tool-logo tool-logo-n8n" />
+                      <img src="/pictures/WhatsApp_Logo_green.svg" alt="WhatsApp" className="tool-logo tool-logo-wa" />
+                      <img src="/pictures/Make_Logo.jpg" alt="Make" className="tool-logo tool-logo-make" />
+                      <img src="/pictures/zapier.png" alt="Zapier" className="tool-logo tool-logo-zapier" />
+                      <img src="/pictures/animations-arkin.webp" alt={svc.title} className="arkin-svc-img" loading="lazy" />
+                    </div>
                   </div>
-                ) : (
-                  <div className="arkin-char-wrap arkin-svc-simple svc-detail-img">
-                    <img src={`/pictures/${svc.image || 'Agent-arkin.png'}`} alt={svc.title} className="arkin-char arkin-svc-simple-img" />
+                );
+              })()}
+
+              {/* Everything else reads faster as a scannable grid */}
+              <div className="svc-cards">
+                {servicesData.slice(1).map((svc, i) => (
+                  <div className="svc-card fade-up" key={svc.id || i}>
+                    <div className="svc-eyebrow">{svc.eyebrow}</div>
+                    <h3>{svc.title}</h3>
+                    <p>{svc.description}</p>
+                    {svc.features && svc.features.length > 0 && (
+                      <ul>
+                        {svc.features.slice(0, 4).map((feature, idx) => (
+                          <li key={idx}>{feature}</li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
-            ))
+            </>
+          ) : (
+            <div style={{ textAlign: 'center', padding: '50px 0' }}>No services found.</div>
           )}
         </div>
       </section>

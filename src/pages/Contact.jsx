@@ -267,9 +267,6 @@ const Contact = () => {
             </div>
           </div>
 
-          <div className="office-strip fade-up">
-            <img src="/pictures/contactarkine.png" alt="Arkin — ElevAIte Labs" style={{ height: '420px', width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 8px 20px rgba(0,0,0,0.1))', marginTop: '-60px' }} />
-          </div>
         </div>
       </section>
     </>

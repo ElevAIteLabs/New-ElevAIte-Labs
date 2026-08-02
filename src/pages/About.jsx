@@ -2,6 +2,14 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import QuizModal from '../components/QuizModal';
 
+const LinkedInIcon = () => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14zM8.339 18.338v-7.16H5.964v7.16h2.375zm-1.18-8.156c.764 0 1.236-.506 1.236-1.14-.014-.648-.472-1.14-1.222-1.14s-1.236.492-1.236 1.14c0 .634.472 1.14 1.207 1.14h.014zm9.665 8.156v-4.107c0-2.19-1.169-3.211-2.728-3.211-1.255 0-1.821.694-2.135 1.181v-1.014H9.586c.029.671 0 7.16 0 7.16h2.375v-3.998c0-.215.014-.43.078-.583.171-.43.563-.875 1.222-.875.86 0 1.207.658 1.207 1.625v3.83h2.375z"/></svg>
+);
+
+const InstagramIcon = () => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+);
+
 const About = () => {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
 
@@ -74,6 +82,9 @@ const About = () => {
         .team-card .name { font-family: var(--display); font-size: 22px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
         .team-card .role { font-size: 14px; color: var(--accent); font-weight: 500; margin-bottom: 8px; }
         .team-card p { font-size: 14px; line-height: 1.5; }
+        .team-social { display: flex; gap: 10px; margin-top: 10px; }
+        .team-social a { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border); color: var(--body); background: #fff; transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease; }
+        .team-social a:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
         .stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 56px; padding: 56px; background: var(--accent); border-radius: 16px; color: #fff; }
         .stat-num { font-family: var(--display); font-size: 64px; font-weight: 500; line-height: 1; letter-spacing: -0.03em; }
         .stats-strip .stat-label { font-size: 14px; opacity: 0.85; margin-top: 8px; }
@@ -87,7 +98,7 @@ const About = () => {
           .about-lead, .values-grid, .team-grid, .stats-strip { grid-template-columns: 1fr !important; }
         }
       `}</style>
-      <section style={{ paddingBottom: '0' }}>
+      <section>
         <div className="wrap">
           <span className="tag fade-up">About Us</span>
           <div className="about-lead fade-up">
@@ -107,9 +118,6 @@ const About = () => {
               <div><strong>10+ industries</strong><span className="badge-sub">Real estate to fintech</span></div>
             </div>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '8px' }}>
-            <img src="/pictures/arkin.png" alt="Arkin" style={{ height: '340px', width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 14px 28px rgba(0,0,0,0.12))', animation: 'arkinFloat 5s ease-in-out infinite' }} />
-          </div>
         </div>
       </section>
 
@@ -125,19 +133,28 @@ const About = () => {
               <div className="ph" style={{ backgroundImage: "url('/pictures/shanmukh.jpeg')", backgroundPosition: 'center 30%' }}></div>
               <div className="name">Ramachandruni Anjaneya Shanmukh</div>
               <div className="role">Founder &amp; CEO</div>
-              <p></p>
-            </div>
-            <div className="team-card fade-up">
-              <div className="ph" style={{ backgroundImage: "url('/pictures/vishnu.jpeg')" }}></div>
-              <div className="name">Vishhnu Saai Gudise</div>
-              <div className="role">CO-Founder &amp; CTO</div>
-              <p></p>
+              <div className="team-social">
+                <a href="https://www.linkedin.com/in/shanmukh-r-a70a0919a/" target="_blank" rel="noopener noreferrer" aria-label="Shanmukh on LinkedIn"><LinkedInIcon /></a>
+                <a href="https://www.instagram.com/shanmukh_ramachandruni_245/" target="_blank" rel="noopener noreferrer" aria-label="Shanmukh on Instagram"><InstagramIcon /></a>
+              </div>
             </div>
             <div className="team-card fade-up">
               <div className="ph" style={{ backgroundImage: "url('/pictures/premsai.png')" }}></div>
               <div className="name">Premsai Kilaru</div>
               <div className="role">CO-Founder &amp; CMO</div>
-              <p></p>
+              <div className="team-social">
+                <a href="https://www.linkedin.com/in/premsaikilaru/" target="_blank" rel="noopener noreferrer" aria-label="Premsai on LinkedIn"><LinkedInIcon /></a>
+                <a href="https://www.instagram.com/premsaikilaru/" target="_blank" rel="noopener noreferrer" aria-label="Premsai on Instagram"><InstagramIcon /></a>
+              </div>
+            </div>
+            <div className="team-card fade-up">
+              <div className="ph" style={{ backgroundImage: "url('/pictures/vishnu.jpeg')" }}></div>
+              <div className="name">Vishhnu Saai Gudise</div>
+              <div className="role">CO-Founder &amp; CTO</div>
+              <div className="team-social">
+                <a href="https://www.linkedin.com/in/vishhnu-saai-gudise/" target="_blank" rel="noopener noreferrer" aria-label="Vishhnu on LinkedIn"><LinkedInIcon /></a>
+                <a href="https://www.instagram.com/vishhnu_chinnu/" target="_blank" rel="noopener noreferrer" aria-label="Vishhnu on Instagram"><InstagramIcon /></a>
+              </div>
             </div>
           </div>
         </div>

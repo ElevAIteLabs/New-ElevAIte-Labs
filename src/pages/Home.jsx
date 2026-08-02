@@ -118,7 +118,7 @@ const Home = () => {
             </div>
             <div className="arkin-hero-wrap">
               <div className="arkin-glow"></div>
-              <img src="/pictures/arkin.png" alt="Arkin — ElevAIte Labs mascot" className="arkin-hero-img" />
+              <img src="/pictures/arkin.webp" alt="Arkin — ElevAIte Labs mascot" className="arkin-hero-img" width="500" height="500" fetchPriority="high" />
             </div>
           </div>
         </div>
@@ -128,8 +128,24 @@ const Home = () => {
       <section style={{ background: 'var(--card)' }}>
         <div className="wrap">
           <div className="about-grid">
-            <div className="arkin-char-wrap arkin-about-wrap fade-up">
-              <img src="/pictures/rightside-pointing-arkin.png" alt="Arkin — ElevAIte Labs" className="arkin-char arkin-about-img" />
+            <div className="about-proof fade-up">
+              <div className="proof-card proof-stat">
+                <div className="proof-num">35+</div>
+                <div className="proof-label">Projects shipped since 2023</div>
+              </div>
+              <div className="proof-card proof-stat">
+                <div className="proof-num">1,000+</div>
+                <div className="proof-label">Hours automated weekly</div>
+              </div>
+              <div className="proof-card proof-tools">
+                <div className="proof-label">Built on the stack you already use</div>
+                <div className="proof-logos">
+                  <img src="/pictures/n8n.png" alt="n8n" />
+                  <img src="/pictures/zapier.png" alt="Zapier" />
+                  <img src="/pictures/Make_Logo.jpg" alt="Make" />
+                  <img src="/pictures/WhatsApp_Logo_green.svg" alt="WhatsApp Business" />
+                </div>
+              </div>
             </div>
             <div className="about-copy fade-up">
               <span className="tag">About Us</span>

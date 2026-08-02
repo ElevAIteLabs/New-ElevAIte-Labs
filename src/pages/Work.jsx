@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { isRealArtwork } from '../lib/artwork';
 
 const apiUrl = (r) => import.meta.env.DEV ? `http://localhost:5000/${r}` : `${import.meta.env.VITE_API_URL}/${r}.php`;
 
@@ -47,7 +48,7 @@ const Work = () => {
         .filter-chip { padding: 8px 16px; border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--body); font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
         .filter-chip.active { background: var(--text); color: #fff; border-color: var(--text); }
         .filter-chip:hover:not(.active) { border-color: var(--text); color: var(--text); }
-        .case-row { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; padding: 80px 0; border-bottom: 1px solid var(--border); align-items: center; }
+        .case-row { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; padding: 56px 0; border-bottom: 1px solid var(--border); align-items: center; }
         .case-row.even > .case-img { order: -1; }
         .case-img { aspect-ratio: 4/3; }
         .case-row .industry-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); font-weight: 600; margin-bottom: 14px; }
@@ -56,14 +57,16 @@ const Work = () => {
         .case-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 24px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 24px; }
         .case-results .num { font-family: var(--display); font-size: 32px; font-weight: 500; color: var(--accent); letter-spacing: -0.02em; }
         .case-results .lbl { font-size: 12px; color: var(--body); margin-top: 4px; }
-        .arkin-case-wrap { background: transparent; position: relative; display: flex; align-items: center; justify-content: center; }
-        .arkin-case-img { height: 90%; max-height: 500px; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.25)); }
+        .case-shot { border-radius: var(--radius-card-lg); overflow: hidden; border: 1px solid var(--border); box-shadow: 0 20px 48px rgba(0,0,0,0.10); background: var(--card); }
+        .case-shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+        .case-tile { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, var(--text) 0%, #2b2b2b 100%); color: #fff; }
+        .case-tile span { font-family: var(--display); font-size: 64px; font-weight: 700; line-height: 1; }
+        .case-tile em { font-style: normal; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.6; }
         .loading-state { padding: 100px 0; text-align: center; color: var(--body); font-size: 18px; }
         .no-projects { padding: 60px 0; text-align: center; color: var(--body); border: 1px dashed var(--border); border-radius: 12px; margin-top: 40px; }
         @media (max-width: 960px) {
-          .case-row { grid-template-columns: 1fr; gap: 32px; padding: 56px 0; }
+          .case-row { grid-template-columns: 1fr; gap: 28px; padding: 40px 0; }
           .case-row:nth-child(even) > .case-img { order: 0; }
-          .arkin-case-img { max-height: 600px; }
         }
       `}</style>
       <section className="page-hero">
@@ -101,8 +104,20 @@ const Work = () => {
                     )}
                   </div>
                 </div>
-                <div className="case-img arkin-char-wrap arkin-case-wrap">
-                  <img src={`/pictures/${project.arkin_image || 'arkin.png'}`} alt="Arkin" className="arkin-char arkin-case-img" />
+                {/* Prefer the actual project screenshot — the mascot is only a last resort */}
+                <div className="case-img case-shot">
+                  {isRealArtwork(project.image) ? (
+                    <img
+                      src={project.image.startsWith('http') ? project.image : `/pictures/${project.image}`}
+                      alt={project.title}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="case-tile">
+                      <span>{(project.title || '?').trim().charAt(0).toUpperCase()}</span>
+                      <em>{project.industry || 'ElevAIte Labs'}</em>
+                    </div>
+                  )}
                 </div>
               </div>
             ))
