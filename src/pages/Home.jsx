@@ -7,12 +7,9 @@ const Home = () => {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [services, setServices] = useState([]);
   const [projects, setProjects] = useState([]);
-  const [products, setProducts] = useState([]);
   const [loadingServices, setLoadingServices] = useState(true);
   const [loadingProjects, setLoadingProjects] = useState(true);
   const [projectsError, setProjectsError] = useState(null);
-  const [loadingProducts, setLoadingProducts] = useState(true);
-  const [productsError, setProductsError] = useState(null);
 
   const apiUrl = (r) => import.meta.env.DEV ? `http://localhost:5000/${r}` : `${import.meta.env.VITE_API_URL}/${r}.php`;
 
@@ -45,22 +42,8 @@ const Home = () => {
         setLoadingProjects(false);
       });
 
-    fetch(apiUrl('products'))
-      .then(res => res.json())
-      .then(data => {
-        console.log('Home: Fetched products:', data);
-        if (Array.isArray(data)) {
-          setProducts(data);
-        } else {
-          setProductsError('Invalid data format received from API');
-        }
-        setLoadingProducts(false);
-      })
-      .catch(err => {
-        console.error('Error fetching products:', err);
-        setProductsError(err.message);
-        setLoadingProducts(false);
-      });
+    // The products section is now the bespoke Kredoo module breakdown, so the
+    // home page no longer needs the CMS products list. /products still uses it.
   }, []);
 
   useEffect(() => {
@@ -311,42 +294,99 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ===== PRODUCTS ===== */}
-      <section>
+      {/* ===== KREDOO MODULES ===== */}
+      <section className="kmod-section">
         <div className="wrap">
           <div className="fade-up">
-            <span className="tag">Our Products</span>
-            <h2 className="display">Tools We've Built. Ready for You.</h2>
+            <span className="tag">Kredoo Modules</span>
+            <h2 className="display" style={{ maxWidth: '840px' }}>Two channels. One pipeline.</h2>
+            <p className="kmod-lead">Instagram creates the lead. WhatsApp closes it. Both write into the same inbox, the same timeline and the same pipeline &mdash; so nobody re-types anything and nothing quietly falls through.</p>
           </div>
-          <div className="products-grid">
-            {loadingProducts ? (
-              <div style={{ padding: '20px', color: 'var(--body)' }}>Loading products...</div>
-            ) : productsError ? (
-              <div style={{ padding: '20px', color: '#ef4444' }}>Error: {productsError}</div>
-            ) : products.length > 0 ? (
-              products.map((product, index) => (
-                <div className="product-card fade-up" key={product.id || index}>
-                  <div
-                    className="ph"
-                    style={{
-                      backgroundImage: `url('${product.image ? (product.image.startsWith('http') ? product.image : `/pictures/${product.image}`) : 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=700&h=400&fit=crop&q=80&auto=format'}')`
-                    }}
-                  >
-                    <span className="ph-label">{product.name}</span>
-                  </div>
-                  <div className="product-card-body">
-                    <h3>{product.name}</h3>
-                    <p className="tagline">{product.description}</p>
-                    <div className="product-card-actions">
-                      <Link to="/products" className="link-arrow">Learn More <span className="arrow">→</span></Link>
-                      <button className="btn-demo"><span className="play">▶</span> Watch Demo</button>
-                    </div>
-                  </div>
+
+          {/* The funnel, end to end - reveals step by step on scroll */}
+          <ol className="kmod-journey fade-up">
+            {[
+              { n: '01', t: 'Reel goes out', c: 'Instagram' },
+              { n: '02', t: 'Someone comments "price"', c: 'Instagram' },
+              { n: '03', t: 'Public reply + private DM', c: 'Instagram' },
+              { n: '04', t: 'Qualified in the DM', c: 'Instagram' },
+              { n: '05', t: 'Slot booked', c: 'Shared' },
+              { n: '06', t: 'Reminders + follow-up', c: 'WhatsApp' },
+            ].map((s) => (
+              <li key={s.n}>
+                <span className="kj-num">{s.n}</span>
+                <strong>{s.t}</strong>
+                <em>{s.c}</em>
+              </li>
+            ))}
+          </ol>
+
+          <div className="kmod-grid">
+            <article className="kmod kmod--ig fade-up">
+              <header className="kmod-head">
+                <span className="kmod-icon kmod-icon--ig" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
+                </span>
+                <div>
+                  <h3>Instagram</h3>
+                  <span className="kmod-role">Top of the funnel</span>
                 </div>
-              ))
-            ) : (
-              <div style={{ padding: '20px', color: 'var(--body)' }}>No products found.</div>
-            )}
+              </header>
+              <p className="kmod-pitch">Native DM automation on your own professional account. Comments, story replies and bio links all become CRM leads.</p>
+              <ul className="kmod-list">
+                <li><b>Comment &rarr; DM</b> on a keyword, or on any comment at all.</li>
+                <li><b>Rotating public replies</b> with <code>{'{{username}}'}</code>, because Instagram flags accounts that post the same comment repeatedly.</li>
+                <li><b>Follow gate</b> &mdash; the real link goes only to followers; everyone else is asked to follow and comment again.</li>
+                <li><b>Arm a rule for your next post</b> and it attaches itself the moment the reel goes live.</li>
+                <li><b>Hourly cap</b> under Instagram&rsquo;s 750/hr ceiling, so a viral reel can&rsquo;t get you rate-limited.</li>
+                <li><b>Ref links</b> for the bio that track taps <em>versus</em> conversations actually started.</li>
+              </ul>
+              <div className="kmod-proof">
+                <span className="kmod-proof-label">Attribution no native dashboard gives you</span>
+                <span className="kmod-proof-value">Per post: DMs triggered &rarr; leads created &rarr; bookings. Not likes.</span>
+              </div>
+            </article>
+
+            <article className="kmod kmod--wa fade-up">
+              <header className="kmod-head">
+                <span className="kmod-icon kmod-icon--wa" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.683 5.535l-.999 3.648 3.805-.882z" /></svg>
+                </span>
+                <div>
+                  <h3>WhatsApp</h3>
+                  <span className="kmod-role">Bottom of the funnel</span>
+                </div>
+              </header>
+              <p className="kmod-pitch">The official WhatsApp Cloud API on your own business number. No third-party relay, no n8n or Zapier sitting in the middle.</p>
+              <ul className="kmod-list">
+                <li><b>One-click connect</b> through Meta&rsquo;s own popup &mdash; Kredoo is a registered Meta Tech Provider, so no copying tokens between dashboards.</li>
+                <li><b>Real delivery tracking:</b> queued &rarr; sent &rarr; delivered &rarr; read &rarr; failed, driven by Meta&rsquo;s webhooks. &ldquo;Sent&rdquo; isn&rsquo;t treated as proof of anything.</li>
+                <li><b>Template builder</b> with a live phone preview, submitted for Meta approval from inside Kredoo.</li>
+                <li><b>Send-again waves</b> &mdash; follow a campaign with a second template to non-responders only, with full history kept.</li>
+                <li><b>AI agent</b> answers off-script from your knowledge base, then hands back to the flow or books the slot itself.</li>
+                <li><b>Compliance built in:</b> automatic STOP handling, 24-hour window enforcement, rate-limit backoff.</li>
+              </ul>
+              <div className="kmod-proof">
+                <span className="kmod-proof-label">Spend you can actually audit</span>
+                <span className="kmod-proof-value">Estimated before you send. Actual cost recorded per message from Meta&rsquo;s own pricing.</span>
+              </div>
+            </article>
+          </div>
+
+          <div className="kmod-shared fade-up">
+            <h4>Both channels share one CRM underneath</h4>
+            <ul>
+              <li>One shared team inbox and a single lead timeline across both channels</li>
+              <li>Kanban pipeline with custom boards, stages, fields and per-rep assignment</li>
+              <li>Meta Lead Ads posting straight in, in real time</li>
+              <li>Booking links, white-label on your own domain</li>
+              <li>AI Voice Agent &mdash; calls leads, transcript lands on the record</li>
+              <li>REST API and webhooks out to n8n, Make, Slack or Sheets</li>
+            </ul>
+            <div className="kmod-cta">
+              <a href="https://kredoo.in" target="_blank" rel="noopener noreferrer" className="btn btn-primary">Try Kredoo Free &rarr;</a>
+              <Link to="/blog-kredoo" className="btn btn-ghost">Read the Story</Link>
+            </div>
           </div>
         </div>
       </section>

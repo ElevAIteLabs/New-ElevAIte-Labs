@@ -44,7 +44,7 @@ const Footer = () => {
             <h4>Connect</h4>
             <ul>
               <li><Link to="/contact">Book a Call</Link></li>
-              <li><a href="mailto:elevaitelabs@gmail.com">elevaitelabs@gmail.com</a></li>
+              <li><a href="mailto:team@elevaitelabs.in">team@elevaitelabs.in</a></li>
               <li><a href="https://wa.me/917569954054" target="_blank" rel="noopener noreferrer">+91 75699 54054</a></li>
               <li><a href="https://www.linkedin.com/company/elevaitelabs/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
               <li><a href="#">HITEC City, Hyderabad</a></li>

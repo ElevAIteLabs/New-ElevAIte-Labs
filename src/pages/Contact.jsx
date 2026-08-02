@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import emailjs from '@emailjs/browser';
+import SelectField from '../components/SelectField';
 
 const Contact = () => {
   const [selectedBudget, setSelectedBudget] = useState('');
@@ -56,7 +57,7 @@ const Contact = () => {
       serviceId: 'service_urz7rpv',            // e.g. 'service_xyz'
       clientTemplateId: 'template_lf58fut',    // confirmation to client
       teamTemplateId: 'template_xgfg4mb',       // notification to your team
-      teamEmail: 'elevaitelabs@gmail.com',
+      teamEmail: 'team@elevaitelabs.in',
     };
 
     if (EMAIL_CONFIG.publicKey !== 'YOUR_EMAILJS_PUBLIC_KEY') {
@@ -122,6 +123,41 @@ const Contact = () => {
         }
         .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(27,79,216,0.12); }
         .form-field textarea { resize: vertical; min-height: 110px; }
+
+        /* Custom dropdown. Trigger deliberately mirrors the input styling
+           above so the form reads as one control set. */
+        .select-field { position: relative; }
+        .select-trigger {
+          display: flex; align-items: center; justify-content: space-between; gap: 12px;
+          width: 100%; padding: 14px 16px; background: #fff;
+          border: 1px solid var(--border); border-radius: 12px;
+          font-family: inherit; font-size: 15px; color: var(--text); text-align: left;
+          cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .select-trigger.placeholder { color: var(--muted); }
+        .select-trigger:hover { border-color: #c9c5bb; }
+        .select-trigger:focus-visible,
+        .select-trigger.open { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(30,136,229,0.12); }
+        .select-chevron { flex-shrink: 0; color: var(--muted); transition: transform 0.2s ease; }
+        .select-trigger.open .select-chevron { transform: rotate(180deg); }
+
+        .select-list {
+          position: absolute; z-index: 40; top: calc(100% + 6px); left: 0; right: 0;
+          margin: 0; padding: 6px; list-style: none;
+          background: #fff; border: 1px solid var(--border); border-radius: 12px;
+          box-shadow: 0 18px 40px -12px rgba(15,23,42,0.22);
+          max-height: 264px; overflow-y: auto;
+        }
+        .select-option {
+          padding: 11px 12px; border-radius: 8px; font-size: 15px; color: var(--text);
+          cursor: pointer; transition: background 0.12s ease;
+        }
+        .select-option.active { background: var(--card); }
+        .select-option.selected { color: var(--accent); font-weight: 600; }
+        @media (prefers-reduced-motion: reduce) {
+          .select-chevron, .select-option { transition: none; }
+        }
         .budget-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
         .budget-chip {
           padding: 12px 8px; background: #fff; border: 1px solid var(--border); border-radius: 8px;
@@ -154,11 +190,11 @@ const Contact = () => {
               <p className="lede">We respond within one business day. If your project is in scope, we'll send a 30-minute call invite. If it isn't, we'll tell you who would be a better fit.</p>
 
               <div className="contact-channels">
-                <a href="mailto:elevaitelabs@gmail.com" className="channel">
+                <a href="mailto:team@elevaitelabs.in" className="channel">
                   <div className="channel-icon">@</div>
                   <div>
                     <div className="channel-label">Email</div>
-                    <div className="channel-value">elevaitelabs@gmail.com</div>
+                    <div className="channel-value">team@elevaitelabs.in</div>
                   </div>
                 </a>
                 <a href="https://wa.me/917569954054" target="_blank" rel="noopener noreferrer" className="channel">
@@ -216,29 +252,37 @@ const Contact = () => {
                     <div className="form-row">
                       <div className="form-field">
                         <label htmlFor="cf-role">What's your role?</label>
-                        <select id="cf-role" name="role" required defaultValue="">
-                          <option value="" disabled>Select one</option>
-                          <option>Founder / CEO</option>
-                          <option>Operations / COO</option>
-                          <option>Marketing / Growth</option>
-                          <option>Engineering / Product</option>
-                          <option>Other</option>
-                        </select>
+                        <SelectField
+                          id="cf-role"
+                          name="role"
+                          required
+                          options={[
+                            'Founder / CEO',
+                            'Operations / COO',
+                            'Marketing / Growth',
+                            'Engineering / Product',
+                            'Other',
+                          ]}
+                        />
                       </div>
                     </div>
                     <div className="form-row">
                       <div className="form-field">
                         <label htmlFor="cf-service">What are you looking to build?</label>
-                        <select id="cf-service" name="service" required defaultValue="">
-                          <option value="" disabled>Select one</option>
-                          <option>AI Automation &amp; Workflows</option>
-                          <option>Web or Mobile App</option>
-                          <option>Custom AI Agents</option>
-                          <option>Lead Generation System</option>
-                          <option>AI Content Engine</option>
-                          <option>Strategy Consulting</option>
-                          <option>Not sure yet</option>
-                        </select>
+                        <SelectField
+                          id="cf-service"
+                          name="service"
+                          required
+                          options={[
+                            'AI Automation & Workflows',
+                            'Web or Mobile App',
+                            'Custom AI Agents',
+                            'Lead Generation System',
+                            'AI Content Engine',
+                            'Strategy Consulting',
+                            'Not sure yet',
+                          ]}
+                        />
                       </div>
                     </div>
                     <div className="form-row">

@@ -88,7 +88,7 @@ const ORGANISATION = {
   slogan: 'AI automation that actually ships.',
   description:
     'ElevAIte Labs is an AI automation agency in Hyderabad, India, building AI workflow automations, custom AI agents, lead generation systems, and web and mobile applications.',
-  email: 'elevaitelabs@gmail.com',
+  email: 'team@elevaitelabs.in',
   telephone: '+91-75699-54054',
   ...(FOUNDING_YEAR ? { foundingDate: String(FOUNDING_YEAR) } : {}),
   foundingLocation: {
@@ -110,7 +110,7 @@ const ORGANISATION = {
     {
       '@type': 'ContactPoint',
       contactType: 'sales',
-      email: 'elevaitelabs@gmail.com',
+      email: 'team@elevaitelabs.in',
       telephone: '+91-75699-54054',
       areaServed: 'IN',
       availableLanguage: ['en', 'te', 'hi'],

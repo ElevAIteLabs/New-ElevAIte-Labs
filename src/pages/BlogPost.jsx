@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { postsApiUrl, postImageSrc, postMeta } from '../seo/posts';
 import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '../seo/siteMeta';
@@ -61,6 +61,58 @@ const BlogPost = () => {
     return () => { cancelled = true; };
   }, [slug]);
 
+  // Computed before the early returns below so the scroll-spy hook that
+  // depends on it stays unconditional.
+  const { bodyHtml, headings } = useMemo(() => buildBody(post?.content), [post?.content]);
+  const [activeId, setActiveId] = useState(null);
+
+  // Highlights the section currently being read. Uses scroll position rather
+  // than IntersectionObserver so the last section still activates even when
+  // it is too short to cross an observer threshold.
+  useEffect(() => {
+    if (!headings.length) return;
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const offset = parseInt(
+        getComputedStyle(document.documentElement).getPropertyValue('--nav-offset'), 10,
+      ) || 128;
+
+      // A heading counts as current once it enters the upper quarter of the
+      // viewport, not only when it touches the navbar - otherwise the
+      // previous section stays lit well after you have moved past it.
+      const threshold = offset + window.innerHeight * 0.25;
+
+      let current = headings[0].id;
+      for (const h of headings) {
+        const el = document.getElementById(h.id);
+        if (el && el.getBoundingClientRect().top <= threshold) current = h.id;
+      }
+
+      // Near the bottom the final section may never reach the top of the
+      // viewport, so pin the highlight to it.
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.body.scrollHeight - 80;
+      if (atBottom) current = headings[headings.length - 1].id;
+
+      setActiveId((prev) => (prev === current ? prev : current));
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [headings]);
+
   if (state === 'loading') {
     return (
       <>
@@ -93,7 +145,6 @@ const BlogPost = () => {
   const cover = postImageSrc(post.image);
   const description = (post.excerpt || '').slice(0, 300);
   const metaLine = postMeta(post);
-  const { bodyHtml, headings } = buildBody(post.content);
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -147,7 +198,7 @@ const BlogPost = () => {
               <ul>
                 {headings.map((h) => (
                   <li key={h.id}>
-                    <a href={`#${h.id}`}>{h.text}</a>
+                    <a href={`#${h.id}`} className={h.id === activeId ? 'active' : undefined}>{h.text}</a>
                   </li>
                 ))}
               </ul>

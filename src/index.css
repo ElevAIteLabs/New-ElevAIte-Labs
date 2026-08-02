@@ -9,7 +9,7 @@
   /* The sticky navbar is 113px tall and shrinks to 101px once scrolled.
      Anything that has to sit clear of it - sticky rails, anchor targets -
      measures from here rather than guessing. */
-  --nav-offset: 128px;
+  --nav-offset: 148px;
   --bg: #FAF9F6;
   --card: #F0EEE8;
   --white: #FFFFFF;
@@ -779,7 +779,7 @@ body[data-imagery="geometric"] .ph::before {
   display: grid;
   grid-template-columns: 1fr 1.1fr;
   gap: 56px;
-  align-items: center;
+  align-items: stretch;
 }
 
 /* Work grid media - real screenshot, or a branded tile when the CMS row
@@ -819,11 +819,22 @@ body[data-imagery="geometric"] .ph::before {
   opacity: 0.6;
 }
 
-/* Proof panel - replaces the oversized mascot in the Home about teaser */
+/* Proof panel - replaces the oversized mascot in the Home about teaser.
+   align-content: stretch so the column fills the row height instead of
+   leaving a block of dead space under the cards. */
 .about-proof {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
+  align-content: stretch;
   gap: var(--sp-3);
+  height: 100%;
+}
+
+.about-proof .proof-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .proof-card {
@@ -1006,6 +1017,8 @@ body[data-imagery="geometric"] .ph::before {
   position: relative;
 }
 
+/* The connector draws left to right and each number lights up as it arrives,
+   so the four steps read as a sequence rather than four things appearing. */
 .process-grid::before {
   content: "";
   position: absolute;
@@ -1017,7 +1030,7 @@ body[data-imagery="geometric"] .ph::before {
   z-index: 0;
   transform-origin: left;
   transform: scaleX(0);
-  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 1.6s var(--ease-out);
 }
 
 .process-grid.line-in::before {
@@ -1035,17 +1048,36 @@ body[data-imagery="geometric"] .ph::before {
   font-family: var(--display);
   font-size: 56px;
   font-weight: 500;
-  color: var(--accent);
+  color: var(--border);
   line-height: 1;
   margin-bottom: 20px;
   background: var(--bg);
   display: inline-block;
   padding-right: 16px;
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: color 0.5s var(--ease-out), transform 0.5s var(--ease-out);
 }
 
-.process-step:hover .process-num {
-  transform: scale(1.08) translateY(-2px);
+/* Each step lights as the connector reaches it */
+.process-step.in .process-num {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.process-grid>.process-step:nth-child(1) .process-num { transition-delay: 100ms; }
+.process-grid>.process-step:nth-child(2) .process-num { transition-delay: 460ms; }
+.process-grid>.process-step:nth-child(3) .process-num { transition-delay: 820ms; }
+.process-grid>.process-step:nth-child(4) .process-num { transition-delay: 1180ms; }
+
+/* Match the fade-up stagger to the sweep instead of the generic 80ms step */
+.process-grid>.fade-up:nth-child(1) { transition-delay: 0ms; }
+.process-grid>.fade-up:nth-child(2) { transition-delay: 200ms; }
+.process-grid>.fade-up:nth-child(3) { transition-delay: 400ms; }
+.process-grid>.fade-up:nth-child(4) { transition-delay: 600ms; }
+
+@media (hover: hover) and (pointer: fine) {
+  .process-step:hover .process-num {
+    transform: scale(1.08) translateY(-2px);
+  }
 }
 
 .process-step h3 {
@@ -1257,6 +1289,325 @@ body[data-imagery="geometric"] .ph::before {
 .work-cta {
   text-align: center;
   margin-top: var(--sp-6);
+}
+
+/* ---------- Kredoo modules (Instagram + WhatsApp) ---------- */
+
+.kmod-section {
+  background: var(--card);
+}
+
+.kmod-lead {
+  font-size: 19px;
+  line-height: 1.55;
+  max-width: 720px;
+  margin-top: var(--sp-3);
+}
+
+/* The end-to-end funnel. Numbers light up in sequence on scroll. */
+.kmod-journey {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--sp-3);
+  margin: var(--sp-6) 0 0;
+  padding: 0;
+  position: relative;
+}
+
+.kmod-journey::before {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: 4%;
+  right: 4%;
+  height: 1px;
+  background: var(--border);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.6s var(--ease-out);
+}
+
+.kmod-journey.in::before {
+  transform: scaleX(1);
+}
+
+.kmod-journey li {
+  position: relative;
+  padding-top: 34px;
+  z-index: 1;
+}
+
+.kmod-journey .kj-num {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  transition: color 0.4s var(--ease-out), border-color 0.4s var(--ease-out), background 0.4s var(--ease-out);
+}
+
+.kmod-journey.in .kj-num {
+  color: var(--white);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.kmod-journey li:nth-child(1) .kj-num { transition-delay: 120ms; }
+.kmod-journey li:nth-child(2) .kj-num { transition-delay: 340ms; }
+.kmod-journey li:nth-child(3) .kj-num { transition-delay: 560ms; }
+.kmod-journey li:nth-child(4) .kj-num { transition-delay: 780ms; }
+.kmod-journey li:nth-child(5) .kj-num { transition-delay: 1000ms; }
+.kmod-journey li:nth-child(6) .kj-num { transition-delay: 1220ms; }
+
+.kmod-journey strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+
+.kmod-journey em {
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* The two module cards */
+.kmod-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+  margin-top: var(--sp-6);
+}
+
+.kmod {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card-lg);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+}
+
+.kmod-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+
+/* Channel colour lives only on the icon chip - the rest stays on brand */
+.kmod-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: var(--white);
+  flex: none;
+}
+
+.kmod-icon--ig {
+  background: linear-gradient(45deg, #F58529 0%, #DD2A7B 55%, #8134AF 100%);
+}
+
+.kmod-icon--wa {
+  background: #25D366;
+}
+
+.kmod-head h3 {
+  font-family: var(--display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.kmod-role {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.kmod-pitch {
+  font-size: 15.5px;
+  line-height: 1.6;
+  margin-bottom: var(--sp-4);
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.kmod-list {
+  list-style: none;
+  margin: 0 0 var(--sp-4);
+  padding: 0;
+  flex: 1;
+}
+
+.kmod-list li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: var(--sp-2);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--body);
+}
+
+.kmod-list li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.kmod-list b {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.kmod-list code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12.5px;
+  background: var(--card);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.kmod-proof {
+  margin-top: auto;
+  background: var(--card);
+  border-radius: var(--radius-card);
+  padding: var(--sp-3);
+}
+
+.kmod-proof-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.kmod-proof-value {
+  display: block;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Shared-CRM footer */
+.kmod-shared {
+  margin-top: var(--sp-4);
+  background: var(--text);
+  color: var(--white);
+  border-radius: var(--radius-card-lg);
+  padding: var(--sp-5);
+}
+
+.kmod-shared h4 {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--sp-4);
+}
+
+.kmod-shared ul {
+  list-style: none;
+  margin: 0 0 var(--sp-4);
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-2) var(--sp-5);
+}
+
+.kmod-shared li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.kmod-shared li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.kmod-cta {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.kmod-shared .btn-ghost {
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+@media (max-width: 1100px) {
+  .kmod-journey {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-4) var(--sp-3);
+  }
+
+  .kmod-journey::before {
+    display: none;
+  }
+
+  .kmod-shared ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .kmod-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .kmod-journey {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .kmod-shared ul {
+    grid-template-columns: 1fr;
+  }
+
+  .kmod,
+  .kmod-shared {
+    padding: var(--sp-4);
+  }
 }
 
 /* ---------- Products ---------- */
@@ -1974,7 +2325,6 @@ footer .logo {
 .testimonials-grid>.fade-up:nth-child(1),
 .products-grid>.fade-up:nth-child(1),
 .reels-row>.fade-up:nth-child(1),
-.process-grid>.fade-up:nth-child(1),
 .values-grid>.fade-up:nth-child(1),
 .team-grid>.fade-up:nth-child(1) {
   transition-delay: 0ms;
@@ -1984,7 +2334,6 @@ footer .logo {
 .testimonials-grid>.fade-up:nth-child(2),
 .products-grid>.fade-up:nth-child(2),
 .reels-row>.fade-up:nth-child(2),
-.process-grid>.fade-up:nth-child(2),
 .values-grid>.fade-up:nth-child(2),
 .team-grid>.fade-up:nth-child(2) {
   transition-delay: 80ms;
@@ -1994,7 +2343,6 @@ footer .logo {
 .testimonials-grid>.fade-up:nth-child(3),
 .products-grid>.fade-up:nth-child(3),
 .reels-row>.fade-up:nth-child(3),
-.process-grid>.fade-up:nth-child(3),
 .values-grid>.fade-up:nth-child(3),
 .team-grid>.fade-up:nth-child(3) {
   transition-delay: 160ms;
@@ -2004,7 +2352,6 @@ footer .logo {
 .testimonials-grid>.fade-up:nth-child(4),
 .products-grid>.fade-up:nth-child(4),
 .reels-row>.fade-up:nth-child(4),
-.process-grid>.fade-up:nth-child(4),
 .values-grid>.fade-up:nth-child(4),
 .team-grid>.fade-up:nth-child(4) {
   transition-delay: 240ms;
@@ -2860,7 +3207,7 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 11px;
+  gap: 2px;
 }
 
 .toc a {
@@ -2868,11 +3215,22 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
   text-decoration: none;
   line-height: 1.4;
   display: block;
-  transition: color 0.2s ease;
+  /* Negative left margin pulls the active marker onto the rail itself. */
+  margin-left: -20px;
+  padding: 5px 0 5px 18px;
+  border-left: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .toc a:hover {
   color: var(--accent);
+}
+
+/* Section currently being read. */
+.toc a.active {
+  color: var(--accent);
+  font-weight: 600;
+  border-left-color: var(--accent);
 }
 
 .article-main {
@@ -4101,6 +4459,30 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+
+  /* Sequences must land on their COMPLETED state, not their unlit start -
+     killing the transition alone would leave grey numbers and undrawn lines. */
+  .process-grid::before,
+  .kmod-journey::before {
+    transform: scaleX(1) !important;
+    transition: none !important;
+  }
+
+  .process-num,
+  .kmod-journey .kj-num {
+    transition: none !important;
+    transition-delay: 0ms !important;
+  }
+
+  .process-num {
+    color: var(--accent) !important;
+  }
+
+  .kmod-journey .kj-num {
+    color: var(--white) !important;
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
   }
 
   .arkin-hero-img,
