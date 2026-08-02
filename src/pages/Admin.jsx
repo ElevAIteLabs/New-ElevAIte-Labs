@@ -83,14 +83,8 @@ export default function Admin() {
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Access is enforced by ProtectedRoute (server session) and by the API itself.
   useEffect(() => {
-    if (localStorage.getItem('admin_auth') !== 'true') {
-      navigate('/admin/login');
-    }
-  }, []);
-
-  useEffect(() => {
-    if (localStorage.getItem('admin_auth') !== 'true') return;
     if (activeTab === 'contact') {
       fetchContact();
     } else {
@@ -98,8 +92,15 @@ export default function Admin() {
     }
   }, [activeTab]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem('admin_auth');
+    if (!IS_DEV) {
+      try {
+        await fetch(`${API_URL}/logout.php`, { method: 'POST', credentials: 'include' });
+      } catch (e) {
+        console.error('Logout request failed', e);
+      }
+    }
     navigate('/admin/login');
   };
 
@@ -152,7 +153,7 @@ export default function Admin() {
     if (IS_DEV) return file.name;
     const fd = new FormData();
     fd.append('file', file);
-    const res = await fetch(`${API_URL}/upload.php`, { method: 'POST', body: fd });
+    const res = await fetch(`${API_URL}/upload.php`, { method: 'POST', credentials: 'include', body: fd });
     const json = await res.json();
     if (json.status === 'success') return json.fileName;
     throw new Error(json.message || 'Upload failed');
@@ -166,6 +167,7 @@ export default function Admin() {
         await fetch(IS_DEV ? `${DEV_API}/contact/1` : `${API_URL}/contact.php`, {
           method: IS_DEV ? 'PATCH' : 'PUT',
           headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
           body: JSON.stringify(formData)
         });
         alert('Contact updated!');
@@ -201,8 +203,15 @@ export default function Admin() {
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(payload)
       });
+
+      if (res.status === 401) {
+        alert('Your session expired. Please sign in again.');
+        navigate('/admin/login');
+        return;
+      }
 
       if (!res.ok) {
         const err = await res.json();
@@ -236,7 +245,17 @@ export default function Admin() {
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure?')) return;
-    await fetch(IS_DEV ? `${DEV_API}/${activeTab}/${id}` : `${API_URL}/${activeTab}.php?id=${id}`, { method: 'DELETE' });
+    const res = await fetch(IS_DEV ? `${DEV_API}/${activeTab}/${id}` : `${API_URL}/${activeTab}.php?id=${id}`, {
+      method: 'DELETE',
+      credentials: 'include'
+    });
+
+    if (res.status === 401) {
+      alert('Your session expired. Please sign in again.');
+      navigate('/admin/login');
+      return;
+    }
+
     fetchData();
   };
 

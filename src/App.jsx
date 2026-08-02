@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -15,9 +16,37 @@ import Admin from './pages/Admin';
 import AdminLogin from './pages/AdminLogin';
 import useSiteEffects from './hooks/useSiteEffects';
 
+// Ask the server whether the session cookie is valid. A localStorage flag
+// only hides the UI — the API enforces access on every request regardless.
 const ProtectedRoute = ({ children }) => {
-  const isAuth = localStorage.getItem('admin_auth') === 'true';
-  return isAuth ? children : <Navigate to="/admin/login" replace />;
+  const [state, setState] = useState('checking');
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (import.meta.env.DEV) {
+      // No PHP in local dev; fall back to the dev-only login flag.
+      setState(localStorage.getItem('admin_auth') === 'true' ? 'allowed' : 'denied');
+      return;
+    }
+
+    fetch(`${import.meta.env.VITE_API_URL}/session.php`, { credentials: 'include' })
+      .then((r) => r.json())
+      .then((d) => !cancelled && setState(d.authenticated ? 'allowed' : 'denied'))
+      .catch(() => !cancelled && setState('denied'));
+
+    return () => { cancelled = true; };
+  }, []);
+
+  if (state === 'checking') {
+    return (
+      <div style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', background: '#0f172a', color: '#94a3b8' }}>
+        Verifying session…
+      </div>
+    );
+  }
+
+  return state === 'allowed' ? children : <Navigate to="/admin/login" replace />;
 };
 
 // Wrapper component to apply site effects and scroll to top on route change

@@ -15,6 +15,8 @@ const AdminLogin = () => {
       const response = await fetch(`${API_URL}/login.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        // Required so the server can set the admin session cookie.
+        credentials: 'include',
         body: JSON.stringify(loginForm)
       });
 

@@ -1,0 +1,10 @@
+# Never serve config or schema files, even if PHP handling breaks.
+<FilesMatch "\.(sql|md|example\.php)$">
+    Require all denied
+</FilesMatch>
+
+<Files "config.php">
+    Require all denied
+</Files>
+
+Options -Indexes

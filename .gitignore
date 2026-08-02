@@ -23,4 +23,14 @@ dist-ssr
 *.sln
 *.sw?
 
-api/
+# Secrets — the PHP API itself IS tracked, but its config is not.
+api/config.php
+.env
+.env.*
+!.env.example
+
+# Assembled upload payload produced by `npm run build:deploy`
+deploy/
+
+# Downloaded copy of the live server root
+public_html/
