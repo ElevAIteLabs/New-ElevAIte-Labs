@@ -131,7 +131,7 @@ const About = () => {
           <div className="team-grid">
             <div className="team-card fade-up">
               <div className="ph" style={{ backgroundImage: "url('/pictures/shanmukh.jpeg')", backgroundPosition: 'center 30%' }}></div>
-              <div className="name">Ramachandruni Anjaneya Shanmukh</div>
+              <div className="name">Shanmukh R</div>
               <div className="role">Founder &amp; CEO</div>
               <div className="team-social">
                 <a href="https://www.linkedin.com/in/shanmukh-r-a70a0919a/" target="_blank" rel="noopener noreferrer" aria-label="Shanmukh on LinkedIn"><LinkedInIcon /></a>

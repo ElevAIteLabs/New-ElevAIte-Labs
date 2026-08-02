@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { postImageSrc, postsApiUrl } from '../seo/posts';
+import { postsApiUrl } from '../seo/posts';
+import MediaOrTile from '../components/MediaOrTile';
 
 const Learn = () => {
   const [subscribed, setSubscribed] = useState(false);
@@ -175,11 +176,17 @@ const Learn = () => {
           <div className="blog-list">
             {posts.map((post) => (
               <Link className="blog-list-item fade-up" key={post.id} to={`/learn/${post.slug}`}>
-                {postImageSrc(post.image) && (
-                  <div className="cover">
-                    <img src={postImageSrc(post.image)} alt={post.title} loading="lazy" />
-                  </div>
-                )}
+                {/* The cover is always rendered. .blog-list-item is a
+                    300px + 1fr grid, so omitting it when a post has no image
+                    pushed the text into the narrow column. */}
+                <div className="cover">
+                  <MediaOrTile
+                    src={post.image}
+                    alt={post.title}
+                    label={post.tag}
+                    tileClassName="blog-tile"
+                  />
+                </div>
                 <div>
                   <div className="meta">
                     {[post.tag, post.read_time, post.author].filter(Boolean).join(' · ')}
