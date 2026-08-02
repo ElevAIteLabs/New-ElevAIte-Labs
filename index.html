@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ElevAIteLabs</title>
+    <!-- Title and meta tags are supplied per route by src/components/Seo.jsx
+         and captured into the prerendered HTML. A static title element here
+         would take precedence over React's hoisted one, so every page would
+         end up sharing it. -->
+    <meta name="theme-color" content="#0f172a" />
   </head>
   <body>
     <div id="root"></div>

@@ -14,6 +14,8 @@ import BlogKredoo from './pages/BlogKredoo';
 import BlogWhatsapp from './pages/BlogWhatsapp';
 import Admin from './pages/Admin';
 import AdminLogin from './pages/AdminLogin';
+import Seo from './components/Seo';
+import StructuredData from './components/StructuredData';
 import useSiteEffects from './hooks/useSiteEffects';
 
 // Ask the server whether the session cookie is valid. A localStorage flag
@@ -58,6 +60,8 @@ function Layout() {
 
   return (
     <>
+      <Seo />
+      <StructuredData />
       {!isAdmin && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />

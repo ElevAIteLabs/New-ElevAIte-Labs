@@ -1,8 +1,52 @@
+Options -Indexes
+DirectoryIndex index.html
+
+# Without this, mod_dir 301-redirects /services to /services/ before the
+# rewrite below can serve the prerendered file, adding a hop to every page.
+<IfModule mod_dir.c>
+  DirectorySlash Off
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-  RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+
+  # 1. Serve the prerendered HTML for a route when one exists.
+  #    Matched without a trailing-slash redirect so /services stays /services.
+  RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+  RewriteRule ^([^.]+?)/?$ /$1/index.html [L]
+
+  # 2. Real files and directories (assets, pictures, /api/*.php) pass through.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 3. Admin is deliberately client-rendered. It gets the bare noindex shell,
+  #    not index.html — that now holds the prerendered homepage, which would
+  #    make every /admin URL look like a duplicate of /.
+  RewriteRule ^admin(/.*)?$ /app-shell.html [L]
+
+  # 4. Anything else genuinely does not exist. Previously every unknown URL
+  #    fell through to index.html and returned 200, so the whole domain
+  #    produced soft-404s — Google indexed /careers, which was never a route.
+  RewriteRule ^ - [R=404,L]
+</IfModule>
+
+ErrorDocument 404 /404.html
+
+# Hashed build assets are immutable; HTML must stay revalidated.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 6 months"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
 </IfModule>

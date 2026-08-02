@@ -25,6 +25,13 @@ if (!existsSync(path.join(root, '.env'))) {
 console.log('> vite build');
 execSync('npx vite build', { cwd: root, stdio: 'inherit' });
 
+// Crawlers must receive populated HTML, not the empty SPA shell.
+console.log('\n> prerender routes');
+execSync('node scripts/prerender.mjs', { cwd: root, stdio: 'inherit' });
+
+console.log('\n> robots.txt + sitemap.xml');
+execSync('node scripts/gen-seo-files.mjs', { cwd: root, stdio: 'inherit' });
+
 rmSync(deploy, { recursive: true, force: true });
 mkdirSync(deploy, { recursive: true });
 

@@ -34,3 +34,6 @@ deploy/
 
 # Downloaded copy of the live server root
 public_html/
+
+# Playwright/browser test artifacts
+.playwright-mcp/
