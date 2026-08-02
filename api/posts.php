@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $isAdmin = is_admin();
 
     try {
-        // Single post by slug — how /learn/:slug fetches its content.
+        // Single post by slug - how /learn/:slug fetches its content.
         if (isset($_GET['slug'])) {
             $sql = 'SELECT * FROM posts WHERE slug = :slug';
             if (!$isAdmin) {

@@ -9,7 +9,7 @@
         "Social Media Automation",
         "Creative Workflows"
       ],
-      "description": "We replace the repetitive parts of your operation with agents that read, decide, and act — across email, CRM, calendars, and the rest of your stack",
+      "description": "We replace the repetitive parts of your operation with agents that read, decide, and act - across email, CRM, calendars, and the rest of your stack",
       "title": "AI Automation & Workflows",
       "eyebrow": "01 / Automation",
       "id": 1,
@@ -17,7 +17,7 @@
     },
     {
       "title": "Web & Mobile App Development",
-      "description": "Production apps for iOS, Android, and the web. Built with React, React Native, and Next.js — designed in-house, AI-native by default.",
+      "description": "Production apps for iOS, Android, and the web. Built with React, React Native, and Next.js - designed in-house, AI-native by default.",
       "features": [
         "Custom Web Applications\nE-commerce Solutions",
         "API Development",
@@ -53,7 +53,7 @@
     {
       "title": "Lead Generation Systems",
       "eyebrow": "04 / Growth",
-      "description": "End-to-end pipelines that source qualified leads, warm them up, and book the meeting — without burning out your sales team.",
+      "description": "End-to-end pipelines that source qualified leads, warm them up, and book the meeting - without burning out your sales team.",
       "features": [
         "Outbound prospecting agents",
         "AI-personalized cold email and LinkedIn",
@@ -66,7 +66,7 @@
     {
       "title": "AI Content Creation",
       "eyebrow": "05 / Content",
-      "description": "Brand-trained content engines that draft, design, and ship — calibrated to your voice, not generic AI sludge.",
+      "description": "Brand-trained content engines that draft, design, and ship - calibrated to your voice, not generic AI sludge.",
       "features": [
         "Content Generation",
         "Copy Writing",
@@ -81,7 +81,7 @@
     {
       "title": "AI Strategy Consulting",
       "eyebrow": "06 / Strategy",
-      "description": "A diagnostic, a roadmap, and a 90-day plan — so you stop guessing where AI fits in your business.",
+      "description": "A diagnostic, a roadmap, and a 90-day plan - so you stop guessing where AI fits in your business.",
       "features": [
         "Operations audit and opportunity mapping",
         "Vendor/build/buy decision support",
@@ -94,7 +94,7 @@
   ],
   "work": [
     {
-      "description": "Bee Echoo is the global marketplace where creators, studios, brands, and advertising services meet. Discover talent, book studios, launch campaigns — and ship work that moves the world.",
+      "description": "Bee Echoo is the global marketplace where creators, studios, brands, and advertising services meet. Discover talent, book studios, launch campaigns - and ship work that moves the world.",
       "title": "Bee Echoo",
       "industry": "Social Media",
       "category": "mobile-app",
@@ -104,7 +104,7 @@
       "id": 1
     },
     {
-      "description": "Bee Echoo is the global marketplace where creators, studios, brands, and advertising services meet. Discover talent, book studios, launch campaigns—and ship work that moves the world.",
+      "description": "Bee Echoo is the global marketplace where creators, studios, brands, and advertising services meet. Discover talent, book studios, launch campaigns - and ship work that moves the world.",
       "industry": "Social Media",
       "category": "web-app",
       "arkin_image": "Arkin-Leftside-Pointing-Grey.png",
@@ -143,7 +143,7 @@
     },
     {
       "title": "AI-Powered Social Media Content Automation",
-      "description": "Built a fully autonomous content engine that scrapes trending topics and industry news daily, generates platform-optimised posts using AI, and automatically publishes them across LinkedIn, Instagram, and other social channels — keeping the brand active and relevant without any manual effort from the client's team.",
+      "description": "Built a fully autonomous content engine that scrapes trending topics and industry news daily, generates platform-optimised posts using AI, and automatically publishes them across LinkedIn, Instagram, and other social channels - keeping the brand active and relevant without any manual effort from the client's team.",
       "industry": "Social Media",
       "category": "ai-automation",
       "arkin_image": "Arkin-Leftside-Pointing-Grey.png",
@@ -152,7 +152,7 @@
     },
     {
       "title": "WhatsApp Automation for Kredoo CRM",
-      "description": "Engineered a WhatsApp Business automation system natively connected to the Kredoo CRM platform, enabling automated lead nurturing, lead follow-ups, and real-time conversation over WhatsApp — with all conversation threads synced back to CRM records for complete visibility and context.",
+      "description": "Engineered a WhatsApp Business automation system natively connected to the Kredoo CRM platform, enabling automated lead nurturing, lead follow-ups, and real-time conversation over WhatsApp - with all conversation threads synced back to CRM records for complete visibility and context.",
       "industry": "Social Media",
       "category": "ai-automation",
       "arkin_image": "rightside-pointing-arkin.png",
@@ -198,7 +198,7 @@
     },
     {
       "title": "Intelligent SMS Lead Engagement via HubSpot",
-      "description": "Developed a smart SMS automation system integrated with HubSpot CRM that instantly messages new leads the moment they enter the pipeline, handles their follow-up questions with AI-powered responses, and sends timely follow-up messages to keep leads engaged — turning cold entries into warm conversations automatically.",
+      "description": "Developed a smart SMS automation system integrated with HubSpot CRM that instantly messages new leads the moment they enter the pipeline, handles their follow-up questions with AI-powered responses, and sends timely follow-up messages to keep leads engaged - turning cold entries into warm conversations automatically.",
       "industry": "tech",
       "category": "ai-automation",
       "arkin_image": "Arkin-Leftside-Pointing-Grey.png",
@@ -207,7 +207,7 @@
     },
     {
       "title": "Certification Issuance Automation",
-      "description": "Developed an automated certification generation and distribution system that triggers upon course completion or milestone achievement. The workflow auto-populates personalised certificate templates, converts them to branded PDFs, and delivers them to recipients via email — cutting certificate turnaround from days to seconds.",
+      "description": "Developed an automated certification generation and distribution system that triggers upon course completion or milestone achievement. The workflow auto-populates personalised certificate templates, converts them to branded PDFs, and delivers them to recipients via email - cutting certificate turnaround from days to seconds.",
       "industry": "Education",
       "category": "ai-automation",
       "arkin_image": "rightside-pointing-arkin.png",
@@ -216,7 +216,7 @@
     },
     {
       "title": "Email-to-Email Workflow via Monday.com",
-      "description": "Implemented an intelligent email-to-email automation integrated with Monday.com boards. Incoming emails are parsed, categorised, and routed as Monday.com items, which then trigger outbound response emails based on board status changes, assignee updates, or custom rules. The system also automatically sends scheduled follow-up emails to leads based on their pipeline stage — ensuring no lead goes cold — all without any manual forwarding or intervention.",
+      "description": "Implemented an intelligent email-to-email automation integrated with Monday.com boards. Incoming emails are parsed, categorised, and routed as Monday.com items, which then trigger outbound response emails based on board status changes, assignee updates, or custom rules. The system also automatically sends scheduled follow-up emails to leads based on their pipeline stage - ensuring no lead goes cold - all without any manual forwarding or intervention.",
       "industry": "tech",
       "category": "ai-automation",
       "arkin_image": "Arkin-Leftside-Pointing-Grey.png",

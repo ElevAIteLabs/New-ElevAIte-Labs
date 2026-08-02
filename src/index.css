@@ -1,5 +1,5 @@
 /* ============================================================
-   ElevAIte Labs — site stylesheet
+   ElevAIte Labs - site stylesheet
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap');
@@ -28,7 +28,7 @@
 
   --section-pad: 88px;
 
-  /* Spacing scale — use these instead of ad-hoc pixel values */
+  /* Spacing scale - use these instead of ad-hoc pixel values */
   --sp-1: 8px;
   --sp-2: 12px;
   --sp-3: 16px;
@@ -770,7 +770,44 @@ body[data-imagery="geometric"] .ph::before {
   align-items: center;
 }
 
-/* Proof panel — replaces the oversized mascot in the Home about teaser */
+/* Work grid media - real screenshot, or a branded tile when the CMS row
+   has no usable artwork (previously a generic Unsplash stock photo). */
+.work-card-shot {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-card);
+}
+
+.work-card-tile {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: var(--radius-card);
+  background: linear-gradient(135deg, var(--text) 0%, #2b2b2b 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #fff;
+}
+
+.work-card-tile span {
+  font-family: var(--display);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.work-card-tile em {
+  font-style: normal;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* Proof panel - replaces the oversized mascot in the Home about teaser */
 .about-proof {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -812,18 +849,19 @@ body[data-imagery="geometric"] .ph::before {
   flex-wrap: wrap;
 }
 
+/* No grayscale filter here - several of these logos ship with an opaque
+   background plate, which desaturates into a grey box rather than a mark. */
 .proof-logos img {
-  height: 26px;
+  height: 24px;
   width: auto;
   object-fit: contain;
-  opacity: 0.75;
-  filter: grayscale(1);
-  transition: opacity 0.2s ease, filter 0.2s ease;
+  border-radius: 4px;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
 }
 
 .about-proof:hover .proof-logos img {
   opacity: 1;
-  filter: grayscale(0);
 }
 
 .about-imgs {
@@ -866,15 +904,17 @@ body[data-imagery="geometric"] .ph::before {
 
 .svc-list {
   border-top: 1px solid var(--border);
-  margin-top: 56px;
+  margin-top: 40px;
 }
 
+/* Title column is the wider track so service names stay on one line - 
+   wrapping here was adding ~90px per row. */
 .svc-row {
   display: grid;
-  grid-template-columns: 90px 1fr 1.2fr 40px;
-  gap: 32px;
+  grid-template-columns: 72px 1.15fr 1fr 40px;
+  gap: 28px;
   align-items: center;
-  padding: 32px 28px;
+  padding: 24px 24px;
   border-bottom: 1px solid var(--border);
   cursor: pointer;
   position: relative;
@@ -912,7 +952,7 @@ body[data-imagery="geometric"] .ph::before {
 
 .svc-title {
   font-family: var(--display);
-  font-size: clamp(24px, 2.8vw, 36px);
+  font-size: clamp(21px, 2.1vw, 29px);
   font-weight: 500;
   color: var(--text);
   letter-spacing: -0.01em;
@@ -2194,7 +2234,7 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
 }
 
 /* ================================================================
-   PHASE 2 ADDITIONS — images · typewriter · tilt · clips · blogs · Kredoo
+   PHASE 2 ADDITIONS - images · typewriter · tilt · clips · blogs · Kredoo
    ================================================================ */
 
 /* ---------- Real photo support in .ph ---------- */
@@ -2227,7 +2267,7 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
 }
 
 /* ---------- Typewriter cursor ---------- */
-/* Hero headline — lock typewriter word to its own line */
+/* Hero headline - lock typewriter word to its own line */
 .hero-headline em {
   white-space: nowrap;
   font-style: normal;
@@ -2275,7 +2315,7 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
   opacity: 0;
 }
 
-/* Cards come forward on hover — stronger lift + z-index */
+/* Cards come forward on hover - stronger lift + z-index */
 .work-card {
   position: relative;
   z-index: 1;
@@ -3269,7 +3309,7 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
   z-index: 3;
 }
 
-/* ── Hero animations — page-specific ─────────────────────── */
+/* ── Hero animations - page-specific ─────────────────────── */
 .hero-tags-row {
   display: flex;
   flex-wrap: wrap;
@@ -3439,7 +3479,7 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
   margin-bottom: 20px;
 }
 
-/* ── Generic Arkin character — reused across pages ──────── */
+/* ── Generic Arkin character - reused across pages ──────── */
 .arkin-char-wrap {
   display: flex;
   align-items: flex-end;

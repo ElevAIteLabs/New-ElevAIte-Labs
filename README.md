@@ -1,11 +1,11 @@
 # ElevAIte Labs Website
 
-The live site at [elevaitelabs.in](https://elevaitelabs.in) — a React 19 + Vite 8 single-page
+The live site at [elevaitelabs.in](https://elevaitelabs.in) - a React 19 + Vite 8 single-page
 app with a small PHP + MySQL API, hosted on Hostinger shared hosting.
 
 > **Branches:** `master` is the site. The `main` branch holds the original
 > hand-written static HTML version that was replaced in May 2026 and is kept
-> only for history — do not build from it.
+> only for history - do not build from it.
 
 ## Layout
 
@@ -29,7 +29,7 @@ npm run dev
 
 `npm run dev` starts Vite plus a `json-server` on port 5000. In dev the pages read
 from `db.json` rather than PHP, so you do not need MySQL running. The admin login
-accepts `admin` / `admin123` in dev only — that fallback is compiled out of
+accepts `admin` / `admin123` in dev only - that fallback is compiled out of
 production builds.
 
 ## Configuration
@@ -38,7 +38,7 @@ Two files hold environment-specific values and **neither is committed**:
 
 | File | Purpose |
 | --- | --- |
-| `.env` | `VITE_API_URL` — base URL of the PHP API, baked into the bundle at build time |
+| `.env` | `VITE_API_URL` - base URL of the PHP API, baked into the bundle at build time |
 | `api/config.php` | DB credentials, allowed CORS origins, debug flag |
 
 Copy the matching `.example` file and fill it in. If `.env` is missing the build

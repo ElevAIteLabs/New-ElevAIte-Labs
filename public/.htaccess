@@ -22,13 +22,13 @@ DirectoryIndex index.html
   RewriteRule ^ - [L]
 
   # 3. Admin is deliberately client-rendered. It gets the bare noindex shell,
-  #    not index.html — that now holds the prerendered homepage, which would
+  #    not index.html - that now holds the prerendered homepage, which would
   #    make every /admin URL look like a duplicate of /.
   RewriteRule ^admin(/.*)?$ /app-shell.html [L]
 
   # 4. Anything else genuinely does not exist. Previously every unknown URL
   #    fell through to index.html and returned 200, so the whole domain
-  #    produced soft-404s — Google indexed /careers, which was never a route.
+  #    produced soft-404s - Google indexed /careers, which was never a route.
   RewriteRule ^ - [R=404,L]
 </IfModule>
 

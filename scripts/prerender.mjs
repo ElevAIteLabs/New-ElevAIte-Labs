@@ -10,7 +10,7 @@
  * Apache then serves each as a real file, which also lets unknown URLs
  * return a genuine 404 instead of the SPA shell with a 200.
  *
- * Visitors still get the SPA — the prerendered file loads the same bundle
+ * Visitors still get the SPA - the prerendered file loads the same bundle
  * and React Router takes over on hydration.
  */
 import { createServer } from 'node:http';
@@ -63,7 +63,7 @@ await new Promise((resolve) => server.listen(PORT, resolve));
 
 // The pages fetch the live API from this local origin, which is deliberately
 // not in the API's CORS allow-list. Without this the browser blocks every
-// data request and we silently capture pages with empty lists — which is
+// data request and we silently capture pages with empty lists - which is
 // exactly what shipped the first time.
 const browser = await puppeteer.launch({
   args: ['--no-sandbox', '--disable-web-security', '--disable-features=IsolateOrigins,site-per-process'],
@@ -119,11 +119,11 @@ try {
 }
 
 // Admin routes are client-rendered on purpose, so they must not fall back to
-// dist/index.html — that file now holds the prerendered homepage, which would
+// dist/index.html - that file now holds the prerendered homepage, which would
 // make /admin look like a duplicate of / to anything that reads the raw HTML.
 const noindexShell = SHELL.replace(
   '</head>',
-  '  <title>Admin — ElevAIte Labs</title>\n    <meta name="robots" content="noindex, nofollow" />\n  </head>',
+  '  <title>Admin - ElevAIte Labs</title>\n    <meta name="robots" content="noindex, nofollow" />\n  </head>',
 );
 await writeFile(path.join(dist, 'app-shell.html'), noindexShell, 'utf8');
 

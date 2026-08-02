@@ -2,7 +2,7 @@
  * Generates robots.txt and sitemap.xml from the route map, so they can
  * never drift out of sync with the app's actual routes.
  *
- * These previously did not exist at all — requests for them fell through
+ * These previously did not exist at all - requests for them fell through
  * the SPA rewrite and returned the HTML shell with a 200, which reads to a
  * crawler as a malformed robots.txt rather than a missing one.
  */
@@ -15,7 +15,7 @@ import { fetchPostRoutes } from './post-routes.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = process.argv[2] ? path.resolve(process.argv[2]) : path.join(root, 'dist');
 
-// Build date only — avoids a pointless diff on every rebuild.
+// Build date only - avoids a pointless diff on every rebuild.
 const lastmod = new Date().toISOString().slice(0, 10);
 
 const { posts } = await fetchPostRoutes();

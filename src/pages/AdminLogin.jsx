@@ -29,7 +29,7 @@ const AdminLogin = () => {
           alert(data.message || 'Invalid credentials');
         }
       } else if (response.status === 404 && import.meta.env.DEV) {
-        // Local dev fallback — PHP not available locally
+        // Local dev fallback - PHP not available locally
         if (loginForm.username === 'admin' && loginForm.password === 'admin123') {
           localStorage.setItem('admin_auth', 'true');
           navigate('/admin');
@@ -41,7 +41,7 @@ const AdminLogin = () => {
       }
     } catch (error) {
       if (import.meta.env.DEV) {
-        // Network error in dev — use fallback
+        // Network error in dev - use fallback
         if (loginForm.username === 'admin' && loginForm.password === 'admin123') {
           localStorage.setItem('admin_auth', 'true');
           navigate('/admin');

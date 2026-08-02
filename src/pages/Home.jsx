@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import QuizModal from '../components/QuizModal';
+import MediaOrTile from '../components/MediaOrTile';
 
 const Home = () => {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
@@ -118,7 +119,7 @@ const Home = () => {
             </div>
             <div className="arkin-hero-wrap">
               <div className="arkin-glow"></div>
-              <img src="/pictures/arkin.webp" alt="Arkin — ElevAIte Labs mascot" className="arkin-hero-img" width="500" height="500" fetchPriority="high" />
+              <img src="/pictures/arkin.webp" alt="Arkin - ElevAIte Labs mascot" className="arkin-hero-img" width="500" height="500" fetchPriority="high" />
             </div>
           </div>
         </div>
@@ -150,7 +151,7 @@ const Home = () => {
             <div className="about-copy fade-up">
               <span className="tag">About Us</span>
               <h2 className="display">Why Businesses in India Choose ElevAIte Labs</h2>
-              <p>We're an AI-first studio based in Hyderabad, working with founders and operators who want results — not slideware. Our team blends senior product engineers with applied-AI specialists, so the things we build actually ship and stay shipped.</p>
+              <p>We're an AI-first studio based in Hyderabad, working with founders and operators who want results - not slideware. Our team blends senior product engineers with applied-AI specialists, so the things we build actually ship and stay shipped.</p>
               <p>Local context matters. We understand the speed, scrappiness, and regulatory texture of Indian businesses, and we pair that with global engineering standards. The outcome: AI systems that fit your operation, not the other way around.</p>
               <Link to="/about" className="link-arrow">Learn More About Us <span className="arrow">→</span></Link>
             </div>
@@ -190,7 +191,7 @@ const Home = () => {
             <div className="fade-up">
               <span className="tag" style={{ color: 'var(--accent)' }}>Our Flagship Product</span>
               <h2 className="display" style={{ color: '#fff', marginBottom: '24px' }}>Meet Kredoo: The AI CRM for Sales Teams</h2>
-              <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '19px', marginBottom: '32px', maxWidth: '540px' }}>Stop chasing leads manually. Kredoo automates your entire sales pipeline — from WhatsApp capture to smart follow-ups and CRM sync.</p>
+              <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '19px', marginBottom: '32px', maxWidth: '540px' }}>Stop chasing leads manually. Kredoo automates your entire sales pipeline - from WhatsApp capture to smart follow-ups and CRM sync.</p>
               <div className="hero-cta-row">
                 <a href="https://kredoo.in" target="_blank" rel="noopener noreferrer" className="btn btn-primary">Try Kredoo Free →</a>
                 <Link to="/blog-kredoo" className="btn btn-ghost" style={{ color: '#fff', borderColor: '#fff' }}>Read the Story</Link>
@@ -248,7 +249,7 @@ const Home = () => {
             <div className="process-step fade-up">
               <div className="process-num">02</div>
               <h3>Design</h3>
-              <p>We architect the system — workflows, data, models, integrations — and lock the blueprint with you.</p>
+              <p>We architect the system - workflows, data, models, integrations - and lock the blueprint with you.</p>
             </div>
             <div className="process-step fade-up">
               <div className="process-num">03</div>
@@ -286,10 +287,12 @@ const Home = () => {
                   return (
                     <Link className={`work-card ${cardClass} fade-up`} to="/work" key={project.id || index}>
                       <div className="ph" style={{ padding: 0, background: 'transparent', border: 'none' }}>
-                        <img
-                          src={project.image ? (project.image.startsWith('http') ? project.image : `/pictures/${project.image}`) : 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&h=500&fit=crop&q=80&auto=format'}
+                        <MediaOrTile
+                          src={project.image}
                           alt={project.title}
-                          style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 'var(--radius-card)' }}
+                          label={project.industry}
+                          className="work-card-shot"
+                          tileClassName="work-card-tile"
                         />
                         <span className="ph-label" style={{ position: 'absolute', bottom: '14px', left: '14px' }}>{project.industry}</span>
                       </div>
@@ -373,7 +376,7 @@ const Home = () => {
                 <div className="reel-play">▶</div>
               </div>
               <div className="reel-cat">Career</div>
-              <h3>Become an AI engineer in 2026 — the honest path</h3>
+              <h3>Become an AI engineer in 2026 - the honest path</h3>
             </a>
             <a className="reel-card fade-up" href="https://www.instagram.com/reel/DS-PVTTjyxQ/" target="_blank" rel="noopener noreferrer">
               <div className="reel-media ig-reel">

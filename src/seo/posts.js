@@ -20,7 +20,7 @@ export function postsApiUrl(slug) {
 
 /**
  * Cover images come from the admin uploader as bare filenames, but the older
- * hardcoded posts use absolute Unsplash URLs — accept both.
+ * hardcoded posts use absolute Unsplash URLs - accept both.
  */
 export function postImageSrc(image) {
   if (!image) return null;

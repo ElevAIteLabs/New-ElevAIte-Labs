@@ -11,7 +11,7 @@ import {
  * Emits the per-page search metadata.
  *
  * React 19 hoists <title>, <meta> and <link> rendered anywhere in the tree
- * into <head>, so this needs no helmet library — and because the prerender
+ * into <head>, so this needs no helmet library - and because the prerender
  * pass captures the rendered DOM, crawlers get these tags in the raw HTML.
  */
 const Seo = () => {
@@ -37,7 +37,7 @@ const Seo = () => {
     return (
       <>
         <title data-seo="1">
-          {isNoIndex ? `Admin — ${SITE_NAME}` : `Page not found — ${SITE_NAME}`}
+          {isNoIndex ? `Admin - ${SITE_NAME}` : `Page not found - ${SITE_NAME}`}
         </title>
         <meta data-seo="1" name="robots" content="noindex, nofollow" />
       </>

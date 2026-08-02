@@ -40,7 +40,7 @@ const Services = () => {
         .svc-detail li { padding-left: 26px; position: relative; margin-bottom: 10px; font-size: 15px; color: var(--body); break-inside: avoid; }
         .svc-detail li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
 
-        /* Remaining services — dense grid, no mascot */
+        /* Remaining services - dense grid, no mascot */
         .svc-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 56px; }
         .svc-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 32px 28px; display: flex; flex-direction: column; transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease; }
         .svc-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(0,0,0,0.07); border-color: #cfd6dd; }
@@ -98,7 +98,7 @@ const Services = () => {
         <div className="wrap">
           <span className="tag fade-up">Services</span>
           <h1 className="fade-up">What We Build for You</h1>
-          <p className="fade-up">Six core service lines, each scoped to ship in weeks, not quarters. Pick one — or stack them — to build the AI-native operation your business deserves.</p>
+          <p className="fade-up">Six core service lines, each scoped to ship in weeks, not quarters. Pick one - or stack them - to build the AI-native operation your business deserves.</p>
         </div>
       </section>
 
@@ -108,7 +108,7 @@ const Services = () => {
             <div style={{ textAlign: 'center', padding: '50px 0' }}>Loading services...</div>
           ) : servicesData.length > 0 ? (
             <>
-              {/* Lead service keeps the mascot — it earns its place once, not six times */}
+              {/* Lead service keeps the mascot - it earns its place once, not six times */}
               {(() => {
                 const svc = servicesData[0];
                 return (
@@ -212,7 +212,7 @@ const Services = () => {
         <div className="wrap fade-up">
           <span className="tag">Free Assessment</span>
           <h2>Not sure which one is right for you?</h2>
-          <p>Take our 2-minute AI readiness quiz — we'll send back a custom recommendation.</p>
+          <p>Take our 2-minute AI readiness quiz - we'll send back a custom recommendation.</p>
           <button className="btn btn-light" onClick={() => setIsQuizOpen(true)}>Take the Free Quiz →</button>
         </div>
       </section>

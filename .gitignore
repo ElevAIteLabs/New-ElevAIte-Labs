@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# Secrets — the PHP API itself IS tracked, but its config is not.
+# Secrets - the PHP API itself IS tracked, but its config is not.
 api/config.php
 .env
 .env.*

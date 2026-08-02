@@ -66,7 +66,7 @@ const Learn = () => {
         <div className="wrap">
           <span className="tag fade-up">Learn With Us</span>
           <h1 className="fade-up">Free AI Education for Professionals &amp; Students</h1>
-          <p className="fade-up">We publish what we wish we'd had when we were starting. Reels, articles, and short courses — built for Indian operators, founders, and students who want to actually use AI in their work.</p>
+          <p className="fade-up">We publish what we wish we'd had when we were starting. Reels, articles, and short courses - built for Indian operators, founders, and students who want to actually use AI in their work.</p>
           <div className="hero-tags-row fade-up">
             <span className="hero-tag"><span className="dot"></span>Automation</span>
             <span className="hero-tag"><span className="dot"></span>AI Agents</span>
@@ -114,7 +114,7 @@ const Learn = () => {
                 </div>
               </div>
               <div className="reel-cat">Career</div>
-              <h3>Become an AI engineer in 2026 — the honest path</h3>
+              <h3>Become an AI engineer in 2026 - the honest path</h3>
             </a>
 
             <a className="reel-card-clean fade-up" href="https://www.instagram.com/reel/DS-PVTTjyxQ/" target="_blank" rel="noopener noreferrer">
@@ -197,7 +197,7 @@ const Learn = () => {
               <div>
                 <div className="meta">Product · 7 min read · ElevAIte Labs</div>
                 <h3>Introducing Kredoo: The Lead CRM Built for Indian Sales Teams</h3>
-                <p className="excerpt">We spent six months watching Indian sales teams struggle with CRMs designed for Western markets — too complex, too expensive, and completely ignorant of how Indian B2B actually works. So we built Kredoo. Here's what it does and why it exists.</p>
+                <p className="excerpt">We spent six months watching Indian sales teams struggle with CRMs designed for Western markets - too complex, too expensive, and completely ignorant of how Indian B2B actually works. So we built Kredoo. Here's what it does and why it exists.</p>
                 <span className="link-arrow">Read article <span className="arrow">→</span></span>
               </div>
             </Link>
@@ -207,7 +207,7 @@ const Learn = () => {
               </div>
               <div>
                 <div className="meta">Operations · 9 min read · Vikram Shah</div>
-                <h3>How Indian SMBs Are Losing 30 Hours a Week — and How to Stop</h3>
+                <h3>How Indian SMBs Are Losing 30 Hours a Week - and How to Stop</h3>
                 <p className="excerpt">The same five manual workflows appear in nearly every business we audit. Lead follow-up, CRM hygiene, appointment scheduling, invoice chasing, and content publishing. Together they eat 30+ hours of someone's week. Here's the complete breakdown and what to automate first.</p>
                 <span className="link-arrow">Read article <span className="arrow">→</span></span>
               </div>
@@ -219,7 +219,7 @@ const Learn = () => {
               <div>
                 <div className="meta">Playbook · 12 min read · Ananya Krishnan</div>
                 <h3>The WhatsApp Automation Playbook for Indian Businesses</h3>
-                <p className="excerpt">450 million Indians use WhatsApp daily. Your best leads are on it right now, and most businesses are responding manually — or not at all. This is the complete guide to building AI agents on WhatsApp that qualify, nurture, and book, without a single human in the loop.</p>
+                <p className="excerpt">450 million Indians use WhatsApp daily. Your best leads are on it right now, and most businesses are responding manually - or not at all. This is the complete guide to building AI agents on WhatsApp that qualify, nurture, and book, without a single human in the loop.</p>
                 <span className="link-arrow">Read article <span className="arrow">→</span></span>
               </div>
             </Link>

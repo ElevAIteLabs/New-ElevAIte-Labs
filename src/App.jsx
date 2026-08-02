@@ -20,7 +20,7 @@ import StructuredData from './components/StructuredData';
 import useSiteEffects from './hooks/useSiteEffects';
 
 // Ask the server whether the session cookie is valid. A localStorage flag
-// only hides the UI — the API enforces access on every request regardless.
+// only hides the UI - the API enforces access on every request regardless.
 const ProtectedRoute = ({ children }) => {
   // In local dev there is no PHP, so resolve from the dev-only login flag up
   // front rather than flipping state from inside the effect.

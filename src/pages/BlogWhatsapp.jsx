@@ -41,7 +41,7 @@ const BlogWhatsapp = () => {
         <div className="wrap">
           <div className="meta fade-up">Playbook · 12 min read · Ananya Krishnan · April 2025</div>
           <h1 className="fade-up">The WhatsApp Automation Playbook for Indian Businesses</h1>
-          <p className="lede fade-up">450 million Indians use WhatsApp daily. Most businesses respond manually — or not at all. This is the complete guide to building AI agents that qualify, nurture, and book on WhatsApp without a human in the loop.</p>
+          <p className="lede fade-up">450 million Indians use WhatsApp daily. Most businesses respond manually - or not at all. This is the complete guide to building AI agents that qualify, nurture, and book on WhatsApp without a human in the loop.</p>
         </div>
       </section>
 
@@ -56,7 +56,7 @@ const BlogWhatsapp = () => {
         <div className="blog-body">
           <article className="blog-content fade-up">
             <p>WhatsApp isn't just a messaging app in India. It's the primary business communication channel for a huge portion of the country's working population. Leads message you on WhatsApp. Customers follow up on WhatsApp. Vendors, partners, and delivery drivers coordinate on WhatsApp. And for most businesses, the response to all of this is either a tired employee manually typing the same answers over and over, or silence.</p>
-            <p>That gap — between the volume of WhatsApp conversations your business needs to handle and the human bandwidth to handle them — is where AI wins.</p>
+            <p>That gap - between the volume of WhatsApp conversations your business needs to handle and the human bandwidth to handle them - is where AI wins.</p>
             <p>This isn't a theoretical playbook. Every workflow I'm about to describe is running in production, in Indian businesses, today. Some of them we built; some our clients built using our guidance. All of them work.</p>
 
             <h2>Why WhatsApp First?</h2>
@@ -81,12 +81,12 @@ const BlogWhatsapp = () => {
             <p>The magic is that it integrates with your actual calendar or booking system, not a separate scheduling tool that creates sync problems. When a patient books an appointment through WhatsApp, it appears directly in your clinic's system, the slot is blocked, and the confirmation message goes out automatically.</p>
 
             <h3>Pattern 3: FAQ and Support</h3>
-            <p>Train the AI on your documents — FAQ pages, product manuals, return policies, pricing tables, service descriptions — and let it handle incoming questions. It answers immediately, in the language the customer messaged in, with a live handoff to a human for anything it can't handle.</p>
+            <p>Train the AI on your documents - FAQ pages, product manuals, return policies, pricing tables, service descriptions - and let it handle incoming questions. It answers immediately, in the language the customer messaged in, with a live handoff to a human for anything it can't handle.</p>
             <p>This one requires good training data and careful design of the handoff flow. "I can't answer that" is a failure mode; "Let me connect you to someone who can help with that" is not. The difference is in how you design the escalation path.</p>
 
             <h3>Pattern 4: Proactive Outreach and Follow-Up</h3>
             <p>Rather than responding to inbound, this pattern sends messages to your contacts based on triggers: a lead goes cold, an invoice becomes overdue, a renewal date approaches, a cart is abandoned. The AI crafts the message (personalized to the contact and context), sends it, and handles any response it gets back.</p>
-            <p>This requires permission-based messaging through the Business API — you can only initiate conversations with people who've opted in. But when done correctly, the response rates are extraordinary compared to email.</p>
+            <p>This requires permission-based messaging through the Business API - you can only initiate conversations with people who've opted in. But when done correctly, the response rates are extraordinary compared to email.</p>
 
             <h2>Building a WhatsApp Automation Stack</h2>
             <p>Here's the stack we've converged on after building roughly a dozen production WhatsApp systems:</p>
@@ -97,7 +97,7 @@ const BlogWhatsapp = () => {
             </div>
             <div className="step-block" data-step="2">
               <h3>Conversation AI Layer</h3>
-              <p>This is the brain of the operation. We use Claude (Anthropic) for most implementations because of its instruction-following accuracy and multi-language capability — critical for Hindi, Telugu, and Tamil conversations. You'll need to design the system prompt, define the flow logic, and handle the edge cases.</p>
+              <p>This is the brain of the operation. We use Claude (Anthropic) for most implementations because of its instruction-following accuracy and multi-language capability - critical for Hindi, Telugu, and Tamil conversations. You'll need to design the system prompt, define the flow logic, and handle the edge cases.</p>
             </div>
             <div className="step-block" data-step="3">
               <h3>Workflow Orchestration</h3>
@@ -114,15 +114,15 @@ const BlogWhatsapp = () => {
 
             <h2>The Multi-Language Reality</h2>
             <p>This is where Indian WhatsApp automation gets genuinely complex, and where a lot of off-the-shelf solutions fall short.</p>
-            <p>Your leads don't all message in English. Depending on your market, you might get messages in Hindi, Telugu, Tamil, Kannada, Marathi, or a mixture of all of them — sometimes within the same conversation. Transliterated Hinglish ("bhai mujhe property dekhni hai") is extremely common and extremely difficult for models trained primarily on formal text.</p>
-            <p>Our approach: use Claude's native multi-language capability for understanding, respond in the language the customer used (defaulting to the most comfortable language detected), and train on real examples of how your customers actually write — not how a textbook says they should.</p>
-            <blockquote><p>"The bot understood my Telugu and replied in Telugu. I thought I'd have to switch to English. That's when I trusted it."<br/>— Customer of one of our clinic clients</p></blockquote>
+            <p>Your leads don't all message in English. Depending on your market, you might get messages in Hindi, Telugu, Tamil, Kannada, Marathi, or a mixture of all of them - sometimes within the same conversation. Transliterated Hinglish ("bhai mujhe property dekhni hai") is extremely common and extremely difficult for models trained primarily on formal text.</p>
+            <p>Our approach: use Claude's native multi-language capability for understanding, respond in the language the customer used (defaulting to the most comfortable language detected), and train on real examples of how your customers actually write - not how a textbook says they should.</p>
+            <blockquote><p>"The bot understood my Telugu and replied in Telugu. I thought I'd have to switch to English. That's when I trusted it."<br/> - Customer of one of our clinic clients</p></blockquote>
 
             <h2>Compliance: What You Actually Need to Know</h2>
             <p>The regulatory landscape for WhatsApp Business in India is manageable but not ignorable. A few things you must get right:</p>
             <ul>
               <li><strong>Opt-in before proactive messaging.</strong> You can only initiate conversations (template messages) with users who've explicitly opted in. Your AI cannot cold-message a list of numbers.</li>
-              <li><strong>Template approval.</strong> All outbound message templates must be approved by Meta before use. Approval typically takes 24–72 hours. Design your templates with this in mind — you can't iterate instantly.</li>
+              <li><strong>Template approval.</strong> All outbound message templates must be approved by Meta before use. Approval typically takes 24–72 hours. Design your templates with this in mind - you can't iterate instantly.</li>
               <li><strong>Data storage.</strong> Conversation data containing personal information falls under DPDP (India's Digital Personal Data Protection Act). Store it in India, define retention periods, and have a deletion process.</li>
               <li><strong>Clear AI disclosure.</strong> We always recommend being upfront that the user is talking to an AI, at least at the start of the conversation. Most users don't care; some prefer it. Hiding it creates trust problems when the bot makes a mistake.</li>
             </ul>
@@ -140,7 +140,7 @@ const BlogWhatsapp = () => {
               <li>Start with inbound FAQ/support. Lowest risk, fastest to build, immediate value.</li>
               <li>Add appointment booking if you're a scheduling-heavy business.</li>
               <li>Layer in lead qualification once you have the basic infrastructure running.</li>
-              <li>Add proactive outreach last — it requires the most careful design and has the highest compliance sensitivity.</li>
+              <li>Add proactive outreach last - it requires the most careful design and has the highest compliance sensitivity.</li>
             </ol>
             <p>Each phase takes 2–4 weeks to build and test properly. Try to do them all at once and you'll end up with something that's partially working everywhere and fully working nowhere.</p>
             <p>If you want help, we do this. The full stack: API setup, AI training, n8n workflows, CRM integration, and the escalation design that makes it all work. Reach out and we'll tell you what it would look like for your specific business.</p>
@@ -160,7 +160,7 @@ const BlogWhatsapp = () => {
               </ul>
             </div>
             <div className="sidebar-card">
-              <h4>ChatDesk — WhatsApp AI</h4>
+              <h4>ChatDesk - WhatsApp AI</h4>
               <p>Our WhatsApp-first AI agent product. Trained on your business, live in days.</p>
               <Link to="/contact" className="btn btn-primary" style={{ display: 'block', textAlign: 'center' }}>Get Early Access →</Link>
             </div>

@@ -1,5 +1,5 @@
 /* ============================================================
-   ElevAIte Labs — shared site JS
+   ElevAIte Labs - shared site JS
    nav · footer · sidebar · scroll · counters · parallax · cursor · modal · tweaks
    ============================================================ */
 
@@ -363,10 +363,10 @@ const QUIZ_QUESTIONS = [
   {
     q: "Do you have a centralized place where your business data lives?",
     options: [
-      ["Yes — a clean CRM or warehouse", 0],
+      ["Yes - a clean CRM or warehouse", 0],
       ["Multiple tools, semi-organized", 1],
       ["Mostly spreadsheets", 2],
-      ["It's everywhere — emails, notes, heads", 3],
+      ["It's everywhere - emails, notes, heads", 3],
     ],
   },
   {
@@ -384,17 +384,17 @@ function quizResult(score) {
   if (score <= 4) return {
     band: "AI-Native",
     title: "You're already operating like an AI-first business.",
-    body: "Your foundations are strong. We can help you push further — building bespoke agents, multi-step workflows, and proprietary AI systems that become a moat.",
+    body: "Your foundations are strong. We can help you push further - building bespoke agents, multi-step workflows, and proprietary AI systems that become a moat.",
   };
   if (score <= 8) return {
     band: "AI-Curious",
-    title: "You've started — there's a lot of upside left.",
+    title: "You've started - there's a lot of upside left.",
     body: "You've experimented with AI but haven't made it the operating system of your business. We typically find 15–30 hours of weekly time savings hiding in your current workflows.",
   };
   if (score <= 12) return {
     band: "AI-Ready",
     title: "You're sitting on a goldmine of automation opportunities.",
-    body: "Lead follow-up, content, customer service, internal ops — most of these can be 70–90% automated. A 4-week sprint with us usually pays for itself within the first quarter.",
+    body: "Lead follow-up, content, customer service, internal ops - most of these can be 70–90% automated. A 4-week sprint with us usually pays for itself within the first quarter.",
   };
   return {
     band: "Pre-AI",
@@ -429,7 +429,7 @@ function openQuiz() {
             <div class="quiz-result-score">${r.band} · Score ${score}/15</div>
             <h3>${r.title}</h3>
             <p>${r.body}</p>
-            <p style="font-size:14px;color:var(--muted);">This was a 2-minute self-assessment. The real diagnostic is a 30-minute conversation — free, no pitch.</p>
+            <p style="font-size:14px;color:var(--muted);">This was a 2-minute self-assessment. The real diagnostic is a 30-minute conversation - free, no pitch.</p>
             <div class="quiz-result-cta">
               <a href="contact.html" class="btn btn-primary">Book Your Free Strategy Call →</a>
             </div>
@@ -590,7 +590,7 @@ function initClipReveal() {
     return;
   }
 
-  // Hero collage cells are above-fold — IntersectionObserver can miss them
+  // Hero collage cells are above-fold - IntersectionObserver can miss them
   // Force reveal immediately with stagger so the right side always shows
   document.querySelectorAll(".collage .clip-reveal").forEach((el, i) => {
     setTimeout(() => el.classList.add("in"), 80 + i * 110);

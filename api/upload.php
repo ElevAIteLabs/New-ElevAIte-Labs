@@ -3,7 +3,7 @@ require_once __DIR__ . '/auth.php';
 
 send_cors_headers('POST, OPTIONS');
 
-// Uploads write into the public web root — admins only.
+// Uploads write into the public web root - admins only.
 require_admin();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

@@ -42,7 +42,7 @@ const BlogPost = () => {
   if (state === 'missing' || !post) {
     return (
       <>
-        <title data-seo="1">Article not found — {SITE_NAME}</title>
+        <title data-seo="1">Article not found - {SITE_NAME}</title>
         <meta data-seo="1" name="robots" content="noindex, follow" />
         <section>
           <div className="wrap" style={{ padding: '120px 0', textAlign: 'center' }}>

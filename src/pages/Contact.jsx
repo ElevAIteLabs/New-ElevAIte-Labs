@@ -184,7 +184,7 @@ const Contact = () => {
                 <div className="form-success">
                   <div style={{ fontSize: '48px', color: 'var(--accent)', marginBottom: '12px' }}>✓</div>
                   <h3>Got it. Talk soon.</h3>
-                  <p style={{ marginBottom: '6px' }}>Your message landed safely — and a confirmation is on its way to <strong>{email}</strong>.</p>
+                  <p style={{ marginBottom: '6px' }}>Your message landed safely - and a confirmation is on its way to <strong>{email}</strong>.</p>
                   <p style={{ fontSize: '14px', color: 'var(--body)' }}>We respond within one business day, usually faster.</p>
                   <a href="/" className="link-arrow" style={{ marginTop: '24px', display: 'inline-flex' }}>Back to homepage <span className="arrow">→</span></a>
                 </div>

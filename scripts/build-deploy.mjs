@@ -17,7 +17,7 @@ const dist = path.join(root, 'dist');
 const deploy = path.join(root, 'deploy');
 
 if (!existsSync(path.join(root, '.env'))) {
-  console.error('\n  Missing .env — copy .env.example to .env first.');
+  console.error('\n  Missing .env - copy .env.example to .env first.');
   console.error('  Without VITE_API_URL the build calls "undefined/login.php".\n');
   process.exit(1);
 }
@@ -39,7 +39,7 @@ cpSync(dist, deploy, { recursive: true });
 cpSync(path.join(root, 'api'), path.join(deploy, 'api'), { recursive: true });
 
 if (!existsSync(path.join(root, 'api', 'config.php'))) {
-  console.warn('\n  api/config.php not found — the API will return 500 until it exists on the server.');
+  console.warn('\n  api/config.php not found - the API will return 500 until it exists on the server.');
   console.warn('  Copy api/config.example.php to api/config.php and fill in the DB credentials.\n');
 }
 

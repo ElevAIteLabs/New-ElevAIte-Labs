@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { isRealArtwork } from '../lib/artwork';
+import MediaOrTile from '../components/MediaOrTile';
 
 const apiUrl = (r) => import.meta.env.DEV ? `http://localhost:5000/${r}` : `${import.meta.env.VITE_API_URL}/${r}.php`;
 
@@ -32,10 +32,19 @@ const Work = () => {
     setFilter(cat);
   };
 
-  const filteredProjects = projects.filter(p => {
-    const pCat = (p.category || '').trim().toLowerCase();
-    const fCat = (filter || '').trim().toLowerCase();
-    return pCat === fCat;
+  const matchesFilter = (p) =>
+    (p.category || '').trim().toLowerCase() === (filter || '').trim().toLowerCase();
+
+  const filteredProjects = projects.filter(matchesFilter);
+
+  // Every project is rendered and the filter only controls visibility.
+  // Rendering just the matching subset meant the prerendered HTML contained
+  // one category, so most case studies were never visible to search engines.
+  let visibleIndex = 0;
+  const allProjects = projects.map((project) => {
+    const visible = matchesFilter(project);
+    const even = visible && visibleIndex++ % 2 === 1;
+    return { project, visible, even };
   });
 
   console.log('Active filter:', filter);
@@ -90,8 +99,13 @@ const Work = () => {
           {loading ? (
             <div className="loading-state">Loading projects...</div>
           ) : filteredProjects.length > 0 ? (
-            filteredProjects.map((project, idx) => (
-              <div className={`case-row ${idx % 2 === 1 ? 'even' : ''}`} key={project.id || idx}>
+            allProjects.map(({ project, visible, even }, idx) => (
+              <div
+                className={`case-row ${even ? 'even' : ''}`}
+                key={project.id || idx}
+                data-category={project.category}
+                style={visible ? undefined : { display: 'none' }}
+              >
                 <div>
                   <div className="industry-tag">{project.industry || 'ElevAIte Labs Project'}</div>
                   <h2>{project.title}</h2>
@@ -104,20 +118,14 @@ const Work = () => {
                     )}
                   </div>
                 </div>
-                {/* Prefer the actual project screenshot — the mascot is only a last resort */}
+                {/* Prefer the actual project screenshot - the mascot is only a last resort */}
                 <div className="case-img case-shot">
-                  {isRealArtwork(project.image) ? (
-                    <img
-                      src={project.image.startsWith('http') ? project.image : `/pictures/${project.image}`}
-                      alt={project.title}
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="case-tile">
-                      <span>{(project.title || '?').trim().charAt(0).toUpperCase()}</span>
-                      <em>{project.industry || 'ElevAIte Labs'}</em>
-                    </div>
-                  )}
+                  <MediaOrTile
+                    src={project.image}
+                    alt={project.title}
+                    label={project.industry || 'ElevAIte Labs'}
+                    tileClassName="case-tile"
+                  />
                 </div>
               </div>
             ))

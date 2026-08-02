@@ -3,7 +3,7 @@
  * the sitemap.
  *
  * Without this, a post published from the admin panel would exist only as a
- * client-rendered page — invisible to crawlers, which is the exact problem
+ * client-rendered page - invisible to crawlers, which is the exact problem
  * the prerender pass was added to solve.
  *
  * Reads VITE_API_URL from .env rather than importing Vite's env handling,
@@ -50,7 +50,7 @@ export async function fetchPostRoutes() {
   } catch (err) {
     // A published post missing from the build is a real SEO regression, so
     // make it loud rather than silently shipping an incomplete sitemap.
-    console.warn(`  WARNING: could not fetch posts (${err.message}) — no article pages will be prerendered`);
+    console.warn(`  WARNING: could not fetch posts (${err.message}) - no article pages will be prerendered`);
     return { routes: [], posts: [] };
   }
 }

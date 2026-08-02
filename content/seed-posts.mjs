@@ -1,7 +1,7 @@
 /**
  * Initial blog articles, one per keyword cluster from the SEO plan.
  *
- * Kept in the repo as the source of record for the seed content — after this
+ * Kept in the repo as the source of record for the seed content - after this
  * they are edited in the admin panel, which is the CMS's job.
  *
  * Every claim here is grounded in work that already appears on /work. No
@@ -31,7 +31,7 @@ export const POSTS = [
 <p><em>Signal you need this:</em> someone on your team opens the same tab every morning and retypes information that already exists somewhere else.</p>
 
 <h2>2. Custom AI agents</h2>
-<p>An agent differs from an automation in one important way: it makes a judgement rather than following a fixed branch. That matters when the input is unstructured — free text from a customer, a document with an inconsistent layout, a message that could mean three different things.</p>
+<p>An agent differs from an automation in one important way: it makes a judgement rather than following a fixed branch. That matters when the input is unstructured - free text from a customer, a document with an inconsistent layout, a message that could mean three different things.</p>
 <p>Our <strong>AI-Powered Lead Coordinator</strong> handles inbound enquiries end to end. It pre-qualifies leads by interpreting what the person actually asked for, rather than requiring them to fill a form correctly. That is agent work: the decision cannot be expressed as a lookup table.</p>
 <p><em>Signal you need this:</em> the task requires reading something and deciding, and your current workaround is a long list of if-then rules that keeps growing.</p>
 
@@ -44,7 +44,7 @@ export const POSTS = [
 <p><em>Signal you need this:</em> a person is retyping the contents of a document into a system.</p>
 
 <h2>5. Content and publishing engines</h2>
-<p>Our <strong>AI-Powered Social Media Content Automation</strong> scrapes trending topics and industry news daily, generates platform-optimised posts, and schedules them. The value is not that AI writes — it is that the pipeline from research to published post runs without a human coordinating five tools.</p>
+<p>Our <strong>AI-Powered Social Media Content Automation</strong> scrapes trending topics and industry news daily, generates platform-optimised posts, and schedules them. The value is not that AI writes - it is that the pipeline from research to published post runs without a human coordinating five tools.</p>
 
 <h2>How to sequence this</h2>
 <p>If you are starting from zero, resist the temptation to begin with the most impressive-sounding project. The correct first automation is almost always the one that is boring, high-frequency, and currently done by your most expensive person. It pays for itself quickly and it teaches your team what to trust.</p>
@@ -78,7 +78,7 @@ export const POSTS = [
 <h2>The five workflows worth building first</h2>
 
 <h3>1. Lead capture and instant response</h3>
-<p>A lead arrives from an ad, a form, or WhatsApp. The workflow writes it to your CRM, assigns an owner, and sends an acknowledgement immediately. The gain is not the data entry saved — it is that the first response no longer waits for someone to check their inbox.</p>
+<p>A lead arrives from an ad, a form, or WhatsApp. The workflow writes it to your CRM, assigns an owner, and sends an acknowledgement immediately. The gain is not the data entry saved - it is that the first response no longer waits for someone to check their inbox.</p>
 
 <h3>2. Follow-up sequences that stop on reply</h3>
 <p>Most follow-up gets dropped not because nobody meant to do it, but because tracking who is due is tedious. A workflow handles the schedule and, critically, stops the sequence the moment the person replies. We built exactly this pattern into our <strong>Intelligent SMS Lead Engagement via HubSpot</strong> system, which messages new leads as they enter the pipeline and handles their responses.</p>
@@ -90,10 +90,10 @@ export const POSTS = [
 <p>Any time a human copies information between two systems, that is a workflow waiting to be built. Our <strong>Email-to-Email Workflow via Monday.com</strong> parses incoming email, categorises it, and routes it onto the correct board.</p>
 
 <h3>5. Scheduled reporting</h3>
-<p>Pull the numbers, assemble them, deliver them somewhere people already look. Low glamour, high adoption — it removes a recurring task nobody enjoys.</p>
+<p>Pull the numbers, assemble them, deliver them somewhere people already look. Low glamour, high adoption - it removes a recurring task nobody enjoys.</p>
 
 <h2>What to expect during a build</h2>
-<p>A first workflow is usually days rather than weeks. The bulk of the effort is not construction, it is mapping the current process honestly — including the exceptions people handle without noticing they handle them. Those exceptions are what break naive automations.</p>
+<p>A first workflow is usually days rather than weeks. The bulk of the effort is not construction, it is mapping the current process honestly - including the exceptions people handle without noticing they handle them. Those exceptions are what break naive automations.</p>
 <p>We also insist on failure handling from the start. An automation that fails silently is worse than no automation, because people keep trusting it after it has stopped working.</p>
 
 <h2>Getting started</h2>
@@ -110,13 +110,13 @@ export const POSTS = [
     excerpt:
       'WhatsApp is where most Indian buyers actually talk to businesses. This is how to automate qualification, follow-up, and support on it without sounding like a bot.',
     content: `
-<p>For most Indian businesses, WhatsApp is not a marketing channel. It is <em>the</em> channel — where enquiries arrive, negotiations happen, and orders get confirmed. Which makes it strange how much automation effort goes into email sequences and website chat widgets instead.</p>
+<p>For most Indian businesses, WhatsApp is not a marketing channel. It is <em>the</em> channel - where enquiries arrive, negotiations happen, and orders get confirmed. Which makes it strange how much automation effort goes into email sequences and website chat widgets instead.</p>
 
 <h2>What WhatsApp automation actually means</h2>
 <p>It does not mean bulk-messaging strangers. That gets numbers banned and damages the brand. Legitimate automation on WhatsApp covers four things:</p>
 <ul>
   <li><strong>Instant acknowledgement</strong> so an enquiry never sits unanswered</li>
-  <li><strong>Qualification</strong> — asking the two or three questions you would ask anyway</li>
+  <li><strong>Qualification</strong> - asking the two or three questions you would ask anyway</li>
   <li><strong>Follow-up</strong> on conversations that went quiet, stopping the moment someone replies</li>
   <li><strong>Routing and record-keeping</strong> so the CRM reflects the conversation without manual copying</li>
 </ul>
@@ -135,7 +135,7 @@ export const POSTS = [
   <li><strong>Be honest about what it is.</strong> People are far more tolerant of an automated first reply than of discovering a "person" was software.</li>
   <li><strong>Ask one question at a time.</strong> Multi-part questions get partial answers, and partial answers break rigid parsers.</li>
   <li><strong>Always offer a human.</strong> An obvious exit to a real person prevents the frustration loop that makes people abandon the thread entirely.</li>
-  <li><strong>Handle the unexpected reply.</strong> Real conversations do not follow the branch you designed. This is where a language model earns its place over a decision tree — it can interpret an answer that does not match any expected option.</li>
+  <li><strong>Handle the unexpected reply.</strong> Real conversations do not follow the branch you designed. This is where a language model earns its place over a decision tree - it can interpret an answer that does not match any expected option.</li>
 </ul>
 
 <h2>Where to start</h2>
@@ -153,7 +153,7 @@ export const POSTS = [
     excerpt:
       'Most lost leads are not lost to a competitor with a better product. They are lost to whoever replied first. Here is how to automate follow-up without turning it into spam.',
     content: `
-<p>There is a pattern we see in almost every sales operation we audit. The pipeline is not leaking because the team lacks discipline. It is leaking because follow-up depends on a person noticing, remembering, and having time — three things that fail independently.</p>
+<p>There is a pattern we see in almost every sales operation we audit. The pipeline is not leaking because the team lacks discipline. It is leaking because follow-up depends on a person noticing, remembering, and having time - three things that fail independently.</p>
 
 <h2>The first reply matters more than the fifth</h2>
 <p>Buyers rarely contact one vendor. They contact several, then engage seriously with whoever responds while the problem is still front of mind. A thoughtful reply the next morning frequently loses to an adequate reply in two minutes.</p>
@@ -162,15 +162,15 @@ export const POSTS = [
 <h2>What to automate, in order</h2>
 
 <h3>1. Instant acknowledgement</h3>
-<p>The moment a lead enters the pipeline, they get a reply. Not a generic auto-responder — a message that confirms what they asked about and tells them what happens next.</p>
+<p>The moment a lead enters the pipeline, they get a reply. Not a generic auto-responder - a message that confirms what they asked about and tells them what happens next.</p>
 <p>We built our <strong>Intelligent SMS Lead Engagement via HubSpot</strong> system around this: new leads are messaged the instant they enter the pipeline, and their responses are handled rather than dumped into an unmonitored inbox.</p>
 
 <h3>2. Qualification before a human is involved</h3>
 <p>Budget, timeline, and scope questions do not need a salesperson to ask them. Collecting these before the first call means your team spends its time on conversations that can actually close.</p>
-<p>Our <strong>AI-Powered Lead Coordinator</strong> does this for inbound enquiries — pre-qualifying by interpreting what someone actually wrote rather than requiring a correctly filled form.</p>
+<p>Our <strong>AI-Powered Lead Coordinator</strong> does this for inbound enquiries - pre-qualifying by interpreting what someone actually wrote rather than requiring a correctly filled form.</p>
 
 <h3>3. Sequenced follow-up that knows when to stop</h3>
-<p>The hard part of a follow-up sequence is not sending. It is stopping — the instant someone replies, books, or opts out. Sequences that keep firing after a reply are the fastest way to make automation feel like spam.</p>
+<p>The hard part of a follow-up sequence is not sending. It is stopping - the instant someone replies, books, or opts out. Sequences that keep firing after a reply are the fastest way to make automation feel like spam.</p>
 
 <h3>4. Re-engagement of the dormant pipeline</h3>
 <p>Most CRMs contain a large set of leads that went quiet and were never revisited. A periodic, low-pressure re-engagement is often the cheapest pipeline available, because acquisition is already paid for.</p>
@@ -203,7 +203,7 @@ export const POSTS = [
 <p>Optical character recognition has moved well past reading characters off a page. Useful document automation today does several things in sequence:</p>
 <ul>
   <li><strong>Reads the text</strong>, including from photographs taken at an angle in poor light</li>
-  <li><strong>Understands layout</strong> — that this block is a table, this is a header, these belong together</li>
+  <li><strong>Understands layout</strong> - that this block is a table, this is a header, these belong together</li>
   <li><strong>Extracts specific fields</strong> by meaning rather than position, so an invoice with an unfamiliar layout still yields the right total</li>
   <li><strong>Validates</strong> the result against rules you define, and flags what fails</li>
 </ul>
@@ -218,15 +218,15 @@ export const POSTS = [
   <li>Bank statements and reconciliation inputs</li>
   <li>Certificates and records that must be reissued in a structured format</li>
 </ul>
-<p>Adjacent to this is generating documents automatically. Our <strong>Certification Issuance Automation</strong> triggers on course completion and produces and distributes certificates without anyone assembling them by hand — the same problem viewed from the other direction.</p>
+<p>Adjacent to this is generating documents automatically. Our <strong>Certification Issuance Automation</strong> triggers on course completion and produces and distributes certificates without anyone assembling them by hand - the same problem viewed from the other direction.</p>
 
 <h2>Where a human still belongs</h2>
 <p>Be sceptical of anyone promising full automation with no review step. Two things reliably need people:</p>
-<p><strong>Low-confidence extractions.</strong> A good system knows when it is unsure and routes those documents for review rather than guessing. The target is not zero human involvement — it is human involvement only on genuine exceptions.</p>
+<p><strong>Low-confidence extractions.</strong> A good system knows when it is unsure and routes those documents for review rather than guessing. The target is not zero human involvement - it is human involvement only on genuine exceptions.</p>
 <p><strong>Consequential decisions.</strong> Extraction can be automated. Approving a payment based on it is a policy choice, and should stay one.</p>
 
 <h2>How to evaluate it honestly</h2>
-<p>Do not test on clean samples. Collect fifty documents from your actual intake — including the crumpled scan, the phone photo, and the one with handwriting in the margin — and measure against those. Accuracy on ideal inputs tells you very little about how the system will behave on a Tuesday.</p>
+<p>Do not test on clean samples. Collect fifty documents from your actual intake - including the crumpled scan, the phone photo, and the one with handwriting in the margin - and measure against those. Accuracy on ideal inputs tells you very little about how the system will behave on a Tuesday.</p>
 `,
   },
 
@@ -244,16 +244,16 @@ export const POSTS = [
 <h2>The distinction</h2>
 <p>A <strong>chatbot</strong> answers. Given a question, it retrieves a response. Its job ends with the reply.</p>
 <p>An <strong>agent</strong> acts. It takes a goal, decides which steps to take, uses tools to take them, checks the outcome, and adapts. The reply, if there is one, is a side effect.</p>
-<p>Put differently: if you can express the entire behaviour as a decision tree, you want a workflow automation — cheaper, faster, and far more predictable. You need an agent when the input is unstructured enough that enumerating the branches is not possible.</p>
+<p>Put differently: if you can express the entire behaviour as a decision tree, you want a workflow automation - cheaper, faster, and far more predictable. You need an agent when the input is unstructured enough that enumerating the branches is not possible.</p>
 
 <h2>A concrete example</h2>
-<p>Our <strong>AI-Powered Lead Coordinator</strong> manages inbound enquiries from prospective tenants. It pre-qualifies by analysing what each person actually wrote — not by matching a dropdown value.</p>
+<p>Our <strong>AI-Powered Lead Coordinator</strong> manages inbound enquiries from prospective tenants. It pre-qualifies by analysing what each person actually wrote - not by matching a dropdown value.</p>
 <p>That is agent territory because the input is free text with unlimited variation. Someone asking about "a place near the metro, moving in next month, under 25k" has expressed three criteria in one sentence in a form no dropdown captures. A rules engine would need an unbounded list of patterns; a language model reads it.</p>
 
 <h2>What a production agent needs</h2>
 <p>The prototype is the easy part. Systems that survive contact with real users need:</p>
 <ul>
-  <li><strong>Tools with real boundaries.</strong> An agent is only as useful as what it can do — and only as safe as what it cannot. Scope permissions deliberately.</li>
+  <li><strong>Tools with real boundaries.</strong> An agent is only as useful as what it can do - and only as safe as what it cannot. Scope permissions deliberately.</li>
   <li><strong>Grounding in your data.</strong> A general model knows nothing about your inventory, pricing, or policies. Retrieval over your own sources is what makes answers correct rather than plausible.</li>
   <li><strong>A defined failure path.</strong> The agent must be able to say it does not know and hand over cleanly. Confident wrong answers are the main way these systems damage trust.</li>
   <li><strong>Observability.</strong> You need to see what it decided and why. Without traces you cannot debug it, and you cannot improve it.</li>
@@ -278,14 +278,14 @@ export const POSTS = [
     excerpt:
       'Most CRMs assume leads arrive by email and get worked by desk-bound reps. Indian sales does not run that way. That gap is why we built Kredoo.',
     content: `
-<p>Ad spend on Meta and Google generates a lead. The lead sits in an ads dashboard. Someone exports a CSV, uploads it to the CRM, and a rep gets to it later that day — or the next. By then the buyer has spoken to two competitors.</p>
+<p>Ad spend on Meta and Google generates a lead. The lead sits in an ads dashboard. Someone exports a CSV, uploads it to the CRM, and a rep gets to it later that day - or the next. By then the buyer has spoken to two competitors.</p>
 <p>This gap between where leads arrive and where they are worked is where most ad budget quietly goes to waste.</p>
 
 <h2>What we built</h2>
 <p><strong>Kredoo</strong> is a sales CRM built around how Indian teams actually sell. Three decisions define it:</p>
 
 <h3>Leads arrive automatically</h3>
-<p>Kredoo captures leads from Meta and Google Ads directly, with no export step. A lead exists in the CRM within seconds of the form being submitted — which is the only way instant follow-up is possible at all.</p>
+<p>Kredoo captures leads from Meta and Google Ads directly, with no export step. A lead exists in the CRM within seconds of the form being submitted - which is the only way instant follow-up is possible at all.</p>
 
 <h3>Follow-up runs on WhatsApp</h3>
 <p>Email open rates are not the constraint in Indian B2B and B2C sales; whether the message is seen at all is. Kredoo drives follow-up through WhatsApp, where buyers already are, with automation built via n8n so sequences can be shaped to the business rather than fixed by the vendor.</p>
@@ -294,7 +294,7 @@ export const POSTS = [
 <p>Most CRMs treat automation as an integration you configure later. Kredoo assumes from the outset that acknowledgement, qualification, and reminders are automated, and that a person enters when the conversation is worth their time.</p>
 
 <h2>Who it suits</h2>
-<p>Kredoo fits teams running paid acquisition where response speed decides the outcome — real estate, education, healthcare, and services businesses spending on lead-generation ads.</p>
+<p>Kredoo fits teams running paid acquisition where response speed decides the outcome - real estate, education, healthcare, and services businesses spending on lead-generation ads.</p>
 <p>It is a poor fit for long, committee-driven enterprise cycles with heavy forecasting requirements. That is a different product category and we would tell you so.</p>
 
 <h2>The underlying point</h2>
