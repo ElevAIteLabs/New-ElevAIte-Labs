@@ -10,6 +10,38 @@ import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '../seo/siteMeta';
  * the title and description come from the post itself. Tags carry data-seo
  * so main.jsx can clear the prerendered copies on boot, same as Seo.jsx.
  */
+/**
+ * Adds an id to every h2 in the article body and returns the list, so the
+ * sidebar can link to each section. Authors write plain HTML in the admin
+ * panel and should not have to hand-write anchors.
+ *
+ * Runs on a detached document, so nothing is inserted into the live page
+ * before React renders it.
+ */
+const buildBody = (html) => {
+  if (!html) return { bodyHtml: '', headings: [] };
+  if (typeof DOMParser === 'undefined') return { bodyHtml: html, headings: [] };
+
+  const doc = new DOMParser().parseFromString(`<body>${html}</body>`, 'text/html');
+  const used = new Set();
+  const headings = [];
+
+  doc.body.querySelectorAll('h2').forEach((h) => {
+    const text = h.textContent.trim();
+    if (!text) return;
+
+    let id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'section';
+    let n = 2;
+    while (used.has(id)) id = `${id}-${n++}`;
+    used.add(id);
+
+    h.id = id;
+    headings.push({ id, text });
+  });
+
+  return { bodyHtml: doc.body.innerHTML, headings };
+};
+
 const BlogPost = () => {
   const { slug } = useParams();
 
@@ -60,6 +92,8 @@ const BlogPost = () => {
   const canonical = `${SITE_URL}/learn/${post.slug}`;
   const cover = postImageSrc(post.image);
   const description = (post.excerpt || '').slice(0, 300);
+  const metaLine = postMeta(post);
+  const { bodyHtml, headings } = buildBody(post.content);
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -91,35 +125,53 @@ const BlogPost = () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
 
-      <article>
-        <section>
-          <div className="wrap" style={{ maxWidth: '760px' }}>
-            <div className="fade-up">
-              <Link className="link-arrow" to="/learn" style={{ marginBottom: '24px', display: 'inline-block' }}>
-                <span className="arrow">←</span> Back to Learn
-              </Link>
-              {postMeta(post) && <div className="meta" style={{ marginTop: '12px' }}>{postMeta(post)}</div>}
-              <h1 className="display" style={{ marginTop: '12px' }}>{post.title}</h1>
-              {post.excerpt && (
-                <p style={{ fontSize: '20px', marginTop: '20px', color: 'var(--muted)', lineHeight: 1.6 }}>
-                  {post.excerpt}
-                </p>
-              )}
-            </div>
+      <header className="article-hero">
+        <div className="wrap">
+          <Link className="article-back" to="/learn">
+            <span className="arrow">←</span> Back to Learn
+          </Link>
+          <div className="article-head">
+            {post.tag && <span className="post-tag">{post.tag}</span>}
+            <h1>{post.title}</h1>
+            {metaLine && <div className="article-meta">{metaLine}</div>}
+            {post.excerpt && <p className="article-standfirst">{post.excerpt}</p>}
+          </div>
+        </div>
+      </header>
 
+      <article className="article">
+        <div className="wrap article-layout">
+          {headings.length > 1 && (
+            <nav className="toc" aria-label="On this page">
+              <p className="toc-label">On this page</p>
+              <ul>
+                {headings.map((h) => (
+                  <li key={h.id}>
+                    <a href={`#${h.id}`}>{h.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
+
+          <div className="article-main">
             {cover && (
-              <div className="fade-up" style={{ margin: '40px 0', borderRadius: '20px', overflow: 'hidden' }}>
-                <img src={cover} alt={post.title} style={{ width: '100%', display: 'block' }} />
+              <div className="article-cover">
+                <img src={cover} alt={post.title} />
               </div>
             )}
+            {/* Body is authored in the admin panel and may contain basic HTML.
+                Headings are given ids above so the table of contents can link
+                to them. */}
+            <div className="prose" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
 
-            {/* Body is authored in the admin panel and may contain basic HTML. */}
-            <div
-              className="post-body fade-up"
-              dangerouslySetInnerHTML={{ __html: post.content || '' }}
-            />
+            <div className="article-foot">
+              <Link className="link-arrow" to="/learn">
+                <span className="arrow">←</span> Back to all articles
+              </Link>
+            </div>
           </div>
-        </section>
+        </div>
       </article>
     </>
   );

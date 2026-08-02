@@ -78,7 +78,8 @@ const Services = () => {
         .tool-logo { position: absolute; z-index: 3; border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); background: #fff; padding: 8px; object-fit: contain; }
         .tool-logo-n8n    { width: 56px; height: 56px; top: 30px;  left: 8%;  animation: floatTool1 6s ease-in-out infinite; }
         .tool-logo-wa     { width: 56px; height: 56px; top: 50px;  right: 6%; animation: floatTool2 7s ease-in-out infinite; padding: 6px; }
-        .tool-logo-make   { width: 60px; height: 60px; bottom: 80px; left: 4%; animation: floatTool3 5.5s ease-in-out infinite; }
+        /* Make's mark is ~1.9:1 — a square tile letterboxed it into a stamp */
+        .tool-logo-make   { width: 88px; height: 50px; padding: 4px 8px; bottom: 80px; left: 4%; animation: floatTool3 5.5s ease-in-out infinite; }
         .tool-logo-zapier { width: 56px; height: 56px; bottom: 60px; right: 4%; animation: floatTool4 6.5s ease-in-out infinite; }
         @keyframes floatTool1 { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-12px) rotate(4deg)} }
         @keyframes floatTool2 { 0%,100%{transform:translateY(0) rotate(3deg)}  50%{transform:translateY(-16px) rotate(-3deg)} }
@@ -89,7 +90,7 @@ const Services = () => {
           .arkin-svc-img { height: 320px; }
           .tool-logo-n8n    { width: 44px; height: 44px; top: 16px; left: 6%; }
           .tool-logo-wa     { width: 44px; height: 44px; top: 20px; right: 6%; }
-          .tool-logo-make   { width: 48px; height: 48px; bottom: 40px; left: 4%; }
+          .tool-logo-make   { width: 68px; height: 42px; bottom: 40px; left: 4%; }
           .tool-logo-zapier { width: 44px; height: 44px; bottom: 30px; right: 4%; }
         }
       `}</style>

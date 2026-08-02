@@ -57,9 +57,12 @@ const Work = () => {
         .filter-chip { padding: 8px 16px; border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--body); font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
         .filter-chip.active { background: var(--text); color: #fff; border-color: var(--text); }
         .filter-chip:hover:not(.active) { border-color: var(--text); color: var(--text); }
-        .case-row { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; padding: 56px 0; border-bottom: 1px solid var(--border); align-items: center; }
+        /* Equal tracks: the order swap moves the media into the other column
+           on alternating rows, so unequal tracks gave every second row a
+           differently-sized image box. */
+        .case-row { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; padding: 56px 0; border-bottom: 1px solid var(--border); align-items: center; }
         .case-row.even > .case-img { order: -1; }
-        .case-img { aspect-ratio: 4/3; }
+        .case-img { aspect-ratio: 16/9; }
         .case-row .industry-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); font-weight: 600; margin-bottom: 14px; }
         .case-row h2 { font-family: var(--display); font-size: clamp(32px, 4vw, 48px); font-weight: 600; color: var(--text); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 18px; }
         .case-row p { font-size: 17px; line-height: 1.6; margin-bottom: 24px; max-width: 540px; }
@@ -68,6 +71,8 @@ const Work = () => {
         .case-results .lbl { font-size: 12px; color: var(--body); margin-top: 4px; }
         .case-shot { border-radius: var(--radius-card-lg); overflow: hidden; border: 1px solid var(--border); box-shadow: 0 20px 48px rgba(0,0,0,0.10); background: var(--card); }
         .case-shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+        /* Logos and other odd-shaped sources: show whole, don't crop to a slab */
+        .case-shot img.is-contained { object-fit: contain; padding: 7%; background: var(--white); }
         .case-tile { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, var(--text) 0%, #2b2b2b 100%); color: #fff; }
         .case-tile span { font-family: var(--display); font-size: 64px; font-weight: 700; line-height: 1; }
         .case-tile em { font-style: normal; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.6; }

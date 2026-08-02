@@ -88,7 +88,8 @@ const Products = () => {
         .mock-btn { font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 6px; background: var(--accent); color: #fff; }
 
         /* CMS-added products: real artwork if we have it, branded tile if not */
-        .product-shot { width: 100%; border-radius: var(--radius-card-lg); border: 1px solid var(--border); box-shadow: 0 20px 48px rgba(0,0,0,0.10); display: block; }
+        .product-shot { width: 100%; aspect-ratio: 16/9; object-fit: cover; object-position: top center; border-radius: var(--radius-card-lg); border: 1px solid var(--border); box-shadow: 0 20px 48px rgba(0,0,0,0.10); display: block; background: var(--white); }
+        .product-shot.is-contained { object-fit: contain; padding: 6%; }
         .product-tile { aspect-ratio: 4/3; border-radius: var(--radius-card-lg); background: linear-gradient(135deg, var(--text) 0%, #2b2b2b 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #fff; }
         .product-tile span { font-family: var(--display); font-size: 56px; font-weight: 700; line-height: 1; opacity: 0.9; }
         .product-tile em { font-style: normal; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.6; }
