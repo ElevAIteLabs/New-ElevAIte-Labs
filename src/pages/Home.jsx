@@ -280,30 +280,25 @@ const Home = () => {
             ) : projects.length > 0 ? (
               projects
                 .filter(p => p.category !== 'mobile-app')
-                .slice(0, 7)
-                .map((project, index) => {
-                  const classes = ['wc-w1', 'wc-w2', 'wc-w3', 'wc-w4', 'wc-w5', 'wc-w6', 'wc-w7'];
-                  const cardClass = classes[index % classes.length];
-                  return (
-                    <Link className={`work-card ${cardClass} fade-up`} to="/work" key={project.id || index}>
-                      <div className="ph" style={{ padding: 0, background: 'transparent', border: 'none' }}>
-                        <MediaOrTile
-                          src={project.image}
-                          alt={project.title}
-                          label={project.industry}
-                          className="work-card-shot"
-                          tileClassName="work-card-tile"
-                        />
-                        <span className="ph-label" style={{ position: 'absolute', bottom: '14px', left: '14px' }}>{project.industry}</span>
-                      </div>
-                      <div className="work-card-body">
-                        <div className="industry">{project.industry}</div>
-                        <h3>{project.title}</h3>
-                        <div className="result">{project.description}</div>
-                      </div>
-                    </Link>
-                  );
-                })
+                .slice(0, 6)
+                .map((project, index) => (
+                  <Link className="work-card fade-up" to="/work" key={project.id || index}>
+                    <div className="wc-media">
+                      <MediaOrTile
+                        src={project.image}
+                        alt={project.title}
+                        className="work-card-shot"
+                        tileClassName="work-card-tile"
+                      />
+                    </div>
+                    <div className="work-card-body">
+                      <div className="industry">{project.industry}</div>
+                      <h3>{project.title}</h3>
+                      <div className="result">{project.description}</div>
+                      <span className="wc-cta">View case study <span className="arrow">→</span></span>
+                    </div>
+                  </Link>
+                ))
             ) : (
               <div style={{ padding: '20px', color: 'var(--body)' }}>No projects found.</div>
             )}

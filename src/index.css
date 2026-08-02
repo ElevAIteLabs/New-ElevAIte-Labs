@@ -37,6 +37,9 @@
   --sp-6: 48px;
   --sp-7: 64px;
   --sp-8: 88px;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 * {
@@ -1050,120 +1053,194 @@ body[data-imagery="geometric"] .ph::before {
 
 /* ---------- Featured Work masonry ---------- */
 
+/* Uniform 3-up grid. Project screenshots arrive at uncontrolled aspect ratios,
+   so the layout is the constant and the image is the variable — a fixed
+   aperture crops them instead of letting each one dictate its card's height. */
 .work-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 24px;
-  margin-top: 56px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-5) var(--sp-4);
+  margin-top: var(--sp-6);
 }
 
 .work-card {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  cursor: pointer;
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    box-shadow 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  will-change: transform;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card-lg);
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(15, 15, 15, 0.04);
+  transition:
+    transform 180ms var(--ease-out),
+    box-shadow 180ms var(--ease-out),
+    border-color 180ms ease;
 }
 
-.work-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 48px -12px rgba(15, 15, 15, 0.14);
-}
-
-.work-card .ph {
-  border-radius: 0;
-  border: none;
+/* The fixed aperture. Screenshot bleeds off the bottom edge so it reads as a
+   window peek rather than a shrunk-to-fit full page. */
+/* 16/9 rather than 16/10: the project screenshots measure 1.77–2.10, and the
+   24px side padding narrows the inner box further — a taller well made `cover`
+   crop the left/right edges hard enough to clip words out of the headings. */
+.wc-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--card);
   border-bottom: 1px solid var(--border);
-  height: 100%;
-  min-height: 220px;
-  flex: 1;
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transform-origin: center;
+  padding: var(--sp-3) var(--sp-3) 0;
+  overflow: hidden;
 }
 
-.work-card:hover .ph {
-  transform: scale(1.03);
+.work-card-shot,
+.work-card-tile {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px 8px 0 0;
+  transform-origin: top center;
+  transition: transform 260ms var(--ease-out);
+}
+
+.work-card-shot {
+  object-fit: cover;
+  object-position: top center;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  box-shadow: 0 8px 20px -10px rgba(15, 15, 15, 0.22);
+  background: var(--white);
+}
+
+.work-card-tile {
+  aspect-ratio: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-1);
+  background: linear-gradient(135deg, var(--text) 0%, #2b2b2b 100%);
+  color: var(--white);
 }
 
 .work-card-body {
-  padding: 22px 24px 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--sp-4);
 }
 
 .work-card .industry {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
   font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
   font-weight: 600;
-  margin-bottom: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: var(--sp-2);
+}
+
+.work-card .industry::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: none;
 }
 
 .work-card h3 {
   font-family: var(--display);
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
   color: var(--text);
-  margin-bottom: 8px;
-  letter-spacing: -0.01em;
+  margin-bottom: var(--sp-1);
 }
 
 .work-card .result {
-  font-size: 14px;
+  font-size: 14.5px;
+  line-height: 1.55;
   color: var(--body);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.wc-w1 {
-  grid-column: span 4;
+/* Pinned to the bottom so card bodies align across a row */
+.wc-cta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: var(--sp-3);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
 }
 
-.wc-w1 .ph {
-  min-height: 320px;
+.wc-cta .arrow {
+  transition: transform 160ms var(--ease-out);
 }
 
-.wc-w2 {
+/* Wide variant is data-driven (project.featured), never index-driven */
+.work-card--lead {
   grid-column: span 2;
 }
 
-.wc-w3 {
-  grid-column: span 2;
+.work-card--lead .wc-media {
+  aspect-ratio: 2 / 1;
 }
 
-.wc-w3 .ph {
-  min-height: 280px;
+.work-card--lead h3 {
+  font-size: 26px;
 }
 
-.wc-w4 {
-  grid-column: span 2;
+.work-card--lead .result {
+  -webkit-line-clamp: 3;
 }
 
-.wc-w5 {
-  grid-column: span 2;
+@media (hover: hover) and (pointer: fine) {
+  .work-card:hover {
+    transform: translateY(-4px);
+    border-color: #D4D0C6;
+    box-shadow: 0 14px 32px -14px rgba(15, 15, 15, 0.16);
+    z-index: 2;
+  }
+
+  .work-card:hover .work-card-shot,
+  .work-card:hover .work-card-tile {
+    transform: scale(1.02);
+  }
+
+  .work-card:hover .wc-cta .arrow {
+    transform: translateX(4px);
+  }
 }
 
-.wc-w6 {
-  grid-column: span 3;
+.work-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px -14px rgba(15, 15, 15, 0.16);
+  z-index: 2;
 }
 
-.wc-w6 .ph {
-  min-height: 260px;
+.work-card:focus-visible .wc-cta .arrow {
+  transform: translateX(4px);
 }
 
-.wc-w7 {
-  grid-column: span 3;
-}
-
-.wc-w7 .ph {
-  min-height: 260px;
+.work-card:active {
+  transform: translateY(-1px) scale(0.995);
+  transition-duration: 100ms;
 }
 
 .work-cta {
   text-align: center;
-  margin-top: 56px;
+  margin-top: var(--sp-6);
 }
 
 /* ---------- Products ---------- */
@@ -1850,12 +1927,37 @@ footer .logo {
   transform: translateY(0);
 }
 
+/* Work grid staggers by column position, not child index — the project count
+   is API-driven, so nth-child(1..7) left everything past the 7th at 0ms. */
+.work-grid>.fade-up {
+  transition-delay: 0ms;
+}
+
+.work-grid>.fade-up:nth-child(3n + 2) {
+  transition-delay: 60ms;
+}
+
+.work-grid>.fade-up:nth-child(3n + 3) {
+  transition-delay: 120ms;
+}
+
+@media (max-width: 1100px) {
+
+  .work-grid>.fade-up:nth-child(3n + 2),
+  .work-grid>.fade-up:nth-child(3n + 3) {
+    transition-delay: 0ms;
+  }
+
+  .work-grid>.fade-up:nth-child(2n) {
+    transition-delay: 60ms;
+  }
+}
+
 /* Stagger siblings inside common parents */
 .stagger>.fade-up:nth-child(1),
 .testimonials-grid>.fade-up:nth-child(1),
 .products-grid>.fade-up:nth-child(1),
 .reels-row>.fade-up:nth-child(1),
-.work-grid>.fade-up:nth-child(1),
 .process-grid>.fade-up:nth-child(1),
 .values-grid>.fade-up:nth-child(1),
 .team-grid>.fade-up:nth-child(1) {
@@ -1866,7 +1968,6 @@ footer .logo {
 .testimonials-grid>.fade-up:nth-child(2),
 .products-grid>.fade-up:nth-child(2),
 .reels-row>.fade-up:nth-child(2),
-.work-grid>.fade-up:nth-child(2),
 .process-grid>.fade-up:nth-child(2),
 .values-grid>.fade-up:nth-child(2),
 .team-grid>.fade-up:nth-child(2) {
@@ -1877,7 +1978,6 @@ footer .logo {
 .testimonials-grid>.fade-up:nth-child(3),
 .products-grid>.fade-up:nth-child(3),
 .reels-row>.fade-up:nth-child(3),
-.work-grid>.fade-up:nth-child(3),
 .process-grid>.fade-up:nth-child(3),
 .values-grid>.fade-up:nth-child(3),
 .team-grid>.fade-up:nth-child(3) {
@@ -1888,7 +1988,6 @@ footer .logo {
 .testimonials-grid>.fade-up:nth-child(4),
 .products-grid>.fade-up:nth-child(4),
 .reels-row>.fade-up:nth-child(4),
-.work-grid>.fade-up:nth-child(4),
 .process-grid>.fade-up:nth-child(4),
 .values-grid>.fade-up:nth-child(4),
 .team-grid>.fade-up:nth-child(4) {
@@ -1896,19 +1995,16 @@ footer .logo {
 }
 
 .stagger>.fade-up:nth-child(5),
-.work-grid>.fade-up:nth-child(5),
 .team-grid>.fade-up:nth-child(5) {
   transition-delay: 320ms;
 }
 
 .stagger>.fade-up:nth-child(6),
-.work-grid>.fade-up:nth-child(6),
 .team-grid>.fade-up:nth-child(6) {
   transition-delay: 400ms;
 }
 
-.stagger>.fade-up:nth-child(7),
-.work-grid>.fade-up:nth-child(7) {
+.stagger>.fade-up:nth-child(7) {
   transition-delay: 480ms;
 }
 
@@ -2074,6 +2170,22 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
   .reels-row[style*="repeat(5"] {
     grid-template-columns: repeat(3, 1fr) !important;
   }
+
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .work-card--lead {
+    grid-column: span 2;
+  }
+
+  .work-card--lead .wc-media {
+    aspect-ratio: 16 / 9;
+  }
+
+  .work-card h3 {
+    font-size: 22px;
+  }
 }
 
 @media (max-width: 700px) {
@@ -2128,17 +2240,16 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
   }
 
   .work-grid {
-    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-4);
+    margin-top: var(--sp-5);
   }
 
-  .wc-w1,
-  .wc-w2,
-  .wc-w3,
-  .wc-w4,
-  .wc-w5,
-  .wc-w6,
-  .wc-w7 {
-    grid-column: span 2;
+  .wc-media {
+    padding: var(--sp-3) var(--sp-3) 0;
+  }
+
+  .work-card h3 {
+    font-size: 20px;
   }
 
   .products-grid {
@@ -2213,6 +2324,28 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
 
   .page-hero {
     padding: 40px 0 32px;
+  }
+
+  .work-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .work-card--lead {
+    grid-column: span 1;
+  }
+
+  /* Taller ratio: a 16/10 crop on a 320px viewport leaves an unreadable sliver */
+  .wc-media,
+  .work-card--lead .wc-media {
+    aspect-ratio: 4 / 3;
+  }
+
+  .work-card-body {
+    padding: var(--sp-3);
+  }
+
+  .work-card .result {
+    -webkit-line-clamp: 3;
   }
 
   .hero-cta-row {
@@ -2313,18 +2446,6 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
 
 .reel-media[style*="background-image"]::before {
   opacity: 0;
-}
-
-/* Cards come forward on hover - stronger lift + z-index */
-.work-card {
-  position: relative;
-  z-index: 1;
-}
-
-.work-card:hover {
-  transform: translateY(-10px) !important;
-  box-shadow: 0 32px 64px -10px rgba(15, 15, 15, 0.22) !important;
-  z-index: 2;
 }
 
 .product-card {
@@ -2627,6 +2748,143 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
 
 .blog-list-item:hover .cover img {
   transform: scale(1.05);
+}
+
+/* ---------- Article cards (Learn page) ----------
+   Editorial card grid: category pill, monospace meta line, bold headline,
+   excerpt, read link. No cover image, so CMS posts and the older hand-built
+   articles present identically. */
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 56px;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+  text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(30, 136, 229, 0.4);
+  box-shadow: 0 22px 48px -20px rgba(10, 14, 26, 0.3);
+}
+
+.post-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.post-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.post-tag {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #1461a0;
+  background: rgba(30, 136, 229, 0.12);
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.post-dates {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.post-card h3 {
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.28;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  margin-bottom: 12px;
+  transition: color 0.2s ease;
+}
+
+.post-card:hover h3 {
+  color: var(--accent);
+}
+
+.post-card p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--body);
+  margin-bottom: 22px;
+}
+
+.post-read {
+  margin-top: auto;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.post-card:hover .post-read {
+  color: var(--accent);
+}
+
+.post-read .arrow {
+  transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.post-card:hover .post-read .arrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 1024px) {
+  .post-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .post-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .post-card {
+    padding: 24px;
+  }
+  /* Nudge the summary up on small screens; 14.5px reads tight on a phone. */
+  .post-card p {
+    font-size: 15.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card,
+  .post-read .arrow {
+    transition: none;
+  }
+  .post-card:hover {
+    transform: none;
+  }
 }
 
 /* Shown when a post has no cover image yet, so the two-column layout still
@@ -3558,3 +3816,49 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
   font-size: 15px;
 }
 .post-body code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; }
+
+/* ---------- Reduced motion ----------
+   Honour the OS setting: drop transforms and scroll reveals, but keep the
+   non-motion hover/focus signals so the cards stay legible as interactive. */
+@media (prefers-reduced-motion: reduce) {
+
+  .work-card,
+  .work-card-shot,
+  .work-card-tile,
+  .wc-cta .arrow {
+    transition-duration: 0.01ms !important;
+  }
+
+  .work-card:hover,
+  .work-card:focus-visible,
+  .work-card:active {
+    transform: none;
+  }
+
+  .work-card:hover .work-card-shot,
+  .work-card:hover .work-card-tile {
+    transform: none;
+  }
+
+  .work-card:hover,
+  .work-card:focus-visible {
+    border-color: var(--accent);
+    box-shadow: 0 14px 32px -14px rgba(15, 15, 15, 0.16);
+  }
+
+  .fade-up,
+  .fade-left,
+  .fade-right {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .arkin-hero-img,
+  .arkin-char,
+  .arkin-glow,
+  .arkin-svc-img,
+  .tool-logo {
+    animation: none !important;
+  }
+}

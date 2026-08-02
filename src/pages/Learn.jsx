@@ -1,7 +1,48 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { postsApiUrl } from '../seo/posts';
-import MediaOrTile from '../components/MediaOrTile';
+
+// Articles written before the CMS existed. They live as their own page
+// components, so they are described here to render through the same card as
+// everything coming from the admin panel.
+const LEGACY_ARTICLES = [
+  {
+    href: '/blog-kredoo',
+    tag: 'Product',
+    readTime: '7 min read',
+    date: null,
+    title: 'Introducing Kredoo: The Lead CRM Built for Indian Sales Teams',
+    excerpt:
+      "We spent six months watching Indian sales teams struggle with CRMs designed for Western markets - too complex, too expensive, and completely ignorant of how Indian B2B actually works. So we built Kredoo. Here's what it does and why it exists.",
+  },
+  {
+    href: '/blog-automation',
+    tag: 'Operations',
+    readTime: '9 min read',
+    date: null,
+    title: 'How Indian SMBs Are Losing 30 Hours a Week - and How to Stop',
+    excerpt:
+      "The same five manual workflows appear in nearly every business we audit. Lead follow-up, CRM hygiene, appointment scheduling, invoice chasing, and content publishing. Together they eat 30+ hours of someone's week. Here's the complete breakdown and what to automate first.",
+  },
+  {
+    href: '/blog-whatsapp',
+    tag: 'Playbook',
+    readTime: '12 min read',
+    date: null,
+    title: 'The WhatsApp Automation Playbook for Indian Businesses',
+    excerpt:
+      '450 million Indians use WhatsApp daily. Your best leads are on it right now, and most businesses are responding manually - or not at all. This is the complete guide to building AI agents on WhatsApp that qualify, nurture, and book, without a single human in the loop.',
+  },
+];
+
+// "2 Aug 2026". Returns null for missing or unparseable values so the meta
+// line simply drops the segment instead of rendering "Invalid Date".
+const formatPostDate = (value) => {
+  if (!value) return null;
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+};
 
 const Learn = () => {
   const [subscribed, setSubscribed] = useState(false);
@@ -17,6 +58,19 @@ const Learn = () => {
       .catch(() => {});
     return () => { cancelled = true; };
   }, []);
+
+  // CMS posts first (newest work), then the pre-CMS articles.
+  const articles = [
+    ...posts.map((p) => ({
+      href: `/learn/${p.slug}`,
+      tag: p.tag,
+      readTime: p.read_time,
+      date: p.published_at,
+      title: p.title,
+      excerpt: p.excerpt,
+    })),
+    ...LEGACY_ARTICLES,
+  ];
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -173,63 +227,20 @@ const Learn = () => {
             <span className="tag">Articles</span>
             <h2 className="display">Long-form, written by people who ship.</h2>
           </div>
-          <div className="blog-list">
-            {posts.map((post) => (
-              <Link className="blog-list-item fade-up" key={post.id} to={`/learn/${post.slug}`}>
-                {/* The cover is always rendered. .blog-list-item is a
-                    300px + 1fr grid, so omitting it when a post has no image
-                    pushed the text into the narrow column. */}
-                <div className="cover">
-                  <MediaOrTile
-                    src={post.image}
-                    alt={post.title}
-                    label={post.tag}
-                    tileClassName="blog-tile"
-                  />
+          <div className="post-grid">
+            {articles.map((article) => (
+              <Link className="post-card fade-up" key={article.href} to={article.href}>
+                <div className="post-card-meta">
+                  {article.tag && <span className="post-tag">{article.tag}</span>}
+                  <span className="post-dates">
+                    {[formatPostDate(article.date), article.readTime].filter(Boolean).join(' · ')}
+                  </span>
                 </div>
-                <div>
-                  <div className="meta">
-                    {[post.tag, post.read_time, post.author].filter(Boolean).join(' · ')}
-                  </div>
-                  <h3>{post.title}</h3>
-                  <p className="excerpt">{post.excerpt}</p>
-                  <span className="link-arrow">Read article <span className="arrow">→</span></span>
-                </div>
+                <h3>{article.title}</h3>
+                <p>{article.excerpt}</p>
+                <span className="post-read">Read the post <span className="arrow">→</span></span>
               </Link>
             ))}
-            <Link className="blog-list-item fade-up" to="/blog-kredoo">
-              <div className="cover">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&q=80&auto=format" alt="Kredoo CRM" loading="lazy" />
-              </div>
-              <div>
-                <div className="meta">Product · 7 min read · ElevAIte Labs</div>
-                <h3>Introducing Kredoo: The Lead CRM Built for Indian Sales Teams</h3>
-                <p className="excerpt">We spent six months watching Indian sales teams struggle with CRMs designed for Western markets - too complex, too expensive, and completely ignorant of how Indian B2B actually works. So we built Kredoo. Here's what it does and why it exists.</p>
-                <span className="link-arrow">Read article <span className="arrow">→</span></span>
-              </div>
-            </Link>
-            <Link className="blog-list-item fade-up" to="/blog-automation">
-              <div className="cover">
-                <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&h=400&fit=crop&q=80&auto=format" alt="AI automation" loading="lazy" />
-              </div>
-              <div>
-                <div className="meta">Operations · 9 min read · Vikram Shah</div>
-                <h3>How Indian SMBs Are Losing 30 Hours a Week - and How to Stop</h3>
-                <p className="excerpt">The same five manual workflows appear in nearly every business we audit. Lead follow-up, CRM hygiene, appointment scheduling, invoice chasing, and content publishing. Together they eat 30+ hours of someone's week. Here's the complete breakdown and what to automate first.</p>
-                <span className="link-arrow">Read article <span className="arrow">→</span></span>
-              </div>
-            </Link>
-            <Link className="blog-list-item fade-up" to="/blog-whatsapp">
-              <div className="cover">
-                <img src="https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=600&h=400&fit=crop&q=80&auto=format" alt="WhatsApp automation" loading="lazy" />
-              </div>
-              <div>
-                <div className="meta">Playbook · 12 min read · Ananya Krishnan</div>
-                <h3>The WhatsApp Automation Playbook for Indian Businesses</h3>
-                <p className="excerpt">450 million Indians use WhatsApp daily. Your best leads are on it right now, and most businesses are responding manually - or not at all. This is the complete guide to building AI agents on WhatsApp that qualify, nurture, and book, without a single human in the loop.</p>
-                <span className="link-arrow">Read article <span className="arrow">→</span></span>
-              </div>
-            </Link>
           </div>
         </div>
       </section>
