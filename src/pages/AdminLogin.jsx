@@ -96,7 +96,7 @@ const AdminLogin = () => {
             margin: '0 auto 24px',
             boxShadow: '0 0 20px rgba(30,136,229,0.3)'
           }}>
-            <img src="/favicon.png" alt="ElevAIte Labs" style={{ height: '50px', width: '100px' }} />
+            <img src="/favicon.png" alt="ElevAIte Labs" style={{ height: '56px', width: '56px', objectFit: 'contain' }} />
           </div>
           <h1 style={{ fontSize: '28px', fontWeight: '800', color: '#fff', letterSpacing: '-0.02em', marginBottom: '8px' }}>Welcome Back</h1>
           <p style={{ color: '#94a3b8', fontSize: '15px' }}>Enter your credentials to access the lab.</p>

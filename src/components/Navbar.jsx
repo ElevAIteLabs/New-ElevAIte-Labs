@@ -53,7 +53,9 @@ const Navbar = () => {
       <nav className={`nav ${scrolled ? 'scrolled' : ''}`} id="main-nav">
         <div className="nav-inner">
           <Link to="/" className="logo">
-            <img src="/favicon.png" alt="ElevAIte Labs" style={{ height: '52px', width: 'auto', display: 'block' }} />
+            {/* logo-mark is the transparent cut of the same square mark - the
+                white-backed favicon.png renders as a visible tile on the nav. */}
+            <img src="/pictures/logo-mark.png" alt="ElevAIte Labs" style={{ height: '76px', width: 'auto', display: 'block' }} />
           </Link>
           <div className="nav-links">
             {items.map((item) => (
@@ -94,7 +96,7 @@ const Navbar = () => {
       >
         <div className="nav-sidebar-head">
           <Link to="/" className="logo">
-            <img src="/pictures/logo.png" alt="ElevAIte Labs" style={{ height: '64px', width: 'auto', display: 'block', marginLeft: '20px' }} />
+            <img src="/pictures/logo-mark.png" alt="ElevAIte Labs" style={{ height: '72px', width: 'auto', display: 'block', marginLeft: '20px' }} />
           </Link>
           <button className="nav-sidebar-close" onClick={() => setIsOpen(false)} aria-label="Close menu">✕</button>
         </div>
