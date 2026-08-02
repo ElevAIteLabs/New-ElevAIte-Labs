@@ -26,7 +26,17 @@
   --radius-card: 12px;
   --radius-card-lg: 16px;
 
-  --section-pad: 120px;
+  --section-pad: 88px;
+
+  /* Spacing scale — use these instead of ad-hoc pixel values */
+  --sp-1: 8px;
+  --sp-2: 12px;
+  --sp-3: 16px;
+  --sp-4: 24px;
+  --sp-5: 32px;
+  --sp-6: 48px;
+  --sp-7: 64px;
+  --sp-8: 88px;
 }
 
 * {
@@ -115,7 +125,8 @@ h3.display {
 
 p {
   color: var(--body);
-  text-align: justify;
+  text-align: left;
+  text-wrap: pretty;
 }
 
 /* ---------- Buttons ---------- */
@@ -1474,7 +1485,7 @@ footer .logo {
 /* ---------- Generic content (inner pages) ---------- */
 
 .page-hero {
-  padding: 80px 0 60px;
+  padding: 64px 0 48px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -1975,7 +1986,7 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
 
 @media (max-width: 960px) {
   :root {
-    --section-pad: 80px;
+    --section-pad: 64px;
   }
 
   .nav-links {
@@ -3381,3 +3392,29 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
 .arkin-char:hover {
   filter: drop-shadow(0 28px 44px rgba(0, 0, 0, 0.18));
 }
+/* Body of a CMS-authored article (/learn/:slug). The admin writes basic HTML,
+   so style the raw tags rather than expecting utility classes. */
+.post-body { font-size: 18px; line-height: 1.75; color: var(--text); }
+.post-body > * + * { margin-top: 22px; }
+.post-body h2 { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin-top: 44px; }
+.post-body h3 { font-size: 22px; font-weight: 700; margin-top: 34px; }
+.post-body ul,
+.post-body ol { padding-left: 24px; }
+.post-body li + li { margin-top: 10px; }
+.post-body img { max-width: 100%; height: auto; border-radius: 14px; }
+.post-body a { color: var(--brand, #1e88e5); text-decoration: underline; }
+.post-body blockquote {
+  border-left: 3px solid var(--border);
+  padding-left: 20px;
+  color: var(--muted);
+  font-style: italic;
+}
+.post-body pre {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  overflow-x: auto;
+  font-size: 15px;
+}
+.post-body code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; }

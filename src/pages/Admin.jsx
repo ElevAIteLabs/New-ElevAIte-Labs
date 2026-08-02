@@ -54,6 +54,21 @@ const schemas = {
       { name: 'image', type: 'file', note: 'Upload any product image', optional: true }
     ]
   },
+  posts: {
+    title: 'Blog Posts',
+    fields: [
+      { name: 'title', type: 'text' },
+      { name: 'slug', type: 'text', note: 'URL under /learn/. Leave blank to generate from the title.', optional: true },
+      { name: 'excerpt', type: 'textarea', note: 'One or two lines. Used on the Learn page and as the search description.' },
+      { name: 'content', type: 'textarea', note: 'Body of the article. Basic HTML is allowed.' },
+      { name: 'tag', type: 'text', note: 'e.g. Automation, AI Agents', optional: true },
+      { name: 'author', type: 'text', optional: true },
+      { name: 'read_time', type: 'text', note: 'e.g. 6 min read', optional: true },
+      { name: 'image', type: 'file', note: 'Cover image', optional: true },
+      { name: 'published_at', type: 'date', note: 'Publish date', optional: true },
+      { name: 'status', type: 'select', options: ['draft', 'published'], note: 'Only published posts appear on the site' }
+    ]
+  },
   learn: {
     title: 'Learn',
     fields: [

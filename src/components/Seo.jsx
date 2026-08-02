@@ -20,6 +20,13 @@ const Seo = () => {
   // Normalise "/services/" -> "/services" so trailing slashes share metadata.
   const path = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
   const isNoIndex = NOINDEX_ROUTES.some((r) => path === r || path.startsWith(`${r}/`));
+
+  // Article pages under /learn/:slug build their metadata from the post
+  // itself, so stay out of the way rather than marking them "not found".
+  if (/^\/learn\/[^/]+$/.test(path)) {
+    return null;
+  }
+
   const meta = ROUTE_META[path];
 
   // Unknown route: keep it out of the index rather than letting it inherit

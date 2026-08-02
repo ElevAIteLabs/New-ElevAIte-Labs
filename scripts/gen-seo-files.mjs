@@ -10,6 +10,7 @@ import { writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PUBLIC_ROUTES, ROUTE_META, SITE_URL } from '../src/seo/siteMeta.js';
+import { fetchPostRoutes } from './post-routes.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = process.argv[2] ? path.resolve(process.argv[2]) : path.join(root, 'dist');
@@ -17,17 +18,31 @@ const outDir = process.argv[2] ? path.resolve(process.argv[2]) : path.join(root,
 // Build date only — avoids a pointless diff on every rebuild.
 const lastmod = new Date().toISOString().slice(0, 10);
 
+const { posts } = await fetchPostRoutes();
+
+const entries = [
+  ...PUBLIC_ROUTES.map((route) => ({
+    loc: `${SITE_URL}${route === '/' ? '/' : route}`,
+    lastmod,
+    changefreq: ROUTE_META[route].changefreq,
+    priority: ROUTE_META[route].priority,
+  })),
+  ...posts.map((post) => ({
+    loc: `${SITE_URL}/learn/${post.slug}`,
+    lastmod: post.published_at || lastmod,
+    changefreq: 'monthly',
+    priority: '0.7',
+  })),
+];
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${PUBLIC_ROUTES.map((route) => {
-  const meta = ROUTE_META[route];
-  return `  <url>
-    <loc>${SITE_URL}${route === '/' ? '/' : route}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>${meta.changefreq}</changefreq>
-    <priority>${meta.priority}</priority>
-  </url>`;
-}).join('\n')}
+${entries.map((e) => `  <url>
+    <loc>${e.loc}</loc>
+    <lastmod>${e.lastmod}</lastmod>
+    <changefreq>${e.changefreq}</changefreq>
+    <priority>${e.priority}</priority>
+  </url>`).join('\n')}
 </urlset>
 `;
 
@@ -45,4 +60,7 @@ Sitemap: ${SITE_URL}/sitemap.xml
 await writeFile(path.join(outDir, 'sitemap.xml'), sitemap, 'utf8');
 await writeFile(path.join(outDir, 'robots.txt'), robots, 'utf8');
 
-console.log(`Wrote robots.txt and sitemap.xml (${PUBLIC_ROUTES.length} URLs) to ${path.relative(root, outDir)}/`);
+console.log(
+  `Wrote robots.txt and sitemap.xml (${entries.length} URLs: ` +
+  `${PUBLIC_ROUTES.length} pages + ${posts.length} posts) to ${path.relative(root, outDir)}/`,
+);

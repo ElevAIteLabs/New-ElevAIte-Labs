@@ -20,6 +20,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import puppeteer from 'puppeteer';
 import { PUBLIC_ROUTES } from '../src/seo/siteMeta.js';
+import { fetchPostRoutes } from './post-routes.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dist = path.join(root, 'dist');
@@ -60,12 +61,34 @@ const server = createServer(async (req, res) => {
 
 await new Promise((resolve) => server.listen(PORT, resolve));
 
-const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
+// The pages fetch the live API from this local origin, which is deliberately
+// not in the API's CORS allow-list. Without this the browser blocks every
+// data request and we silently capture pages with empty lists — which is
+// exactly what shipped the first time.
+const browser = await puppeteer.launch({
+  args: ['--no-sandbox', '--disable-web-security', '--disable-features=IsolateOrigins,site-per-process'],
+});
 const results = [];
 
+const { routes: postRoutes } = await fetchPostRoutes();
+if (postRoutes.length) {
+  console.log(`  discovered ${postRoutes.length} published post(s)`);
+}
+const ALL_ROUTES = [...PUBLIC_ROUTES, ...postRoutes];
+
 try {
-  for (const route of PUBLIC_ROUTES) {
+  for (const route of ALL_ROUTES) {
     const page = await browser.newPage();
+
+    // A blocked or failing API call means the captured HTML is missing the
+    // content we are prerendering for. Record it and fail the build.
+    const failed = [];
+    page.on('requestfailed', (req) => {
+      if (/\/api\//.test(req.url())) failed.push(`${req.url()} (${req.failure()?.errorText})`);
+    });
+    page.on('response', (res) => {
+      if (/\/api\//.test(res.url()) && res.status() >= 400) failed.push(`${res.url()} (HTTP ${res.status()})`);
+    });
 
     // The pages fetch live content; without a network idle wait the
     // prerendered HTML would capture empty lists.
@@ -87,7 +110,7 @@ try {
     await mkdir(outDir, { recursive: true });
     await writeFile(path.join(outDir, 'index.html'), html, 'utf8');
 
-    results.push({ route, bytes: html.length, title });
+    results.push({ route, bytes: html.length, title, failed });
     await page.close();
   }
 } finally {
@@ -113,5 +136,16 @@ for (const r of results) {
 const tooSmall = results.filter((r) => r.bytes < 5000);
 if (tooSmall.length) {
   console.error(`\nFAILED: ${tooSmall.map((r) => r.route).join(', ')} rendered suspiciously small.`);
+  process.exit(1);
+}
+
+const brokenApi = results.filter((r) => r.failed.length);
+if (brokenApi.length) {
+  console.error('\nFAILED: API requests did not succeed while prerendering.');
+  console.error('The captured HTML would be missing its content.\n');
+  for (const r of brokenApi) {
+    console.error(`  ${r.route}`);
+    for (const f of r.failed) console.error(`    - ${f}`);
+  }
   process.exit(1);
 }

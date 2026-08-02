@@ -12,6 +12,7 @@ import Contact from './pages/Contact';
 import BlogAutomation from './pages/BlogAutomation';
 import BlogKredoo from './pages/BlogKredoo';
 import BlogWhatsapp from './pages/BlogWhatsapp';
+import BlogPost from './pages/BlogPost';
 import Admin from './pages/Admin';
 import AdminLogin from './pages/AdminLogin';
 import Seo from './components/Seo';
@@ -21,16 +22,17 @@ import useSiteEffects from './hooks/useSiteEffects';
 // Ask the server whether the session cookie is valid. A localStorage flag
 // only hides the UI — the API enforces access on every request regardless.
 const ProtectedRoute = ({ children }) => {
-  const [state, setState] = useState('checking');
+  // In local dev there is no PHP, so resolve from the dev-only login flag up
+  // front rather than flipping state from inside the effect.
+  const [state, setState] = useState(() =>
+    import.meta.env.DEV
+      ? (localStorage.getItem('admin_auth') === 'true' ? 'allowed' : 'denied')
+      : 'checking',
+  );
 
   useEffect(() => {
+    if (import.meta.env.DEV) return;
     let cancelled = false;
-
-    if (import.meta.env.DEV) {
-      // No PHP in local dev; fall back to the dev-only login flag.
-      setState(localStorage.getItem('admin_auth') === 'true' ? 'allowed' : 'denied');
-      return;
-    }
 
     fetch(`${import.meta.env.VITE_API_URL}/session.php`, { credentials: 'include' })
       .then((r) => r.json())
@@ -70,6 +72,7 @@ function Layout() {
         <Route path="/work" element={<Work />} />
         <Route path="/products" element={<Products />} />
         <Route path="/learn" element={<Learn />} />
+        <Route path="/learn/:slug" element={<BlogPost />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog-automation" element={<BlogAutomation />} />
         <Route path="/blog-kredoo" element={<BlogKredoo />} />

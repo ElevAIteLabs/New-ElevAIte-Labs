@@ -25,7 +25,7 @@ try {
 }
 
 /** Tables this API is allowed to touch. */
-const ALLOWED_TABLES = ['products', 'services', 'work', 'learn', 'testimonials', 'contact'];
+const ALLOWED_TABLES = ['products', 'services', 'work', 'learn', 'testimonials', 'contact', 'posts'];
 
 /**
  * Real column names for a table, read from the live schema.
@@ -54,7 +54,11 @@ function handleCrud($db, $table) {
         require_admin();
     }
 
-    $input = json_decode(file_get_contents('php://input'), true);
+    // An endpoint may pre-process the body (posts.php normalises the slug);
+    // php://input cannot be re-read after that, so it hands the result over.
+    $input = $GLOBALS['ELEVAITE_INPUT_OVERRIDE']
+        ?? json_decode(file_get_contents('php://input'), true);
+
     if ($method !== 'GET' && $method !== 'DELETE' && !is_array($input)) {
         http_response_code(400);
         echo json_encode(['error' => 'Invalid JSON body']);

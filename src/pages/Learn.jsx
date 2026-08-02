@@ -1,8 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { postImageSrc, postsApiUrl } from '../seo/posts';
 
 const Learn = () => {
   const [subscribed, setSubscribed] = useState(false);
+  const [posts, setPosts] = useState([]);
+
+  // Posts published from the admin panel. The three articles below this list
+  // predate the CMS and are still hardcoded, so both render together.
+  useEffect(() => {
+    let cancelled = false;
+    fetch(postsApiUrl())
+      .then((r) => (r.ok ? r.json() : []))
+      .then((d) => !cancelled && setPosts(Array.isArray(d) ? d : []))
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -160,6 +173,23 @@ const Learn = () => {
             <h2 className="display">Long-form, written by people who ship.</h2>
           </div>
           <div className="blog-list">
+            {posts.map((post) => (
+              <Link className="blog-list-item fade-up" key={post.id} to={`/learn/${post.slug}`}>
+                {postImageSrc(post.image) && (
+                  <div className="cover">
+                    <img src={postImageSrc(post.image)} alt={post.title} loading="lazy" />
+                  </div>
+                )}
+                <div>
+                  <div className="meta">
+                    {[post.tag, post.read_time, post.author].filter(Boolean).join(' · ')}
+                  </div>
+                  <h3>{post.title}</h3>
+                  <p className="excerpt">{post.excerpt}</p>
+                  <span className="link-arrow">Read article <span className="arrow">→</span></span>
+                </div>
+              </Link>
+            ))}
             <Link className="blog-list-item fade-up" to="/blog-kredoo">
               <div className="cover">
                 <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&q=80&auto=format" alt="Kredoo CRM" loading="lazy" />
