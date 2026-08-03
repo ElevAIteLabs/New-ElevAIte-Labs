@@ -46,8 +46,8 @@ return [
         'password'   => 'your-16-char-app-password',
         'from_email' => 'sender@gmail.com',
         'from_name'  => 'ElevAIte Labs Website',
-        'reply_to'   => 'team@elevaitelabs.in',
-        'notify'     => 'team@elevaitelabs.in',   // where new leads are sent
+        'reply_to'   => 'contact@elevaitelabs.in',
+        'notify'     => 'contact@elevaitelabs.in',   // where new leads are sent
     ],
 
     // Forwarded server-side so the URL is not exposed in the JS bundle.

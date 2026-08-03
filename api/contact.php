@@ -90,7 +90,7 @@ try {
     http_response_code(500);
     echo json_encode([
         'status' => 'error',
-        'message' => 'We could not record your enquiry. Please email team@elevaitelabs.in directly.',
+        'message' => 'We could not record your enquiry. Please email contact@elevaitelabs.in directly.',
         'detail' => ELEVAITE_CONFIG['debug'] ? $e->getMessage() : null,
     ]);
     exit();

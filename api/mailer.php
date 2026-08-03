@@ -49,14 +49,18 @@ function send_lead_mail(array $lead) {
     ];
 
     $tableRows = '';
+    $plainRows = '';
     foreach ($rows as $label => $value) {
         $tableRows .= '<tr>'
             . '<td style="padding:6px 14px 6px 0;color:#64748b;white-space:nowrap;">' . htmlspecialchars($label) . '</td>'
             . '<td style="padding:6px 0;color:#0f172a;"><strong>' . htmlspecialchars((string) $value) . '</strong></td>'
             . '</tr>';
+        // Plain-text clients would otherwise get the table cells run together.
+        $plainRows .= str_pad($label . ':', 10) . $value . "\n";
     }
 
     $messageHtml = nl2br(htmlspecialchars((string) $lead['message']));
+    $messagePlain = (string) $lead['message'];
 
     $teamBody = "<div style=\"font-family:system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.6;color:#0f172a;\">"
         . "<h2 style=\"margin:0 0 4px;font-size:20px;\">New enquiry from the website</h2>"
@@ -66,11 +70,15 @@ function send_lead_mail(array $lead) {
         . "<div style=\"padding:14px 16px;background:#f8fafc;border-radius:10px;border-left:3px solid #1e88e5;\">{$messageHtml}</div>"
         . "</div>";
 
+    // The confirmation repeats every field too, so the sender has a complete
+    // record of what they submitted rather than just their own message.
     $clientBody = "<div style=\"font-family:system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.65;color:#0f172a;\">"
         . "<p>Hi " . htmlspecialchars($name) . ",</p>"
         . "<p>Thanks for getting in touch with ElevAIte Labs. We have your enquiry and one of us will reply within one business day.</p>"
         . "<p>If your project is in scope we will send a 30-minute call invite. If it is not, we will tell you who would be a better fit.</p>"
-        . "<p style=\"margin-top:22px;color:#64748b;font-size:14px;\">For reference, this is what you sent:</p>"
+        . "<h3 style=\"margin:26px 0 8px;font-size:15px;color:#64748b;font-weight:600;\">What you sent</h3>"
+        . "<table style=\"border-collapse:collapse;font-size:15px;\">{$tableRows}</table>"
+        . "<h3 style=\"margin:22px 0 6px;font-size:15px;color:#64748b;font-weight:600;\">Your message</h3>"
         . "<div style=\"padding:14px 16px;background:#f8fafc;border-radius:10px;border-left:3px solid #1e88e5;\">{$messageHtml}</div>"
         . "<p style=\"margin-top:24px;\">- The ElevAIte Labs team<br>"
         . "<span style=\"color:#64748b;font-size:14px;\">HITEC City, Hyderabad</span></p>"
@@ -83,11 +91,15 @@ function send_lead_mail(array $lead) {
     foreach ([
         ['to' => $smtp['notify'], 'toName' => 'ElevAIte Labs',
          'subject' => "New enquiry: {$name}" . ($lead['company'] ? " ({$lead['company']})" : ''),
-         'body' => $teamBody, 'replyTo' => $email, 'replyToName' => $name],
+         'body' => $teamBody,
+         'text' => "New enquiry from the website (lead #{$lead['id']})\n\n{$plainRows}\nProject:\n{$messagePlain}\n",
+         'replyTo' => $email, 'replyToName' => $name],
 
         ['to' => $email, 'toName' => $name,
          'subject' => 'We received your enquiry - ElevAIte Labs',
-         'body' => $clientBody, 'replyTo' => $smtp['reply_to'], 'replyToName' => 'ElevAIte Labs'],
+         'body' => $clientBody,
+         'text' => "Hi {$name},\n\nThanks for getting in touch with ElevAIte Labs. We have your enquiry and one of us will reply within one business day.\n\nWhat you sent\n{$plainRows}\nYour message:\n{$messagePlain}\n\n- The ElevAIte Labs team\nHITEC City, Hyderabad\n",
+         'replyTo' => $smtp['reply_to'], 'replyToName' => 'ElevAIte Labs'],
     ] as $msg) {
         try {
             $mail = new PHPMailer(true);
@@ -112,7 +124,7 @@ function send_lead_mail(array $lead) {
             $mail->isHTML(true);
             $mail->Subject = mail_safe($msg['subject']);
             $mail->Body = $msg['body'];
-            $mail->AltBody = trim(strip_tags(str_replace(['</p>', '<br>'], "\n", $msg['body'])));
+            $mail->AltBody = $msg['text'];
 
             $mail->send();
         } catch (MailException $e) {

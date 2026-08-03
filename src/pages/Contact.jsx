@@ -62,7 +62,7 @@ const Contact = () => {
 
       if (!res.ok || data.status !== 'success') {
         setStatus('idle');
-        alert(data.message || 'Something went wrong. Please email team@elevaitelabs.in directly.');
+        alert(data.message || 'Something went wrong. Please email contact@elevaitelabs.in directly.');
         return;
       }
 
@@ -76,7 +76,7 @@ const Contact = () => {
     } catch (err) {
       console.error('Contact submit failed:', err);
       setStatus('idle');
-      alert('We could not reach the server. Please email team@elevaitelabs.in directly.');
+      alert('We could not reach the server. Please email contact@elevaitelabs.in directly.');
     }
   };
 
@@ -174,11 +174,11 @@ const Contact = () => {
               <p className="lede">We respond within one business day. If your project is in scope, we'll send a 30-minute call invite. If it isn't, we'll tell you who would be a better fit.</p>
 
               <div className="contact-channels">
-                <a href="mailto:team@elevaitelabs.in" className="channel">
+                <a href="mailto:contact@elevaitelabs.in" className="channel">
                   <div className="channel-icon">@</div>
                   <div>
                     <div className="channel-label">Email</div>
-                    <div className="channel-value">team@elevaitelabs.in</div>
+                    <div className="channel-value">contact@elevaitelabs.in</div>
                   </div>
                 </a>
                 <a href="https://wa.me/917569954054" target="_blank" rel="noopener noreferrer" className="channel">
