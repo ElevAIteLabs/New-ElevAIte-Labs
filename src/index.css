@@ -540,10 +540,12 @@ html {
   padding: 56px 0 72px;
 }
 
+/* Visual column gets the wider track - it now carries the run panel as well
+   as the mascot, and both need room to sit side by side rather than stacked. */
 .hero-grid {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 56px;
+  grid-template-columns: 1fr 1.08fr;
+  gap: 40px;
   align-items: center;
 }
 
@@ -607,9 +609,91 @@ html {
   position: relative;
   display: flex;
   align-items: flex-end;
-  justify-content: center;
-  height: 480px;
+  /* Arkin sits right so the run panel has room at his left */
+  justify-content: flex-end;
+  height: 600px;
   overflow: visible;
+}
+
+/* ── Hero run panel ───────────────────────────────────────
+   Plays once, ~1.2s after load so it never competes with LCP,
+   then holds its finished state. No loop: perpetual motion with
+   no cause is what reads as decoration. */
+.hero-run {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 244px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.hrun-step {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 11px;
+  box-shadow: 0 6px 18px -8px rgba(15, 15, 15, 0.18);
+  opacity: 0;
+  transform: translateY(6px);
+  animation: hrunIn 0.4s var(--ease-out) forwards;
+}
+
+.hrun-step:nth-child(1) { animation-delay: 1.0s; }
+.hrun-step:nth-child(2) { animation-delay: 1.45s; }
+.hrun-step:nth-child(3) { animation-delay: 1.9s; }
+.hrun-step:nth-child(4) { animation-delay: 2.35s; }
+.hrun-step:nth-child(5) { animation-delay: 2.8s; }
+.hrun-step:nth-child(6) { animation-delay: 3.25s; }
+
+@keyframes hrunIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hrun-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: none;
+}
+
+.hrun-body {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+  min-width: 0;
+}
+
+.hrun-body b {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.hrun-body span {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.hrun-foot {
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-left: 4px;
+  margin-top: 2px;
+  opacity: 0;
+  animation: hrunIn 0.4s var(--ease-out) 3.7s forwards;
 }
 
 .arkin-glow {
@@ -617,8 +701,10 @@ html {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 340px;
-  height: 340px;
+  /* The pulse scales this to 1.12, so a fixed 340px pushed past a 360px
+     viewport and produced horizontal scroll on small phones. */
+  width: min(340px, 72vw);
+  height: min(340px, 72vw);
   border-radius: 50%;
   background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, transparent 70%);
   pointer-events: none;
@@ -627,7 +713,7 @@ html {
 
 .arkin-hero-img {
   position: relative;
-  height: 500px;
+  height: 620px;
   width: auto;
   object-fit: contain;
   object-position: bottom;
@@ -819,61 +905,100 @@ body[data-imagery="geometric"] .ph::before {
   opacity: 0.6;
 }
 
-/* Proof panel - replaces the oversized mascot in the Home about teaser.
-   align-content: stretch so the column fills the row height instead of
-   leaving a block of dead space under the cards. */
+.about-copy h2 {
+  margin-bottom: 28px;
+}
+
+.about-copy p {
+  margin-bottom: 18px;
+  max-width: 540px;
+}
+
+/* Proof panel - one dense card, not three stretched empty ones. Height comes
+   from real content (stats + team + stack) rather than from padding. */
 .about-proof {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-rows: 1fr;
-  align-content: stretch;
-  gap: var(--sp-3);
-  height: 100%;
-}
-
-.about-proof .proof-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.proof-card {
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: var(--radius-card);
-  padding: var(--sp-4);
+  border-radius: var(--radius-card-lg);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  align-self: center;
 }
 
-.proof-tools {
-  grid-column: 1 / -1;
+.proof-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
 }
 
 .proof-num {
+  display: block;
   font-family: var(--display);
-  font-size: clamp(36px, 4vw, 48px);
+  font-size: clamp(28px, 3vw, 38px);
   font-weight: 700;
   color: var(--text);
   letter-spacing: -0.03em;
   line-height: 1;
-  margin-bottom: var(--sp-1);
+  margin-bottom: 6px;
 }
 
 .proof-label {
-  font-size: 14px;
+  display: block;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.proof-team {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--border);
+}
+
+.proof-faces {
+  display: flex;
+  flex: none;
+}
+
+.proof-faces img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--white);
+  margin-left: -10px;
+}
+
+.proof-faces img:first-child {
+  margin-left: 0;
+}
+
+.proof-team p {
+  font-size: 13.5px;
   line-height: 1.45;
   color: var(--body);
+  margin: 0;
+}
+
+.proof-tools {
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--border);
 }
 
 .proof-logos {
   display: flex;
   align-items: center;
   gap: var(--sp-4);
-  margin-top: var(--sp-3);
+  margin-top: var(--sp-2);
   flex-wrap: wrap;
 }
 
-/* No grayscale filter here - several of these logos ship with an opaque
-   background plate, which desaturates into a grey box rather than a mark. */
+/* No grayscale: several of these ship with an opaque background plate and
+   desaturate into a grey box rather than a mark. */
 .proof-logos img {
   height: 24px;
   width: auto;
@@ -887,40 +1012,15 @@ body[data-imagery="geometric"] .ph::before {
   opacity: 1;
 }
 
-.about-imgs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 200px 200px;
-  gap: 12px;
-}
+@media (max-width: 560px) {
+  .about-proof {
+    padding: var(--sp-4);
+  }
 
-.about-imgs .ph:nth-child(1) {
-  grid-row: 1;
-  transform: translateY(20px);
-}
-
-.about-imgs .ph:nth-child(2) {
-  grid-row: 1;
-  transform: translateY(-20px);
-}
-
-.about-imgs .ph:nth-child(3) {
-  grid-row: 2;
-  transform: translateY(20px);
-}
-
-.about-imgs .ph:nth-child(4) {
-  grid-row: 2;
-  transform: translateY(-20px);
-}
-
-.about-copy h2 {
-  margin-bottom: 28px;
-}
-
-.about-copy p {
-  margin-bottom: 18px;
-  max-width: 540px;
+  .proof-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-4) var(--sp-3);
+  }
 }
 
 /* ---------- Services list ---------- */
@@ -2585,13 +2685,21 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
     height: 460px;
   }
 
+  /* No order swap: leading with the mascot pushed the headline and the CTAs
+     below the fold on a phone. Copy first, mascot after. */
   .arkin-hero-wrap {
-    height: 435px;
-    order: -1;
+    height: 340px;
+    justify-content: center;
+  }
+
+  /* Overlaying cards on a 410px figure at phone width buries the mascot's
+     arm and clips the caption - the mobile hero is dense enough already. */
+  .hero-run {
+    display: none;
   }
 
   .arkin-hero-img {
-    height: 410px;
+    height: 350px;
   }
 
   .process-grid {
@@ -4491,5 +4599,120 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
   .arkin-svc-img,
   .tool-logo {
     animation: none !important;
+  }
+
+  /* These reveal via a keyframe animation, not a transition, so the
+     transition overrides above don't reach them - without this the run
+     still staggers in for someone who asked for no motion. */
+  .hrun-step,
+  .hrun-foot {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ---------- Mobile consistency pass ----------
+   Three things were inconsistent across pages at phone widths: micro-labels
+   dropped to 9-11px, several links and chips sat under the 44px touch
+   minimum, and nothing guaranteed content stayed inside the viewport. */
+@media (max-width: 700px) {
+
+  /* Nothing may exceed the viewport, whatever a child declares */
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Floor every micro-label at 12px. Uppercase tracking at 10px is
+     unreadable on a phone. */
+  .tag,
+  .work-card .industry,
+  .svc-card .svc-eyebrow,
+  .case-row .industry-tag,
+  .hero-badge .badge-sub,
+  .reel-cat,
+  .reel-thumb-cat,
+  .post-tag,
+  .kmod-role,
+  .kmod-journey em,
+  .proof-label,
+  .kmod-proof-label,
+  .work-card-tile em,
+  .case-tile em,
+  .product-tile em {
+    font-size: 12px;
+  }
+
+  .kmod-journey strong,
+  .hrun-body b {
+    font-size: 14px;
+  }
+
+  /* Touch minimum. Inline text links get a padded hit area rather than a
+     bigger font, so the layout doesn't shift. */
+  .link-arrow,
+  .svc-card-cta,
+  .svc-engage-quiz,
+  .wc-cta {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .filter-chip {
+    min-height: 44px;
+    padding: 10px 18px;
+  }
+
+  .mobile-toggle,
+  .nav-sidebar-close {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .footer-social a,
+  .team-social a {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* Buttons already clear 44px, but stretch them full width so the two CTAs
+     in a row stop wrapping into uneven halves. */
+  .hero-cta-row .btn,
+  .kmod-cta .btn,
+  .svc-engage-cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn-demo .play {
+    font-size: 12px;
+  }
+
+  .kredoo-mockup-title {
+    font-size: 12px;
+  }
+
+  /* Every button clears the touch minimum, not just the ones in CTA rows */
+  .btn {
+    min-height: 44px;
+  }
+
+  /* Higher-specificity holdouts that the list above could not reach */
+  .reel-card .reel-cat,
+  .kmod-journey .kj-num,
+  .hero-stats,
+  .hero-stats span {
+    font-size: 12px;
+  }
+
+  /* Footer and nav lists are the densest tap clusters on the site */
+  .footer-col a,
+  .footer-col li,
+  .nav-sidebar-links a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
   }
 }

@@ -78,6 +78,10 @@ const Work = () => {
         .case-tile em { font-style: normal; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.6; }
         .loading-state { padding: 100px 0; text-align: center; color: var(--body); font-size: 18px; }
         .no-projects { padding: 60px 0; text-align: center; color: var(--body); border: 1px dashed var(--border); border-radius: 12px; margin-top: 40px; }
+        @media (max-width: 700px) {
+          .case-row .industry-tag { font-size: 12px; }
+          .case-row .link-arrow { min-height: 44px; display: inline-flex; align-items: center; }
+        }
         @media (max-width: 960px) {
           .case-row { grid-template-columns: 1fr; gap: 28px; padding: 40px 0; }
           .case-row:nth-child(even) > .case-img { order: 0; }

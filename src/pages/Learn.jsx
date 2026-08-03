@@ -115,7 +115,13 @@ const Learn = () => {
         .course-card p { font-size: 15px; line-height: 1.5; }
         .course-card .cta { margin-top: auto; padding-top: 16px; }
         @media (max-width: 960px) { .blog-grid, .course-row { grid-template-columns: 1fr; } }
-      `}</style>
+              @media (max-width: 700px) {
+          .reel-thumb-cat { font-size: 12px; }
+          .reel-card .reel-cat, .reel-card-clean .reel-cat { font-size: 12px; }
+          .course-card .level { font-size: 12px; }
+          .post-dates, .post-tag { font-size: 12px; }
+        }
+`}</style>
 
       <section className="page-hero">
         <div className="wrap">

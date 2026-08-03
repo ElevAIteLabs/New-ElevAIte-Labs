@@ -104,7 +104,31 @@ const Home = () => {
               <div className="arkin-glow"></div>
               {/* Intrinsic size is 941x1672 - square attributes reserved a box
                   that collapsed on decode, shifting the LCP element. */}
-              <img src="/pictures/arkin.webp" alt="Arkin - ElevAIte Labs mascot" className="arkin-hero-img" width="281" height="500" fetchPriority="high" />
+              <img src="/pictures/arkin.webp" alt="Arkin - ElevAIte Labs mascot" className="arkin-hero-img" width="349" height="620" fetchPriority="high" />
+
+              {/* The six service lines, revealed once after LCP settles.
+                  Absolutely positioned, so it adds no page height. Static on
+                  purpose: the hero must render without waiting on the API.
+                  Keep in sync with the Services page if a line changes. */}
+              <div className="hero-run" role="img" aria-label="The six things ElevAIte Labs builds: AI automation and workflows, web and mobile apps, custom AI agents, lead generation systems, AI content creation, and AI strategy consulting.">
+                {[
+                  ['AI Automation', 'Agents that read, decide, act'],
+                  ['Web & Mobile Apps', 'iOS, Android and web'],
+                  ['Custom AI Agents', 'On WhatsApp, web and Slack'],
+                  ['Lead Generation', 'Sourced, warmed, booked'],
+                  ['AI Content', 'Trained on your brand voice'],
+                  ['AI Strategy', 'A 90-day roadmap'],
+                ].map(([title, sub]) => (
+                  <div className="hrun-step" key={title}>
+                    <span className="hrun-dot"></span>
+                    <div className="hrun-body">
+                      <b>{title}</b>
+                      <span>{sub}</span>
+                    </div>
+                  </div>
+                ))}
+                <div className="hrun-foot">Six service lines &middot; shipped in weeks</div>
+              </div>
             </div>
           </div>
         </div>
@@ -115,21 +139,40 @@ const Home = () => {
         <div className="wrap">
           <div className="about-grid">
             <div className="about-proof fade-up">
-              <div className="proof-card proof-stat">
-                <div className="proof-num">35+</div>
-                <div className="proof-label">Projects shipped since 2023</div>
+              <div className="proof-stats">
+                <div>
+                  <span className="proof-num">35+</span>
+                  <span className="proof-label">Projects shipped<br />since 2023</span>
+                </div>
+                <div>
+                  <span className="proof-num">20+</span>
+                  <span className="proof-label">Clients across<br />10+ industries</span>
+                </div>
+                <div>
+                  <span className="proof-num">1,000+</span>
+                  <span className="proof-label">Hours automated<br />every week</span>
+                </div>
               </div>
-              <div className="proof-card proof-stat">
-                <div className="proof-num">1,000+</div>
-                <div className="proof-label">Hours automated weekly</div>
+
+              <div className="proof-team">
+                {/* Per-image crop: these three portraits have different aspect
+                    ratios (900x1600 vs ~1100x1400), so one shared position
+                    beheads the tallest of them. */}
+                <div className="proof-faces">
+                  <img src="/pictures/shanmukh.jpeg" alt="Ramachandruni Anjaneya Shanmukh" loading="lazy" style={{ objectPosition: 'center 18%' }} />
+                  <img src="/pictures/vishnu.jpeg" alt="Vishhnu Saai Gudise" loading="lazy" style={{ objectPosition: 'center 22%' }} />
+                  <img src="/pictures/premsai.png" alt="Premsai Kilaru" loading="lazy" style={{ objectPosition: 'center 20%' }} />
+                </div>
+                <p>A small team, by design &mdash; the people you meet on the call are the people writing the code.</p>
               </div>
-              <div className="proof-card proof-tools">
-                <div className="proof-label">Built on the stack you already use</div>
+
+              <div className="proof-tools">
+                <span className="proof-label">Built on the stack you already use</span>
                 <div className="proof-logos">
-                  <img src="/pictures/n8n.png" alt="n8n" />
-                  <img src="/pictures/zapier.png" alt="Zapier" />
-                  <img src="/pictures/Make_Logo.jpg" alt="Make" />
-                  <img src="/pictures/WhatsApp_Logo_green.svg" alt="WhatsApp Business" />
+                  <img src="/pictures/n8n.png" alt="n8n" loading="lazy" />
+                  <img src="/pictures/zapier.png" alt="Zapier" loading="lazy" />
+                  <img src="/pictures/Make_Logo.jpg" alt="Make" loading="lazy" />
+                  <img src="/pictures/WhatsApp_Logo_green.svg" alt="WhatsApp Business" loading="lazy" />
                 </div>
               </div>
             </div>
@@ -170,13 +213,18 @@ const Home = () => {
         </div>
       </section>
       {/* ===== KREDOO TEASER ===== */}
-      <section style={{ background: 'var(--text)', color: '#fff', padding: '100px 0', overflow: 'hidden' }}>
+      <section style={{ background: 'var(--text)', color: '#fff', overflow: 'hidden' }}>
         <div className="wrap">
           <div className="kredoo-teaser-grid">
             <div className="fade-up">
               <span className="tag" style={{ color: 'var(--accent)' }}>Our Flagship Product</span>
               <h2 className="display" style={{ color: '#fff', marginBottom: '24px' }}>Meet Kredoo: The AI CRM for Sales Teams</h2>
               <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '19px', marginBottom: '32px', maxWidth: '540px' }}>Stop chasing leads manually. Kredoo automates your entire sales pipeline - from WhatsApp capture to smart follow-ups and CRM sync.</p>
+              <ul className="kredoo-points">
+                <li>Leads from Meta &amp; Google Ads land in the pipeline in real time</li>
+                <li>WhatsApp and Instagram in one shared team inbox</li>
+                <li>Booking links, smart follow-ups and n8n automation built in</li>
+              </ul>
               <div className="hero-cta-row">
                 <a href="https://kredoo.in" target="_blank" rel="noopener noreferrer" className="btn btn-primary">Try Kredoo Free →</a>
                 <Link to="/blog-kredoo" className="btn btn-ghost" style={{ color: '#fff', borderColor: '#fff' }}>Read the Story</Link>
@@ -200,19 +248,24 @@ const Home = () => {
           </div>
         </div>
         <style>{`
-          .kredoo-teaser-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
-          .kredoo-teaser-visual { position: relative; display: flex; justify-content: center; align-items: center; }
-          .browser-mockup { width: 100%; max-width: 560px; border-radius: 12px; overflow: hidden; box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08); background: #1e1e1e; }
+          /* The screenshot is the proof here, so give it the wider track and
+             let it bleed past the container - it was scaled down so far the
+             product was illegible. */
+          .kredoo-teaser-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 64px; align-items: center; }
+          .kredoo-teaser-visual { position: relative; display: flex; justify-content: flex-start; align-items: center; }
+          .kredoo-points { list-style: none; margin: 0 0 32px; padding: 0; }
+          .kredoo-points li { position: relative; padding-left: 24px; margin-bottom: 12px; font-size: 15.5px; line-height: 1.5; color: rgba(255,255,255,0.72); }
+          .kredoo-points li::before { content: ""; position: absolute; left: 2px; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+          .browser-mockup { width: calc(100% + 90px); max-width: none; border-radius: 12px; overflow: hidden; box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08); background: #1e1e1e; }
           .browser-bar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #2a2a2a; border-bottom: 1px solid rgba(255,255,255,0.06); }
           .browser-dots { display: flex; gap: 6px; }
           .browser-dots span { width: 12px; height: 12px; border-radius: 50%; display: block; }
           .browser-url { flex: 1; background: rgba(255,255,255,0.07); border-radius: 6px; padding: 5px 12px; font-size: 13px; color: rgba(255,255,255,0.5); font-family: monospace; text-align: center; }
           .browser-content { overflow: hidden; }
           @media (max-width: 960px) {
-            .kredoo-teaser-grid { grid-template-columns: 1fr; gap: 48px; text-align: center; }
-            .kredoo-teaser-grid p { margin-inline: auto; }
-            .kredoo-teaser-grid .hero-cta-row { justify-content: center; }
-            .browser-mockup { max-width: 100%; }
+            .kredoo-teaser-grid { grid-template-columns: 1fr; gap: 40px; }
+            .kredoo-teaser-visual { justify-content: center; }
+            .browser-mockup { width: 100%; }
           }
         `}</style>
       </section>
@@ -350,7 +403,7 @@ const Home = () => {
             <article className="kmod kmod--wa fade-up">
               <header className="kmod-head">
                 <span className="kmod-icon kmod-icon--wa" aria-hidden="true">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.683 5.535l-.999 3.648 3.805-.882z" /></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.683 5.535l-.999 3.648 3.805-.882zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" /></svg>
                 </span>
                 <div>
                   <h3>WhatsApp</h3>

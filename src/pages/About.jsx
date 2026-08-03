@@ -94,6 +94,9 @@ const About = () => {
           .about-img-strip .ph { height: 200px; }
           .stats-strip { padding: 32px; }
         }
+        @media (max-width: 700px) {
+          .team-social a { width: 44px; height: 44px; }
+        }
         @media (max-width: 560px) {
           .about-lead, .values-grid, .team-grid, .stats-strip { grid-template-columns: 1fr !important; }
         }
@@ -132,7 +135,7 @@ const About = () => {
             <div className="team-card fade-up">
               <div className="ph" style={{ backgroundImage: "url('/pictures/shanmukh.jpeg')", backgroundPosition: 'center 30%' }}></div>
               <div className="name">Shanmukh R</div>
-              <div className="role">Founder &amp; CEO</div>
+              <div className="role">CO-Founder &amp; CEO</div>
               <div className="team-social">
                 <a href="https://www.linkedin.com/in/shanmukh-r-a70a0919a/" target="_blank" rel="noopener noreferrer" aria-label="Shanmukh on LinkedIn"><LinkedInIcon /></a>
                 <a href="https://www.instagram.com/shanmukh_ramachandruni_245/" target="_blank" rel="noopener noreferrer" aria-label="Shanmukh on Instagram"><InstagramIcon /></a>
