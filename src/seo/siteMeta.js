@@ -62,6 +62,20 @@ export const ROUTE_META = {
     changefreq: 'monthly',
     priority: '0.8',
   },
+  /**
+   * Deliberately targets "ai automation company in hyderabad" rather than the
+   * "best ..." phrasing. Google answers "best X in city" with directories and
+   * listicles, which no single company page can displace; the plain variant is
+   * served by service pages, which is what the agencies ranking there use.
+   */
+  '/ai-automation-company-hyderabad': {
+    label: 'AI Automation Hyderabad',
+    title: 'AI Automation Company in Hyderabad | ElevAIte Labs',
+    description:
+      'AI automation company in Hyderabad building n8n workflows, custom AI agents, WhatsApp and CRM automation, and document AI for businesses across India. See the projects behind each one.',
+    changefreq: 'monthly',
+    priority: '0.9',
+  },
   '/learn': {
     label: 'Learn',
     title: 'Learn AI Automation | Guides & Resources',

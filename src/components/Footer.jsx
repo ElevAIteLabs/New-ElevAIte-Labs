@@ -23,6 +23,9 @@ const Footer = () => {
           <div className="footer-col">
             <h4>Services</h4>
             <ul>
+              {/* Sitewide link so the landing page is discoverable from every
+                  page rather than only from the sitemap. */}
+              <li><Link to="/ai-automation-company-hyderabad">AI Automation in Hyderabad</Link></li>
               <li><Link to="/services">AI Automation & Workflows</Link></li>
               <li><Link to="/services">Web & Mobile App Development</Link></li>
               <li><Link to="/services">Custom AI Agents</Link></li>
