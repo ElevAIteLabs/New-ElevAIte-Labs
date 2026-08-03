@@ -37,3 +37,5 @@ public_html/
 
 # Playwright/browser test artifacts
 .playwright-mcp/
+
+# PHPMailer is committed so a clean clone can deploy without composer.

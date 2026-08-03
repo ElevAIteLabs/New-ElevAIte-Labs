@@ -69,8 +69,14 @@ const AdminLayout = ({ children, activeTab, onTabChange, schemas, handleLogout }
               {schemas[key].title}
             </button>
           ))}
-          <button 
-            className={activeTab === 'contact' ? 'active' : ''} 
+          <button
+            className={activeTab === 'leads' ? 'active' : ''}
+            onClick={() => onTabChange('leads')}
+          >
+            Enquiries
+          </button>
+          <button
+            className={activeTab === 'contact' ? 'active' : ''}
             onClick={() => onTabChange('contact')}
           >
             Contact Settings

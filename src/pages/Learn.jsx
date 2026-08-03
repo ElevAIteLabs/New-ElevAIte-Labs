@@ -288,7 +288,7 @@ const Learn = () => {
         <div className="wrap fade-up">
           <span className="tag">Newsletter</span>
           <h2>One email a week. Zero filler.</h2>
-          <p>Practical AI plays for operators and founders, written by our team. ~3,000 subscribers. Unsubscribe in one click.</p>
+          <p>Practical AI plays for operators and founders, written by our team. Unsubscribe in one click.</p>
           <form style={{ display: 'flex', gap: '8px', justifyContent: 'center', maxWidth: '480px', margin: '0 auto', flexWrap: 'wrap' }} onSubmit={handleSubscribe}>
             <input type="email" placeholder="you@company.com" required style={{ flex: 1, minWidth: '200px', padding: '14px 18px', borderRadius: '8px', border: 'none', fontFamily: 'inherit', fontSize: '15px', color: 'var(--text)' }} />
             <button className="btn btn-light" type="submit" disabled={subscribed}>{subscribed ? 'Subscribed ✓' : 'Subscribe'}</button>

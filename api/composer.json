@@ -1,0 +1,9 @@
+{
+  "name": "elevaitelabs/api",
+  "description": "PHP API for elevaitelabs.in",
+  "require": {
+    "php": ">=8.1",
+    "phpmailer/phpmailer": "^6.9"
+  },
+  "config": { "optimize-autoloader": true }
+}

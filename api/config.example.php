@@ -25,4 +25,32 @@ return [
 
     // Show DB error details in API responses. Keep false in production.
     'debug' => false,
+
+    /**
+     * Outgoing mail for contact form notifications.
+     *
+     * Provider-agnostic. For a Gmail account, generate an App Password
+     * (Google Account > Security > 2-Step Verification > App passwords) and
+     * use it as 'password' - your normal account password will not work.
+     *
+     * Note on the From address: Gmail will not send as an address it has not
+     * verified, so 'from_email' should be the account itself. 'reply_to' is
+     * what matters for replies, and that is the address people will answer to.
+     */
+    'smtp' => [
+        'enabled'    => false,
+        'host'       => 'smtp.gmail.com',
+        'port'       => 587,
+        'encryption' => 'tls',           // 'tls' for 587, 'ssl' for 465
+        'username'   => 'sender@gmail.com',
+        'password'   => 'your-16-char-app-password',
+        'from_email' => 'sender@gmail.com',
+        'from_name'  => 'ElevAIte Labs Website',
+        'reply_to'   => 'team@elevaitelabs.in',
+        'notify'     => 'team@elevaitelabs.in',   // where new leads are sent
+    ],
+
+    // Forwarded server-side so the URL is not exposed in the JS bundle.
+    // Empty string disables forwarding.
+    'kredoo_webhook' => '',
 ];

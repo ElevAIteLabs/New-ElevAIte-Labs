@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import emailjs from '@emailjs/browser';
 import SelectField from '../components/SelectField';
+
+const IS_DEV = import.meta.env.DEV;
+const API_URL = import.meta.env.VITE_API_URL;
+const DEV_API = 'http://localhost:5000';
 
 const Contact = () => {
   const [selectedBudget, setSelectedBudget] = useState('');
@@ -32,68 +35,49 @@ const Contact = () => {
     setStatus('sending');
     setEmail(emailVal);
 
-    const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-    const KREDOO_WEBHOOK = 'https://kredoo.in/api/webhook/068d9345-b4ee-43ac-82fc-a500790a6990';
+    // One call to our own API. It stores the lead before emailing anyone or
+    // forwarding to the CRM, so an enquiry is never lost when a downstream
+    // service is unavailable - and the mail credentials and webhook URL stay
+    // on the server instead of being readable in this bundle.
+    const endpoint = IS_DEV ? `${DEV_API}/leads` : `${API_URL}/contact.php`;
 
-    /* 1. Post lead to Kredoo CRM */
     try {
-      await fetch(KREDOO_WEBHOOK, {
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name, email: emailVal, phone, company, role,
-          service, budget, message,
-          source: 'Website Contact Form',
-          submitted_at: timestamp,
+          name,
+          email: emailVal,
+          phone,
+          company,
+          role,
+          service,
+          budget,
+          message,
+          website: formData.get('website') || '',
         }),
       });
-    } catch (err) {
-      console.warn('Kredoo webhook error (non-blocking):', err);
-    }
 
-    /* 2. Send emails via EmailJS */
-    const EMAIL_CONFIG = {
-      publicKey: 'TV2W6oWSqMNM7ELMw',   // e.g. 'AbCdEf123456'
-      serviceId: 'service_urz7rpv',            // e.g. 'service_xyz'
-      clientTemplateId: 'template_lf58fut',    // confirmation to client
-      teamTemplateId: 'template_xgfg4mb',       // notification to your team
-      teamEmail: 'team@elevaitelabs.in',
-    };
+      const data = await res.json().catch(() => ({}));
 
-    if (EMAIL_CONFIG.publicKey !== 'YOUR_EMAILJS_PUBLIC_KEY') {
-      emailjs.init({ publicKey: EMAIL_CONFIG.publicKey });
-      const sharedParams = {
-        from_name: name,
-        from_email: emailVal,
-        phone: phone || 'Not provided',
-        company: company || 'Not provided',
-        role,
-        service,
-        budget,
-        message,
-        submitted_at: timestamp,
-        team_email: EMAIL_CONFIG.teamEmail,
-      };
-
-      try {
-        /* Client confirmation */
-        await emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.clientTemplateId, {
-          ...sharedParams,
-          to_name: name,
-          to_email: emailVal,
-        });
-        /* Team notification */
-        await emailjs.send(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.teamTemplateId, {
-          ...sharedParams,
-          to_email: EMAIL_CONFIG.teamEmail,
-        });
-      } catch (err) {
-        console.warn('EmailJS error (non-blocking):', err);
+      if (!res.ok || data.status !== 'success') {
+        setStatus('idle');
+        alert(data.message || 'Something went wrong. Please email team@elevaitelabs.in directly.');
+        return;
       }
-    }
 
-    /* 3. Show success state */
-    setStatus('success');
+      // Delivery problems are recorded against the lead for the team to see;
+      // the enquiry itself is safely stored, so the visitor is done.
+      if (data.delivery && (data.delivery.mail !== 'sent' || data.delivery.webhook === 'failed')) {
+        console.warn('Lead saved, but delivery had issues:', data.delivery);
+      }
+
+      setStatus('success');
+    } catch (err) {
+      console.error('Contact submit failed:', err);
+      setStatus('idle');
+      alert('We could not reach the server. Please email team@elevaitelabs.in directly.');
+    }
   };
 
   return (
@@ -300,6 +284,16 @@ const Contact = () => {
                       <div className="form-field">
                         <label htmlFor="cf-message">Tell us about the project</label>
                         <textarea id="cf-message" name="message" required placeholder="What's the problem? What have you tried? What does success look like?"></textarea>
+                        {/* Honeypot. Hidden from people, filled in by bots, and
+                            the server discards any submission that has it set. */}
+                        <input
+                          type="text"
+                          name="website"
+                          tabIndex={-1}
+                          autoComplete="off"
+                          aria-hidden="true"
+                          style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+                        />
                       </div>
                     </div>
                     <button type="submit" className="btn btn-primary" id="cf-submit" disabled={status === 'sending'}>

@@ -102,10 +102,33 @@ export default function Admin() {
   useEffect(() => {
     if (activeTab === 'contact') {
       fetchContact();
+    } else if (activeTab === 'leads') {
+      fetchLeads();
     } else {
       fetchData();
     }
   }, [activeTab]);
+
+  // Enquiries come from their own endpoint: unlike the content tables, reads
+  // are admin-only because this is personal data submitted by the public.
+  const fetchLeads = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(IS_DEV ? `${DEV_API}/leads` : `${API_URL}/leads.php`, {
+        credentials: 'include',
+      });
+      if (res.status === 401) {
+        navigate('/admin/login');
+        return;
+      }
+      const json = await res.json();
+      setData(Array.isArray(json) ? json : []);
+    } catch (e) {
+      console.error(e);
+      setData([]);
+    }
+    setLoading(false);
+  };
 
   const handleLogout = async () => {
     localStorage.removeItem('admin_auth');
@@ -281,8 +304,16 @@ export default function Admin() {
       schemas={schemas}
       handleLogout={handleLogout}
     >
-      <h2 className="admin-title">{activeTab === 'contact' ? 'Contact Settings' : schemas[activeTab]?.title}</h2>
+      <h2 className="admin-title">
+        {activeTab === 'contact' ? 'Contact Settings'
+          : activeTab === 'leads' ? 'Enquiries'
+          : schemas[activeTab]?.title}
+      </h2>
 
+      {activeTab === 'leads' ? (
+        <LeadsPanel leads={data} loading={loading} onDelete={handleDelete} />
+      ) : (
+      <>
       <form className="admin-form" onSubmit={handleSubmit}>
         {activeTab === 'contact' ? (
           <>
@@ -372,10 +403,120 @@ export default function Admin() {
           </table>
         </div>
       )}
+      </>
+      )}
 
-      {loading && (
+      {loading && activeTab !== 'leads' && (
         <div style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>Loading...</div>
       )}
     </AdminLayout>
   );
 }
+
+/** Badge for a delivery outcome recorded against a lead. */
+const StatusPill = ({ label, status, error }) => {
+  const tone = status === 'sent' ? { bg: '#dcfce7', fg: '#166534' }
+    : status === 'failed' ? { bg: '#fee2e2', fg: '#991b1b' }
+    : { bg: '#f1f5f9', fg: '#475569' };
+
+  return (
+    <span
+      title={error || undefined}
+      style={{
+        display: 'inline-block', padding: '3px 9px', borderRadius: '999px',
+        background: tone.bg, color: tone.fg, fontSize: '11px', fontWeight: 700,
+        letterSpacing: '0.04em', marginRight: '6px', whiteSpace: 'nowrap',
+        cursor: error ? 'help' : 'default',
+      }}
+    >
+      {label}: {status}
+    </span>
+  );
+};
+
+/**
+ * Enquiries are read-only. They are a record of what a member of the public
+ * sent, so editing them would only ever misrepresent it - the sole action is
+ * deleting one.
+ */
+const LeadsPanel = ({ leads, loading, onDelete }) => {
+  if (loading) {
+    return <div style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>Loading enquiries...</div>;
+  }
+
+  if (!leads.length) {
+    return (
+      <div style={{ textAlign: 'center', padding: '60px 20px', color: '#94a3b8' }}>
+        <p style={{ fontSize: '17px', fontWeight: 600, color: '#475569' }}>No enquiries yet.</p>
+        <p style={{ marginTop: '8px' }}>Submissions from the contact form will appear here.</p>
+      </div>
+    );
+  }
+
+  const failed = leads.filter((l) => l.mail_status === 'failed' || l.webhook_status === 'failed').length;
+
+  return (
+    <>
+      <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap' }}>
+        <span style={{ fontSize: '15px', color: '#475569' }}>
+          <strong>{leads.length}</strong> enquir{leads.length === 1 ? 'y' : 'ies'}
+        </span>
+        {failed > 0 && (
+          <span style={{ fontSize: '14px', color: '#991b1b', fontWeight: 600 }}>
+            {failed} had a delivery problem - hover the badge for the reason
+          </span>
+        )}
+      </div>
+
+      <div style={{ display: 'grid', gap: '16px' }}>
+        {leads.map((lead) => (
+          <div
+            key={lead.id}
+            style={{
+              border: '1px solid #e2e8f0', borderRadius: '16px', padding: '22px 24px',
+              background: '#fff',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
+              <div>
+                <div style={{ fontSize: '17px', fontWeight: 700, color: '#0f172a' }}>
+                  {lead.name}{lead.company ? ` - ${lead.company}` : ''}
+                </div>
+                <div style={{ fontSize: '14px', color: '#475569', marginTop: '4px' }}>
+                  <a href={`mailto:${lead.email}`} style={{ color: '#1e88e5' }}>{lead.email}</a>
+                  {lead.phone ? ` · ${lead.phone}` : ''}
+                </div>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: '13px', color: '#94a3b8' }}>
+                  {new Date(lead.created_at.replace(' ', 'T')).toLocaleString('en-IN')}
+                </div>
+                <div style={{ marginTop: '8px' }}>
+                  <StatusPill label="Mail" status={lead.mail_status} error={lead.mail_error} />
+                  <StatusPill label="CRM" status={lead.webhook_status} error={lead.webhook_error} />
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', margin: '14px 0' }}>
+              {[lead.role, lead.service, lead.budget].filter(Boolean).map((v) => (
+                <span key={v} style={{
+                  fontSize: '12px', padding: '4px 10px', borderRadius: '999px',
+                  background: '#f1f5f9', color: '#334155', fontWeight: 600,
+                }}>{v}</span>
+              ))}
+            </div>
+
+            <p style={{ fontSize: '15px', lineHeight: 1.6, color: '#334155', whiteSpace: 'pre-wrap', margin: 0 }}>
+              {lead.message}
+            </p>
+
+            <div style={{ marginTop: '18px' }}>
+              <button className="admin-btn-danger" onClick={() => onDelete(lead.id)}>Delete</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+};

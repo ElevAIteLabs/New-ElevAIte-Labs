@@ -25,7 +25,7 @@ import {
  */
 
 /** Set once confirmed - a wrong year is worse than an absent one. */
-const FOUNDING_YEAR = null;
+const FOUNDING_YEAR = 2024;
 
 const FOUNDERS = [
   {
