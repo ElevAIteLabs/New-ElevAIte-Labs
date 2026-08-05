@@ -216,6 +216,33 @@ const BlogPost = () => {
                 to them. */}
             <div className="prose" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
 
+            {/* Body links from relevant prose are the strongest internal
+                signal a site has. Without this every article's only outbound
+                links were the sitewide nav and footer, which are boilerplate
+                and largely discounted. Anchor text is deliberately the phrase
+                each destination is trying to rank for. */}
+            <aside className="article-next">
+              <p className="article-next-label">Where to go next</p>
+              <ul>
+                <li>
+                  <Link to="/ai-automation-company-hyderabad">AI automation company in Hyderabad</Link>
+                  <span> - what we build, and the projects behind each one</span>
+                </li>
+                <li>
+                  <Link to="/work">AI automation and app development case studies</Link>
+                  <span> - every project, by category</span>
+                </li>
+                <li>
+                  <Link to="/services">AI automation and AI agent services</Link>
+                  <span> - the six service lines in full</span>
+                </li>
+                <li>
+                  <Link to="/contact">Book a 30-minute scoping call</Link>
+                  <span> - free, and we will tell you if you do not need us</span>
+                </li>
+              </ul>
+            </aside>
+
             <div className="article-foot">
               <Link className="link-arrow" to="/learn">
                 <span className="arrow">←</span> Back to all articles
