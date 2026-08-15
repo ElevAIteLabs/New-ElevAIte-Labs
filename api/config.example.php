@@ -33,18 +33,24 @@ return [
      * (Google Account > Security > 2-Step Verification > App passwords) and
      * use it as 'password' - your normal account password will not work.
      *
-     * Note on the From address: Gmail will not send as an address it has not
-     * verified, so 'from_email' should be the account itself. 'reply_to' is
-     * what matters for replies, and that is the address people will answer to.
+     * 'username' and 'from_email' must be the SAME mailbox. Gmail silently
+     * rewrites the From header to the authenticated account when they differ,
+     * so a mismatch does not error, it just quietly sends as someone else.
+     *
+     * Sending as an @elevaitelabs.in address therefore means authenticating as
+     * that Workspace mailbox, not as a personal gmail with an alias. The
+     * domain publishes DMARC with adkim=s and aspf=s, so SPF and DKIM have to
+     * align to elevaitelabs.in exactly; authenticating as @gmail.com aligns to
+     * gmail.com instead and the mail is treated as spam.
      */
     'smtp' => [
         'enabled'    => false,
         'host'       => 'smtp.gmail.com',
         'port'       => 587,
         'encryption' => 'tls',           // 'tls' for 587, 'ssl' for 465
-        'username'   => 'sender@gmail.com',
+        'username'   => 'premsai@elevaitelabs.in',
         'password'   => 'your-16-char-app-password',
-        'from_email' => 'sender@gmail.com',
+        'from_email' => 'premsai@elevaitelabs.in',   // must match 'username'
         'from_name'  => 'ElevAIte Labs Website',
         'reply_to'   => 'contact@elevaitelabs.in',
         'notify'     => 'premsai@elevaitelabs.in',   // where new leads are sent
