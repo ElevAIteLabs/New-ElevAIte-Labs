@@ -8,7 +8,7 @@
  * so the only extra step is dropping the PHP API alongside it.
  */
 import { execSync } from 'node:child_process';
-import { cpSync, existsSync, rmSync, mkdirSync, readdirSync } from 'node:fs';
+import { cpSync, existsSync, rmSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -20,6 +20,14 @@ if (!existsSync(path.join(root, '.env'))) {
   console.error('\n  Missing .env - copy .env.example to .env first.');
   console.error('  Without VITE_API_URL the build calls "undefined/login.php".\n');
   process.exit(1);
+}
+
+// Analytics has been lost once already, silently, because the tag existed
+// only in the server's copy of index.html and a deploy overwrote it. A build
+// that ships no tag is now something you are told about.
+if (!/^\s*VITE_GA_ID\s*=\s*G-\S/m.test(readFileSync(path.join(root, '.env'), 'utf8'))) {
+  console.warn('\n  VITE_GA_ID is not set - this build will ship with no analytics tag.');
+  console.warn('  Get it from GA4 -> Admin -> Data Streams and add it to .env.\n');
 }
 
 console.log('> vite build');

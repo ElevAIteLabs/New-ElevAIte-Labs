@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import SelectField from '../components/SelectField';
+import { trackLead } from '../analytics';
 
 const IS_DEV = import.meta.env.DEV;
 const API_URL = import.meta.env.VITE_API_URL;
@@ -71,6 +72,11 @@ const Contact = () => {
       if (data.delivery && (data.delivery.mail !== 'sent' || data.delivery.webhook === 'failed')) {
         console.warn('Lead saved, but delivery had issues:', data.delivery);
       }
+
+      // Counted only once the API confirms the lead was stored, so the
+      // conversion total matches the Enquiries table rather than the number
+      // of times the button was pressed.
+      trackLead({ service, budget });
 
       setStatus('success');
     } catch (err) {
