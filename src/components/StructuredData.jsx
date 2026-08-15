@@ -112,13 +112,21 @@ const ORGANISATION = {
       contactType: 'sales',
       email: 'contact@elevaitelabs.in',
       telephone: '+91-75699-54054',
-      areaServed: 'IN',
+      areaServed: ['IN', 'US', 'GB', 'CA', 'AU', 'SG'],
       availableLanguage: ['en', 'te', 'hi'],
     },
   ],
+  // India and Hyderabad stay first: they carry the local-business signals the
+  // rest of the site ranks on. The additions declare that we take work from
+  // these markets too, which /global is written for.
   areaServed: [
     { '@type': 'Country', name: 'India' },
     { '@type': 'City', name: 'Hyderabad' },
+    { '@type': 'Country', name: 'United States' },
+    { '@type': 'Country', name: 'United Kingdom' },
+    { '@type': 'Country', name: 'Canada' },
+    { '@type': 'Country', name: 'Australia' },
+    { '@type': 'Country', name: 'Singapore' },
   ],
   address: {
     '@type': 'PostalAddress',

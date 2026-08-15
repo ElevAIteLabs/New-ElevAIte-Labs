@@ -4934,3 +4934,49 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
 @media (max-width: 700px) {
   .article-next { padding: 22px 20px; }
 }
+
+/* Suggestion bar for visitors whose timezone is not India. The navbar is
+   sticky rather than fixed, so this sits in normal flow directly beneath it
+   and needs no offset of its own. It scrolls away while the navbar stays. */
+.region-hint {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 12px 56px 12px 20px;
+  background: var(--text);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 14.5px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.region-hint-cta {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.region-hint-cta:hover { color: var(--accent); }
+
+.region-hint-close {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 15px;
+  line-height: 1;
+  padding: 6px;
+  cursor: pointer;
+}
+.region-hint-close:hover { color: #fff; }
+
+@media (max-width: 640px) {
+  .region-hint { font-size: 13.5px; padding: 11px 48px 11px 16px; gap: 8px; }
+}

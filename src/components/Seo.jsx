@@ -46,12 +46,32 @@ const Seo = () => {
 
   const canonical = `${SITE_URL}${path === '/' ? '/' : path}`;
 
+  /**
+   * The homepage and /global are the same offer written for two audiences, so
+   * they are declared as alternates of each other. Google then picks by the
+   * searcher's region instead of us redirecting by IP, which would send
+   * Googlebot - which crawls largely from the US - to the wrong version and
+   * risk the India pages never being crawled properly.
+   *
+   * Deliberately limited to this one pair. Claiming an international variant
+   * for every URL would be false, and hreflang has to be reciprocal to work.
+   */
+  const hasGlobalAlternate = path === '/' || path === '/global';
+
   return (
     <>
       <title data-seo="1">{meta.title}</title>
       <meta data-seo="1" name="description" content={meta.description} />
       <link data-seo="1" rel="canonical" href={canonical} />
       <meta data-seo="1" name="robots" content="index, follow, max-image-preview:large" />
+
+      {hasGlobalAlternate && (
+        <>
+          <link data-seo="1" rel="alternate" hrefLang="en-IN" href={`${SITE_URL}/`} />
+          <link data-seo="1" rel="alternate" hrefLang="en" href={`${SITE_URL}/global`} />
+          <link data-seo="1" rel="alternate" hrefLang="x-default" href={`${SITE_URL}/global`} />
+        </>
+      )}
 
       <meta data-seo="1" property="og:type" content="website" />
       <meta data-seo="1" property="og:site_name" content={SITE_NAME} />

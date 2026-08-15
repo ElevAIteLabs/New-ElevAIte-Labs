@@ -76,6 +76,21 @@ export const ROUTE_META = {
     changefreq: 'monthly',
     priority: '0.9',
   },
+  /**
+   * The one page written for buyers outside India. Named /global rather than
+   * /usa on purpose: a Canadian or British buyer needs exactly the same thing,
+   * and Search Console already shows impressions from five countries outside
+   * India. It carries x-default in the hreflang set, so Google offers it to
+   * anyone the India pages are not a better fit for.
+   */
+  '/global': {
+    label: 'International',
+    title: 'AI Automation for US & International Teams | ElevAIte Labs',
+    description:
+      'AI automation, custom agents and app development for teams in the US, UK, Canada and Australia. Fixed-fee scopes in USD, code in your accounts, and an overnight build cycle.',
+    changefreq: 'monthly',
+    priority: '0.9',
+  },
   '/learn': {
     label: 'Learn',
     title: 'Learn AI Automation | Guides & Resources',

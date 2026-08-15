@@ -163,7 +163,7 @@ const Home = () => {
                   <img src="/pictures/vishnu.jpeg" alt="Vishhnu Saai Gudise" loading="lazy" style={{ objectPosition: 'center 22%' }} />
                   <img src="/pictures/premsai.png" alt="Premsai Kilaru" loading="lazy" style={{ objectPosition: 'center 20%' }} />
                 </div>
-                <p>A small team, by design &mdash; the people you meet on the call are the people writing the code.</p>
+                <p>A small team, by design - the people you meet on the call are the people writing the code.</p>
               </div>
 
               <div className="proof-tools">
@@ -353,7 +353,7 @@ const Home = () => {
           <div className="fade-up">
             <span className="tag">Kredoo Modules</span>
             <h2 className="display" style={{ maxWidth: '840px' }}>Two channels. One pipeline.</h2>
-            <p className="kmod-lead">Instagram creates the lead. WhatsApp closes it. Both write into the same inbox, the same timeline and the same pipeline &mdash; so nobody re-types anything and nothing quietly falls through.</p>
+            <p className="kmod-lead">Instagram creates the lead. WhatsApp closes it. Both write into the same inbox, the same timeline and the same pipeline - so nobody re-types anything and nothing quietly falls through.</p>
           </div>
 
           {/* The funnel, end to end - reveals step by step on scroll */}
@@ -389,7 +389,7 @@ const Home = () => {
               <ul className="kmod-list">
                 <li><b>Comment &rarr; DM</b> on a keyword, or on any comment at all.</li>
                 <li><b>Rotating public replies</b> with <code>{'{{username}}'}</code>, because Instagram flags accounts that post the same comment repeatedly.</li>
-                <li><b>Follow gate</b> &mdash; the real link goes only to followers; everyone else is asked to follow and comment again.</li>
+                <li><b>Follow gate</b> - the real link goes only to followers; everyone else is asked to follow and comment again.</li>
                 <li><b>Arm a rule for your next post</b> and it attaches itself the moment the reel goes live.</li>
                 <li><b>Hourly cap</b> under Instagram&rsquo;s 750/hr ceiling, so a viral reel can&rsquo;t get you rate-limited.</li>
                 <li><b>Ref links</b> for the bio that track taps <em>versus</em> conversations actually started.</li>
@@ -412,10 +412,10 @@ const Home = () => {
               </header>
               <p className="kmod-pitch">The official WhatsApp Cloud API on your own business number. No third-party relay, no n8n or Zapier sitting in the middle.</p>
               <ul className="kmod-list">
-                <li><b>One-click connect</b> through Meta&rsquo;s own popup &mdash; Kredoo is a registered Meta Tech Provider, so no copying tokens between dashboards.</li>
+                <li><b>One-click connect</b> through Meta&rsquo;s own popup - Kredoo is a registered Meta Tech Provider, so no copying tokens between dashboards.</li>
                 <li><b>Real delivery tracking:</b> queued &rarr; sent &rarr; delivered &rarr; read &rarr; failed, driven by Meta&rsquo;s webhooks. &ldquo;Sent&rdquo; isn&rsquo;t treated as proof of anything.</li>
                 <li><b>Template builder</b> with a live phone preview, submitted for Meta approval from inside Kredoo.</li>
-                <li><b>Send-again waves</b> &mdash; follow a campaign with a second template to non-responders only, with full history kept.</li>
+                <li><b>Send-again waves</b> - follow a campaign with a second template to non-responders only, with full history kept.</li>
                 <li><b>AI agent</b> answers off-script from your knowledge base, then hands back to the flow or books the slot itself.</li>
                 <li><b>Compliance built in:</b> automatic STOP handling, 24-hour window enforcement, rate-limit backoff.</li>
               </ul>
@@ -433,7 +433,7 @@ const Home = () => {
               <li>Kanban pipeline with custom boards, stages, fields and per-rep assignment</li>
               <li>Meta Lead Ads posting straight in, in real time</li>
               <li>Booking links, white-label on your own domain</li>
-              <li>AI Voice Agent &mdash; calls leads, transcript lands on the record</li>
+              <li>AI Voice Agent - calls leads, transcript lands on the record</li>
               <li>REST API and webhooks out to n8n, Make, Slack or Sheets</li>
             </ul>
             <div className="kmod-cta">

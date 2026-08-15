@@ -169,9 +169,9 @@ const Services = () => {
               <span className="tag" style={{ color: 'var(--accent)' }}>How an engagement runs</span>
               <h2 className="display">Scoped in a week. Shipping in four.</h2>
               <ol className="svc-engage-list">
-                <li><b>Week 1 &mdash; Scope.</b> We map the workflow, agree the success metric, and fix the price. No open-ended discovery.</li>
-                <li><b>Weeks 2&ndash;4 &mdash; Build.</b> Working software every week, in your environment, not a demo sandbox.</li>
-                <li><b>After &mdash; Own it or keep us.</b> Documented handover to your team, or a retainer if you would rather we keep compounding it.</li>
+                <li><b>Week 1 - Scope.</b> We map the workflow, agree the success metric, and fix the price. No open-ended discovery.</li>
+                <li><b>Weeks 2 - 4 - Build.</b> Working software every week, in your environment, not a demo sandbox.</li>
+                <li><b>After - Own it or keep us.</b> Documented handover to your team, or a retainer if you would rather we keep compounding it.</li>
               </ol>
               <div className="svc-engage-cta">
                 <Link to="/contact" className="btn btn-light">Book a scoping call &rarr;</Link>

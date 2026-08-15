@@ -13,6 +13,8 @@ import BlogAutomation from './pages/BlogAutomation';
 import BlogKredoo from './pages/BlogKredoo';
 import BlogWhatsapp from './pages/BlogWhatsapp';
 import AiAutomationHyderabad from './pages/AiAutomationHyderabad';
+import Global from './pages/Global';
+import RegionHint from './components/RegionHint';
 import BlogPost from './pages/BlogPost';
 import Admin from './pages/Admin';
 import AdminLogin from './pages/AdminLogin';
@@ -66,6 +68,7 @@ function Layout() {
       <Seo />
       <StructuredData />
       {!isAdmin && <Navbar />}
+      {!isAdmin && <RegionHint />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -73,6 +76,7 @@ function Layout() {
         <Route path="/work" element={<Work />} />
         <Route path="/products" element={<Products />} />
         <Route path="/ai-automation-company-hyderabad" element={<AiAutomationHyderabad />} />
+        <Route path="/global" element={<Global />} />
         <Route path="/learn" element={<Learn />} />
         <Route path="/learn/:slug" element={<BlogPost />} />
         <Route path="/contact" element={<Contact />} />
