@@ -1,6 +1,16 @@
 Options -Indexes
 DirectoryIndex index.html
 
+# Anything that is not meant to be served must stay unreadable whatever
+# extension it ends up with. api/config.php is safe only because its mode is
+# 0600; a backup copy of it written into the same folder inherited 0644 and
+# was served as plain text, credentials and all, until it was removed.
+<IfModule mod_authz_core.c>
+  <FilesMatch "(^\.|\.(bak|bak-[A-Za-z0-9]+|orig|save|swp|sql|env|ini|log|sh|zip|tar|gz|old)$|^config\.php)">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+
 # Without this, mod_dir 301-redirects /services to /services/ before the
 # rewrite below can serve the prerendered file, adding a hop to every page.
 <IfModule mod_dir.c>
