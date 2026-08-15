@@ -89,7 +89,11 @@ function send_lead_mail(array $lead) {
     // Two separate messages, so a failure to reach the submitter still gets
     // the lead in front of the team.
     foreach ([
+        // Copies go on the team notification only. The submitter's
+        // confirmation deliberately has none - it would expose an internal
+        // address to whoever filled in the form.
         ['to' => $smtp['notify'], 'toName' => 'ElevAIte Labs',
+         'cc' => (array) ($smtp['notify_cc'] ?? []),
          'subject' => "New enquiry: {$name}" . ($lead['company'] ? " ({$lead['company']})" : ''),
          'body' => $teamBody,
          'text' => "New enquiry from the website (lead #{$lead['id']})\n\n{$plainRows}\nProject:\n{$messagePlain}\n",
@@ -117,6 +121,11 @@ function send_lead_mail(array $lead) {
 
             $mail->setFrom($smtp['from_email'], mail_safe($smtp['from_name']));
             $mail->addAddress($msg['to'], mail_safe($msg['toName']));
+            foreach ($msg['cc'] ?? [] as $cc) {
+                if (trim((string) $cc) !== '') {
+                    $mail->addCC(trim($cc));
+                }
+            }
             if (!empty($msg['replyTo'])) {
                 $mail->addReplyTo($msg['replyTo'], mail_safe($msg['replyToName']));
             }

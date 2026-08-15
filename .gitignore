@@ -43,3 +43,6 @@ public_html/
 # Search Console exports - local analysis only, not for a public repo
 elevaitelabs.in-Performance-on-Search-*/
 *-Performance-on-Search-*/
+
+# Build artefact - 91MB, and rebuildable with `npm run build:deploy`
+deploy.zip

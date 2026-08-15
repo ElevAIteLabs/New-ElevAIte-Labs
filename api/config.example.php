@@ -47,7 +47,10 @@ return [
         'from_email' => 'sender@gmail.com',
         'from_name'  => 'ElevAIte Labs Website',
         'reply_to'   => 'contact@elevaitelabs.in',
-        'notify'     => 'contact@elevaitelabs.in',   // where new leads are sent
+        'notify'     => 'premsai@elevaitelabs.in',   // where new leads are sent
+        // Copied on the team notification only, never on the confirmation
+        // that goes back to the person who filled in the form.
+        'notify_cc'  => ['elevaitelabs@gmail.com'],
     ],
 
     // Forwarded server-side so the URL is not exposed in the JS bundle.
