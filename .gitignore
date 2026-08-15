@@ -39,3 +39,7 @@ public_html/
 .playwright-mcp/
 
 # PHPMailer is committed so a clean clone can deploy without composer.
+
+# Search Console exports - local analysis only, not for a public repo
+elevaitelabs.in-Performance-on-Search-*/
+*-Performance-on-Search-*/
