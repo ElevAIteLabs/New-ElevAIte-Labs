@@ -16,33 +16,45 @@ import { SITE_URL } from '../seo/siteMeta';
  * rather than redirecting anyone by IP address.
  */
 
+/**
+ * Every row carries a destination. .svc-row sets cursor:pointer and reserves a
+ * fourth grid column for the arrow, so a row rendered as a plain div looks
+ * interactive, animates on hover and then does nothing. Rows that are genuinely
+ * not destinations use .is-static instead.
+ */
 const CAPABILITIES = [
   {
+    to: '/work',
     name: 'Workflow automation',
     body: 'Removing a repetitive sequence someone performs by hand: reading an incoming message, deciding what it is, putting the data where it belongs, notifying the right person. Built on n8n, self-hosted when you want the data staying inside your own infrastructure.',
     proof: 'Email-to-Email Workflow via Monday.com',
   },
   {
+    to: '/services',
     name: 'Custom AI agents',
     body: 'For work that needs judgement rather than a fixed branch: unstructured text, inconsistent documents, requests that could mean three different things. If the behaviour fits a decision tree you want an automation instead, and we will say so before you spend anything.',
     proof: 'AI-Powered Lead Coordinator',
   },
   {
+    to: '/work',
     name: 'Document and data extraction',
     body: 'Reading scanned invoices, forms and statements, extracting fields by meaning rather than position, validating the result and flagging what fails. That validation step is the difference between a demo and something you can run a business on.',
     proof: 'SmartDoc: OCR Automation',
   },
   {
+    to: '/work',
     name: 'Lead response systems',
     body: 'Instant first reply, qualification before a human is involved, and sequences that stop the moment someone responds. First-response speed moves revenue more directly than almost anything else in a sales process.',
     proof: 'Intelligent SMS Lead Engagement via HubSpot',
   },
   {
+    to: '/products',
     name: 'Web and mobile applications',
     body: 'Production applications in React, React Native and Next.js. Designed in-house, shipped to the app stores, and handed over with the repository and the deployment pipeline in your accounts.',
     proof: 'Kredoo CRM',
   },
   {
+    to: '/contact',
     name: 'Overflow and white-label delivery',
     body: 'If you are an agency with more automation sold than capacity to build it, we work as your delivery team. Your client relationship, your brand on the deliverable, our engineers behind it. Several of our engagements run this way.',
     proof: null,
@@ -165,7 +177,7 @@ const Global = () => {
             </h2>
           </div>
           <div className="svc-list fade-up">
-            <div className="svc-row">
+            <div className="svc-row is-static">
               <div className="svc-num">01</div>
               <div className="svc-title">You brief, end of your day</div>
               <div className="svc-desc">
@@ -173,7 +185,7 @@ const Global = () => {
                 Whatever is quickest for you.
               </div>
             </div>
-            <div className="svc-row">
+            <div className="svc-row is-static">
               <div className="svc-num">02</div>
               <div className="svc-title">We build, through your night</div>
               <div className="svc-desc">
@@ -181,7 +193,7 @@ const Global = () => {
                 so nothing waits twelve hours for an answer that could have been a sentence.
               </div>
             </div>
-            <div className="svc-row">
+            <div className="svc-row is-static">
               <div className="svc-num">03</div>
               <div className="svc-title">You review, start of your day</div>
               <div className="svc-desc">
@@ -203,21 +215,17 @@ const Global = () => {
           </div>
           <div className="svc-list fade-up">
             {CAPABILITIES.map((c, i) => (
-              <div className="svc-row" key={c.name}>
+              <Link className="svc-row" to={c.to} key={c.name}>
                 <div className="svc-num">{String(i + 1).padStart(2, '0')}</div>
                 <div className="svc-title">{c.name}</div>
                 <div className="svc-desc">
                   {c.body}
-                  {c.proof && (
-                    <>
-                      {' '}
-                      <Link to="/work" style={{ color: 'var(--accent)', fontWeight: 500 }}>
-                        See: {c.proof}
-                      </Link>
-                    </>
-                  )}
+                  {/* Not a nested anchor: the whole row is the link, so this is
+                      only a label telling you where it goes. */}
+                  {c.proof && <span className="svc-proof">See: {c.proof}</span>}
                 </div>
-              </div>
+                <div className="svc-arrow">→</div>
+              </Link>
             ))}
           </div>
         </div>
@@ -238,40 +246,34 @@ const Global = () => {
             </p>
           </div>
           <div className="svc-list fade-up">
-            <div className="svc-row">
-              <div className="svc-num">$</div>
-              <div className="svc-title">Single workflow</div>
-              <div className="svc-desc">
-                Roughly $500 to $1,500. Three to five systems connected, with error handling
-                and alerting included rather than quoted separately.
-              </div>
-            </div>
-            <div className="svc-row">
-              <div className="svc-num">$$</div>
-              <div className="svc-title">Multi-step system with AI</div>
-              <div className="svc-desc">
-                Roughly $1,500 to $5,000. Custom integrations, a model making a judgement
-                somewhere in the flow, multi-branch logic and a tested fallback for the cases
-                it gets wrong.
-              </div>
-            </div>
-            <div className="svc-row">
-              <div className="svc-num">$$$</div>
-              <div className="svc-title">Ongoing retainer</div>
-              <div className="svc-desc">
-                From about $1,200 a month. Maintenance, iteration and a named engineer.
-                Worth it once you have systems in production, because APIs change and
-                something breaks every few months in anything with external dependencies.
-              </div>
-            </div>
-            <div className="svc-row">
-              <div className="svc-num">◇</div>
-              <div className="svc-title">White-label capacity</div>
-              <div className="svc-desc">
-                Monthly, priced on committed engineer time. For agencies who have sold more
-                automation than they can staff.
-              </div>
-            </div>
+            {[
+              {
+                num: '$', name: 'Single workflow',
+                body: 'Roughly $500 to $1,500. Three to five systems connected, with error handling and alerting included rather than quoted separately.',
+              },
+              {
+                num: '$$', name: 'Multi-step system with AI',
+                body: 'Roughly $1,500 to $5,000. Custom integrations, a model making a judgement somewhere in the flow, multi-branch logic and a tested fallback for the cases it gets wrong.',
+              },
+              {
+                num: '$$$', name: 'Ongoing retainer',
+                body: 'From about $1,200 a month. Maintenance, iteration and a named engineer. Worth it once you have systems in production, because APIs change and something breaks every few months in anything with external dependencies.',
+              },
+              {
+                num: '◇', name: 'White-label capacity',
+                body: 'Monthly, priced on committed engineer time. For agencies who have sold more automation than they can staff.',
+              },
+            ].map((t) => (
+              <Link className="svc-row" to="/contact" key={t.name}>
+                <div className="svc-num">{t.num}</div>
+                <div className="svc-title">{t.name}</div>
+                <div className="svc-desc">
+                  {t.body}
+                  <span className="svc-proof">Get a fixed quote</span>
+                </div>
+                <div className="svc-arrow">→</div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

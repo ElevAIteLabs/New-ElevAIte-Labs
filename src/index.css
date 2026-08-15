@@ -4980,3 +4980,24 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
 @media (max-width: 640px) {
   .region-hint { font-size: 13.5px; padding: 11px 48px 11px 16px; gap: 8px; }
 }
+
+/* Rows that explain rather than navigate. .svc-row carries cursor:pointer and
+   a hover treatment, which on a plain div promises a click that never happens. */
+.svc-row.is-static { cursor: default; }
+.svc-row.is-static:hover::before { transform: translateX(-100%); }
+.svc-row.is-static:hover .svc-num,
+.svc-row.is-static:hover .svc-title,
+.svc-row.is-static:hover .svc-desc { color: inherit; }
+.svc-row.is-static .svc-num { color: var(--accent); }
+.svc-row.is-static .svc-title { color: var(--text); }
+
+/* Where a clickable row leads, shown inside the row rather than as a nested
+   anchor, which would be invalid inside the row's own link. */
+.svc-proof {
+  display: block;
+  margin-top: 8px;
+  color: var(--accent);
+  font-weight: 500;
+  font-size: 14px;
+}
+.svc-row:hover .svc-proof { color: inherit; }
