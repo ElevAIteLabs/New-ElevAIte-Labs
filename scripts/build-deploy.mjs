@@ -46,3 +46,8 @@ if (!existsSync(path.join(root, 'api', 'config.php'))) {
 console.log(`\nReady: ${path.relative(root, deploy)}/`);
 console.log(readdirSync(deploy).sort().map((f) => `  ${f}`).join('\n'));
 console.log('\nUpload the CONTENTS of deploy/ into public_html/ on Hostinger.');
+console.log(
+  '\nIf deploying with rsync --delete, protect the server config:\n' +
+  "  rsync -az --delete --filter='protect api/config.php' deploy/ <host>:<docroot>/\n" +
+  '  --exclude alone is not enough; a mistyped path deletes it and the API 500s.',
+);

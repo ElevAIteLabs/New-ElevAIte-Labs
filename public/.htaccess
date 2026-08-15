@@ -11,6 +11,25 @@ DirectoryIndex index.html
   RewriteEngine On
   RewriteBase /
 
+  # 0a. Force one hostname. Search Console showed the site indexed on both
+  #     www and apex - www/blog-kredoo alone had 44 impressions - which
+  #     splits ranking signals across two copies of every page. The canonical
+  #     tag alone was not enough; a 301 is unambiguous. Must run first.
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+  # 0b. URLs from the previous static site that still hold impressions.
+  #     /contacts and /careers were both ranking around position 1 and began
+  #     returning 404 once real 404s were introduced, so they are redirected
+  #     to their nearest equivalent rather than lost.
+  RewriteRule ^contacts/?$ /contact [R=301,L]
+  RewriteRule ^careers/?$ /about [R=301,L]
+
+  # 0c. The old site served .html URLs. Map them onto the current routes.
+  RewriteRule ^index\.html$ / [R=301,L]
+  RewriteRule ^(about|services|work|products|learn|contact)\.html$ /$1 [R=301,L]
+  RewriteRule ^(blog-automation|blog-kredoo|blog-whatsapp)\.html$ /$1 [R=301,L]
+
   # 1. Serve the prerendered HTML for a route when one exists.
   #    Matched without a trailing-slash redirect so /services stays /services.
   RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
