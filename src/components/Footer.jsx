@@ -18,6 +18,10 @@ const Footer = () => {
               <li><Link to="/about">About</Link></li>
               <li><Link to="/work">Work</Link></li>
               <li><Link to="/learn">Learn</Link></li>
+              {/* The only crawlable link to /global. The region banner that
+                  offers it is client-side and fires on timezone, so a crawler
+                  never sees it; without this the page is an orphan. */}
+              <li><Link to="/global">For US &amp; International Teams</Link></li>
             </ul>
           </div>
           <div className="footer-col">
