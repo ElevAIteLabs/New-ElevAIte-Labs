@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import ReelCard from '../components/ReelCard';
 import { postsApiUrl } from '../seo/posts';
 
 // Articles written before the CMS existed. They live as their own page
@@ -44,6 +45,39 @@ const formatPostDate = (value) => {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 };
 
+const REELS = [
+  {
+    href: 'https://www.instagram.com/reel/DPblf0dD_T0/',
+    cat: 'Automation',
+    title: '5 workflows you should automate this week',
+    poster: '/pictures/reels/DPblf0dD_T0.jpg',
+  },
+  {
+    href: 'https://www.instagram.com/reel/DS7ph4rD9LM/',
+    cat: 'Career',
+    title: 'Become an AI engineer in 2026 - the honest path',
+    poster: '/pictures/reels/DS7ph4rD9LM.jpg',
+  },
+  {
+    href: 'https://www.instagram.com/reel/DS-PVTTjyxQ/',
+    cat: 'Founders',
+    title: 'Why your AI Agent is failing (and how to fix it)',
+    poster: '/pictures/reels/DS-PVTTjyxQ.jpg',
+  },
+  {
+    href: 'https://www.instagram.com/reel/DUlGdjLjWaG/',
+    cat: 'Tools',
+    title: 'The 6 AI tools every Indian SMB should be running',
+    poster: '/pictures/reels/DUlGdjLjWaG.jpg',
+  },
+  {
+    href: 'https://www.instagram.com/reel/DV0-5lfDx2_/',
+    cat: 'Growth',
+    title: 'How we automated a business to ₹10L/month',
+    poster: '/pictures/reels/DV0-5lfDx2_.jpg',
+  },
+];
+
 const Learn = () => {
   const [subscribed, setSubscribed] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -81,23 +115,6 @@ const Learn = () => {
     <>
       <style>{`
         .reels-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; margin-top: 40px; align-items: start; }
-        .reel-card-clean { display: flex; flex-direction: column; gap: 14px; text-decoration: none; cursor: pointer; }
-        .reel-thumb { aspect-ratio: 9 / 16; border-radius: 16px; overflow: hidden; position: relative; background: var(--card); border: 1px solid var(--border); transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .reel-card-clean:hover .reel-thumb { transform: translateY(-6px); box-shadow: 0 20px 48px -8px rgba(15, 15, 15, 0.18); }
-        .reel-thumb::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 10, 10, 0.72) 0%, rgba(10, 10, 10, 0.18) 45%, transparent 70%); border-radius: inherit; z-index: 1; }
-        .reel-thumb-cat { position: absolute; top: 14px; left: 14px; z-index: 2; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; background: rgba(30, 136, 229, 0.85); padding: 4px 10px; border-radius: 999px; backdrop-filter: blur(6px); }
-        .reel-thumb-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; width: 52px; height: 52px; border-radius: 50%; background: rgba(255, 255, 255, 0.92); border: 1px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 17px; padding-left: 3px; transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.25s ease, background 0.25s ease; backdrop-filter: blur(4px); }
-        .reel-card-clean:hover .reel-thumb-play { transform: translate(-50%, -50%) scale(1.12); box-shadow: 0 8px 28px rgba(30, 136, 229, 0.28); background: #fff; }
-        .reel-thumb-ig { position: absolute; bottom: 14px; left: 14px; right: 14px; z-index: 2; display: flex; align-items: center; gap: 6px; font-size: 11px; color: rgba(255,255,255,0.75); font-weight: 500; }
-        .reel-thumb-ig svg { flex-shrink: 0; opacity: 0.85; }
-        .reel-thumb-bg { position: absolute; inset: 0; z-index: 0; background-image: repeating-linear-gradient(135deg, rgba(15,15,15,0.04) 0px, rgba(15,15,15,0.04) 1px, transparent 1px, transparent 9px); }
-        .reel-card-clean:nth-child(1) .reel-thumb { background: #E8EEF8; }
-        .reel-card-clean:nth-child(2) .reel-thumb { background: #EBE8F0; }
-        .reel-card-clean:nth-child(3) .reel-thumb { background: #E8F0EC; }
-        .reel-card-clean:nth-child(4) .reel-thumb { background: #F0EBE8; }
-        .reel-card-clean:nth-child(5) .reel-thumb { background: #E8EEF0; }
-        .reel-card-clean .reel-cat { font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); font-weight: 600; }
-        .reel-card-clean h3 { font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.35; }
         @media (max-width: 1100px) { .reels-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 700px) { .reels-grid { grid-template-columns: repeat(2, 1fr); } }
         .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 56px; }
@@ -116,8 +133,6 @@ const Learn = () => {
         .course-card .cta { margin-top: auto; padding-top: 16px; }
         @media (max-width: 960px) { .blog-grid, .course-row { grid-template-columns: 1fr; } }
               @media (max-width: 700px) {
-          .reel-thumb-cat { font-size: 12px; }
-          .reel-card .reel-cat, .reel-card-clean .reel-cat { font-size: 12px; }
           .course-card .level { font-size: 12px; }
           .post-dates, .post-tag { font-size: 12px; }
         }
@@ -146,83 +161,15 @@ const Learn = () => {
               <span className="tag">Reels</span>
               <h2 className="display">This Week on Instagram</h2>
             </div>
-            <a href="https://www.instagram.com/elevaitelabs/" target="_blank" rel="noopener noreferrer" className="link-arrow">Follow @elevaitelabs <span className="arrow">→</span></a>
+            <a href="https://www.instagram.com/elevaite_labs/" target="_blank" rel="noopener noreferrer" className="link-arrow">Follow @elevaite_labs <span className="arrow">→</span></a>
           </div>
 
           <div className="reels-grid">
-            <a className="reel-card-clean fade-up" href="https://www.instagram.com/reel/DPblf0dD_T0/" target="_blank" rel="noopener noreferrer">
-              <div className="reel-thumb">
-                <div className="reel-thumb-bg"></div>
-                <div className="reel-thumb-cat">Automation</div>
-                <div className="reel-thumb-play">▶</div>
-                <div className="reel-thumb-ig">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
-                  Watch on Instagram
-                </div>
-              </div>
-              <div className="reel-cat">Automation</div>
-              <h3>5 workflows you should automate this week</h3>
-            </a>
-
-            <a className="reel-card-clean fade-up" href="https://www.instagram.com/reel/DS7ph4rD9LM/" target="_blank" rel="noopener noreferrer">
-              <div className="reel-thumb">
-                <div className="reel-thumb-bg"></div>
-                <div className="reel-thumb-cat">Career</div>
-                <div className="reel-thumb-play">▶</div>
-                <div className="reel-thumb-ig">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
-                  Watch on Instagram
-                </div>
-              </div>
-              <div className="reel-cat">Career</div>
-              <h3>Become an AI engineer in 2026 - the honest path</h3>
-            </a>
-
-            <a className="reel-card-clean fade-up" href="https://www.instagram.com/reel/DS-PVTTjyxQ/" target="_blank" rel="noopener noreferrer">
-              <div className="reel-thumb">
-                <div className="reel-thumb-bg"></div>
-                <div className="reel-thumb-cat">Founders</div>
-                <div className="reel-thumb-play">▶</div>
-                <div className="reel-thumb-ig">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
-                  Watch on Instagram
-                </div>
-              </div>
-              <div className="reel-cat">Founders</div>
-              <h3>Why your AI Agent is failing (and how to fix it)</h3>
-            </a>
-
-            <a className="reel-card-clean fade-up" href="https://www.instagram.com/reel/DUlGdjLjWaG/" target="_blank" rel="noopener noreferrer">
-              <div className="reel-thumb">
-                <div className="reel-thumb-bg"></div>
-                <div className="reel-thumb-cat">Tools</div>
-                <div className="reel-thumb-play">▶</div>
-                <div className="reel-thumb-ig">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
-                  Watch on Instagram
-                </div>
-              </div>
-              <div className="reel-cat">Tools</div>
-              <h3>The 6 AI tools every Indian SMB should be running</h3>
-            </a>
-
-            <a className="reel-card-clean fade-up" href="https://www.instagram.com/reel/DV0-5lfDx2_/" target="_blank" rel="noopener noreferrer">
-              <div className="reel-thumb">
-                <div className="reel-thumb-bg"></div>
-                <div className="reel-thumb-cat">Growth</div>
-                <div className="reel-thumb-play">▶</div>
-                <div className="reel-thumb-ig">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
-                  Watch on Instagram
-                </div>
-              </div>
-              <div className="reel-cat">Growth</div>
-              <h3>How we automated a business to ₹10L/month</h3>
-            </a>
+            {REELS.map((r) => <ReelCard key={r.href} {...r} />)}
           </div>
 
           <div className="work-cta fade-up" style={{ marginTop: '40px' }}>
-            <a href="https://www.instagram.com/elevaitelabs/" target="_blank" rel="noopener noreferrer" className="link-arrow">View all reels on Instagram <span className="arrow">→</span></a>
+            <a href="https://www.instagram.com/elevaite_labs/" target="_blank" rel="noopener noreferrer" className="link-arrow">View all reels on Instagram <span className="arrow">→</span></a>
           </div>
         </div>
       </section>

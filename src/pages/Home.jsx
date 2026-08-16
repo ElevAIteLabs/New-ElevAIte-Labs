@@ -2,6 +2,51 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import QuizModal from '../components/QuizModal';
 import MediaOrTile from '../components/MediaOrTile';
+import ReelCard from '../components/ReelCard';
+
+/**
+ * Instagram reels shown in the Learn section.
+ *
+ * These were four instagram.com/reel/ID/embed/ iframes. That rendered
+ * Instagram's own chrome inside our page (like and comment icons, "Add a
+ * comment...", a likes count), stacked a second play button on top of theirs,
+ * and swallowed clicks meant for the wrapping link. Four third-party frames
+ * also loaded their tracking on first paint, on the homepage.
+ *
+ * Now a facade: our own poster, our own play control, one link straight to the
+ * reel. Nothing third-party loads until the visitor chooses to go there.
+ *
+ * poster: drop a 9:16 JPG in public/pictures/reels/ and put its path here.
+ * Until then the typographic fallback renders, which is a designed state
+ * rather than an empty box.
+ */
+const REELS = [
+  {
+    href: 'https://www.instagram.com/reel/DPblf0dD_T0/',
+    cat: 'Automation',
+    title: '5 workflows you should automate this week',
+    poster: '/pictures/reels/DPblf0dD_T0.jpg',
+  },
+  {
+    href: 'https://www.instagram.com/reel/DS7ph4rD9LM/',
+    cat: 'Career',
+    title: 'Become an AI engineer in 2026 - the honest path',
+    poster: '/pictures/reels/DS7ph4rD9LM.jpg',
+  },
+  {
+    href: 'https://www.instagram.com/reel/DS-PVTTjyxQ/',
+    cat: 'Founders',
+    title: 'Why your AI Agent is failing (and how to fix it)',
+    poster: '/pictures/reels/DS-PVTTjyxQ.jpg',
+  },
+  {
+    href: 'https://www.instagram.com/reel/DUlGdjLjWaG/',
+    cat: 'Tools',
+    title: 'The 6 AI tools every Indian SMB should be running',
+    poster: '/pictures/reels/DUlGdjLjWaG.jpg',
+  },
+];
+
 
 const Home = () => {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
@@ -452,41 +497,10 @@ const Home = () => {
             <h2 className="display">Free AI Education for Professionals &amp; Students</h2>
           </div>
           <div className="reels-row">
-            <a className="reel-card fade-up" href="https://www.instagram.com/reel/DPblf0dD_T0/" target="_blank" rel="noopener noreferrer">
-              <div className="reel-media ig-reel">
-                <iframe src="https://www.instagram.com/reel/DPblf0dD_T0/embed/" className="reel-iframe" frameBorder="0" scrolling="no" allow="autoplay; encrypted-media; picture-in-picture" loading="lazy"></iframe>
-                <div className="reel-play">▶</div>
-              </div>
-              <div className="reel-cat">Automation</div>
-              <h3>5 workflows you should automate this week</h3>
-            </a>
-            <a className="reel-card fade-up" href="https://www.instagram.com/reel/DS7ph4rD9LM/" target="_blank" rel="noopener noreferrer">
-              <div className="reel-media ig-reel">
-                <iframe src="https://www.instagram.com/reel/DS7ph4rD9LM/embed/" className="reel-iframe" frameBorder="0" scrolling="no" allow="autoplay; encrypted-media; picture-in-picture" loading="lazy"></iframe>
-                <div className="reel-play">▶</div>
-              </div>
-              <div className="reel-cat">Career</div>
-              <h3>Become an AI engineer in 2026 - the honest path</h3>
-            </a>
-            <a className="reel-card fade-up" href="https://www.instagram.com/reel/DS-PVTTjyxQ/" target="_blank" rel="noopener noreferrer">
-              <div className="reel-media ig-reel">
-                <iframe src="https://www.instagram.com/reel/DS-PVTTjyxQ/embed/" className="reel-iframe" frameBorder="0" scrolling="no" allow="autoplay; encrypted-media; picture-in-picture" loading="lazy"></iframe>
-                <div className="reel-play">▶</div>
-              </div>
-              <div className="reel-cat">Founders</div>
-              <h3>Why your AI Agent is failing (and how to fix it)</h3>
-            </a>
-            <a className="reel-card fade-up" href="https://www.instagram.com/reel/DUlGdjLjWaG/" target="_blank" rel="noopener noreferrer">
-              <div className="reel-media ig-reel">
-                <iframe src="https://www.instagram.com/reel/DUlGdjLjWaG/embed/" className="reel-iframe" frameBorder="0" scrolling="no" allow="autoplay; encrypted-media; picture-in-picture" loading="lazy"></iframe>
-                <div className="reel-play">▶</div>
-              </div>
-              <div className="reel-cat">Tools</div>
-              <h3>The 6 AI tools every Indian SMB should be running</h3>
-            </a>
+            {REELS.map((r) => <ReelCard key={r.href} {...r} />)}
           </div>
           <div className="work-cta fade-up">
-            <Link to="/learn" className="link-arrow">Follow Us on Instagram <span className="arrow">→</span></Link>
+            <a className="link-arrow" href="https://www.instagram.com/elevaite_labs" target="_blank" rel="noopener noreferrer">Follow us on Instagram <span className="arrow">→</span></a>
           </div>
         </div>
       </section>

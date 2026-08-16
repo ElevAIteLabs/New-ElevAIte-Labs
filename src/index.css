@@ -1850,42 +1850,9 @@ body[data-imagery="geometric"] .ph::before {
   box-shadow: 0 16px 40px -8px rgba(15, 15, 15, 0.14);
 }
 
-.reel-card .reel-media::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(135deg,
-      rgba(15, 15, 15, 0.04) 0,
-      rgba(15, 15, 15, 0.04) 1px,
-      transparent 1px,
-      transparent 9px);
-}
 
-.reel-play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent);
-  font-size: 18px;
-  padding-left: 4px;
-  transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    box-shadow 0.25s ease;
-}
 
-.reel-card:hover .reel-play {
-  transform: translate(-50%, -50%) scale(1.12);
-  box-shadow: 0 8px 24px rgba(30, 136, 229, 0.2);
-}
-
+.reel-card:hover 
 .reel-card .reel-cat {
   font-size: 11px;
   text-transform: uppercase;
@@ -2955,12 +2922,6 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
   box-shadow: 0 24px 52px -8px rgba(15, 15, 15, 0.22);
 }
 
-.ig-reel-wrap:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 52px -8px rgba(15, 15, 15, 0.2);
-  z-index: 2;
-  position: relative;
-}
 
 /* Kredoo iframe card */
 .kredoo-iframe-card {
@@ -3138,50 +3099,9 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
 }
 
 /* ---------- Instagram reel grid ---------- */
-.ig-reels-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 14px;
-  margin-top: 48px;
-  align-items: start;
-}
 
-.ig-reel-wrap {
-  border-radius: 16px;
-  overflow: hidden;
-  background: #fff;
-  border: 1px solid var(--border);
-  min-height: 480px;
-  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
 
-.ig-reel-wrap:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px -8px rgba(15, 15, 15, 0.15);
-}
 
-.ig-reel-wrap .instagram-media {
-  margin: 0 !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
-  width: 100% !important;
-  border-radius: 0 !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-@media (max-width: 1100px) {
-  .ig-reels-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 700px) {
-  .ig-reels-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
 /* ---------- Blog list (horizontal) ---------- */
 .blog-list {
@@ -4294,28 +4214,9 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
 }
 
 /* ── Reel iframe autoplay embeds ──────────────────────────── */
-.reel-media.ig-reel {
-  overflow: hidden;
-}
-
-.reel-media.ig-reel::before {
-  opacity: 0 !important;
-}
-
-.reel-media.ig-reel .reel-iframe {
-  position: absolute;
-  top: -58px;
-  left: 0;
-  width: 100%;
-  height: calc(100% + 112px);
-  border: none;
-  pointer-events: none;
-}
-
-.reel-media.ig-reel .reel-play {
-  z-index: 3;
-}
-
+.reel-media
+.reel-media
+.reel-media
 /* ── Hero animations - page-specific ─────────────────────── */
 .hero-tags-row {
   display: flex;
@@ -5001,3 +4902,99 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
   font-size: 14px;
 }
 .svc-row:hover .svc-proof { color: inherit; }
+
+/* ===== Reel cards (homepage + /learn) =====
+   A facade over Instagram, not an embed: our poster, our play control, one
+   link out. Nothing third-party loads until the visitor chooses to go.
+   Posters are re-hosted by scripts/fetch-reel-posters.mjs because the
+   Instagram CDN signs its URLs with an expiry. */
+.reel-card-clean { display: flex; flex-direction: column; gap: 14px; }
+
+.reel-thumb {
+  position: relative;
+  aspect-ratio: 9 / 16;            /* reserved up front so nothing shifts */
+  border-radius: var(--radius-card-lg);
+  overflow: hidden;
+  background: #E8EEF8;
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.reel-card-clean:hover .reel-thumb {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px -8px rgba(15, 15, 15, 0.18);
+}
+
+.reel-thumb-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Keeps the category chip and the caption legible over any cover. */
+.reel-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.18) 45%, transparent 70%);
+  border-radius: inherit;
+  z-index: 1;
+}
+
+/* Only shown when a poster has not been fetched yet. */
+.reel-thumb-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: repeating-linear-gradient(135deg,
+    rgba(15,15,15,0.04) 0px, rgba(15,15,15,0.04) 1px, transparent 1px, transparent 9px);
+}
+
+.reel-thumb-cat {
+  position: absolute; top: 14px; left: 14px; z-index: 2;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #fff; background: rgba(30, 136, 229, 0.9);
+  padding: 4px 10px; border-radius: 999px;
+}
+
+.reel-thumb-play {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255,255,255,0.94); color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.25s ease, background 0.25s ease;
+}
+/* The triangle is optically heavy on its left edge; nudge it back to centre. */
+.reel-thumb-play svg { transform: translateX(1px); }
+.reel-card-clean:hover .reel-thumb-play {
+  transform: translate(-50%, -50%) scale(1.12);
+  box-shadow: 0 8px 28px rgba(30, 136, 229, 0.28);
+  background: #fff;
+}
+
+.reel-thumb-ig {
+  position: absolute; bottom: 14px; left: 14px; right: 14px; z-index: 2;
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.85);
+}
+.reel-thumb-ig svg { flex-shrink: 0; opacity: 0.85; }
+
+.reel-card-clean .reel-cat {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent);
+}
+.reel-card-clean h3 {
+  font-family: var(--sans); font-size: 15px; font-weight: 600;
+  line-height: 1.35; color: var(--text);
+  transition: color 0.2s ease;
+}
+.reel-card-clean:hover h3 { color: var(--accent); }
+
+/* The whole card is one link, so the ring belongs on the card. */
+.reel-card-clean:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: var(--radius-card-lg);
+}
+
+@media (max-width: 900px) { .reels-row { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
+@media (max-width: 520px) { .reels-row { grid-template-columns: 1fr; gap: 22px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .reel-thumb, .reel-thumb-play, .reel-card-clean h3 { transition: none; }
+  .reel-card-clean:hover .reel-thumb { transform: none; }
+  .reel-card-clean:hover .reel-thumb-play { transform: translate(-50%, -50%); }
+}
