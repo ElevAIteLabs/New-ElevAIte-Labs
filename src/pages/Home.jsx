@@ -187,7 +187,7 @@ const Home = () => {
               <div className="proof-stats">
                 <div>
                   <span className="proof-num">35+</span>
-                  <span className="proof-label">Projects shipped<br />since 2023</span>
+                  <span className="proof-label">Projects shipped<br />since 2025</span>
                 </div>
                 <div>
                   <span className="proof-num">20+</span>

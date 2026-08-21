@@ -114,7 +114,7 @@ const About = () => {
             </div>
             <div className="hero-badge">
               <span className="badge-icon">🚀</span>
-              <div><strong> 35+ projects shipped</strong><span className="badge-sub">Since 2024</span></div>
+              <div><strong> 35+ projects shipped</strong><span className="badge-sub">Since 2025</span></div>
             </div>
             <div className="hero-badge">
               <span className="badge-icon">🌐</span>
