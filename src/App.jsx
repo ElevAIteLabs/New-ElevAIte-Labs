@@ -14,6 +14,8 @@ import BlogKredoo from './pages/BlogKredoo';
 import BlogWhatsapp from './pages/BlogWhatsapp';
 import AiAutomationHyderabad from './pages/AiAutomationHyderabad';
 import Global from './pages/Global';
+import WebDevelopmentHyderabad from './pages/WebDevelopmentHyderabad';
+import MobileAppDevelopmentHyderabad from './pages/MobileAppDevelopmentHyderabad';
 import RegionHint from './components/RegionHint';
 import BlogPost from './pages/BlogPost';
 import Admin from './pages/Admin';
@@ -77,6 +79,8 @@ function Layout() {
         <Route path="/products" element={<Products />} />
         <Route path="/ai-automation-company-hyderabad" element={<AiAutomationHyderabad />} />
         <Route path="/global" element={<Global />} />
+        <Route path="/web-development-company-hyderabad" element={<WebDevelopmentHyderabad />} />
+        <Route path="/mobile-app-development-company-hyderabad" element={<MobileAppDevelopmentHyderabad />} />
         <Route path="/learn" element={<Learn />} />
         <Route path="/learn/:slug" element={<BlogPost />} />
         <Route path="/contact" element={<Contact />} />

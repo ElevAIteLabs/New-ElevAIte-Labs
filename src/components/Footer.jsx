@@ -30,6 +30,8 @@ const Footer = () => {
               {/* Sitewide link so the landing page is discoverable from every
                   page rather than only from the sitemap. */}
               <li><Link to="/ai-automation-company-hyderabad">AI Automation in Hyderabad</Link></li>
+              <li><Link to="/web-development-company-hyderabad">Web Development in Hyderabad</Link></li>
+              <li><Link to="/mobile-app-development-company-hyderabad">Mobile App Development in Hyderabad</Link></li>
               <li><Link to="/services">AI Automation & Workflows</Link></li>
               <li><Link to="/services">Web & Mobile App Development</Link></li>
               <li><Link to="/services">Custom AI Agents</Link></li>

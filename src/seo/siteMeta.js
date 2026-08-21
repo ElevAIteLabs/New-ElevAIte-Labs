@@ -91,6 +91,28 @@ export const ROUTE_META = {
     changefreq: 'monthly',
     priority: '0.9',
   },
+  /**
+   * Same construction as the AI landing page above, which reached page one:
+   * a root-level page with Service and FAQPage markup, fed by exact-match
+   * anchors from every article. The /learn guides on these topics stay
+   * informational and link up here rather than competing for the query.
+   */
+  '/web-development-company-hyderabad': {
+    label: 'Web Development Hyderabad',
+    title: 'Web Development Company in Hyderabad | ElevAIte Labs',
+    description:
+      'Web development company in Hyderabad building custom web applications, e-commerce storefronts, learning platforms and APIs. React, TypeScript and Next.js, handed over in your accounts.',
+    changefreq: 'monthly',
+    priority: '0.9',
+  },
+  '/mobile-app-development-company-hyderabad': {
+    label: 'Mobile App Development Hyderabad',
+    title: 'Mobile App Development Company in Hyderabad | ElevAIte Labs',
+    description:
+      'Mobile app development company in Hyderabad building iOS and Android apps in React Native, with backends, store submission and code handed over in your own accounts.',
+    changefreq: 'monthly',
+    priority: '0.9',
+  },
   '/learn': {
     label: 'Learn',
     title: 'Learn AI Automation | Guides & Resources',

@@ -229,6 +229,14 @@ const BlogPost = () => {
                   <span> - what we build, and the projects behind each one</span>
                 </li>
                 <li>
+                  <Link to="/web-development-company-hyderabad">Web development company in Hyderabad</Link>
+                  <span> - web apps, storefronts and platforms we have shipped</span>
+                </li>
+                <li>
+                  <Link to="/mobile-app-development-company-hyderabad">Mobile app development company in Hyderabad</Link>
+                  <span> - iOS and Android, built in React Native</span>
+                </li>
+                <li>
                   <Link to="/work">AI automation and app development case studies</Link>
                   <span> - every project, by category</span>
                 </li>
