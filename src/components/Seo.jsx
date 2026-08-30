@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import { IS_PRERENDER } from '../seo/prerender';
 import {
   ROUTE_META,
   NOINDEX_ROUTES,
@@ -39,7 +40,7 @@ const Seo = () => {
         <title data-seo="1">
           {isNoIndex ? `Admin - ${SITE_NAME}` : `Page not found - ${SITE_NAME}`}
         </title>
-        <meta data-seo="1" name="robots" content="noindex, nofollow" />
+        {IS_PRERENDER && <meta data-seo="1" name="robots" content="noindex, nofollow" />}
       </>
     );
   }
@@ -63,7 +64,7 @@ const Seo = () => {
       <title data-seo="1">{meta.title}</title>
       <meta data-seo="1" name="description" content={meta.description} />
       <link data-seo="1" rel="canonical" href={canonical} />
-      <meta data-seo="1" name="robots" content="index, follow, max-image-preview:large" />
+      {IS_PRERENDER && <meta data-seo="1" name="robots" content="index, follow, max-image-preview:large" />}
 
       {hasGlobalAlternate && (
         <>

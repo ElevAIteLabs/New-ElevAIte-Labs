@@ -80,6 +80,12 @@ try {
   for (const route of ALL_ROUTES) {
     const page = await browser.newPage();
 
+    // Tells the app it is being captured, so it emits the robots directive
+    // into the HTML we are about to write. At runtime the flag is absent and
+    // no component emits one, which leaves this baked-in value as the single,
+    // permanent directive for the URL. See src/seo/prerender.js.
+    await page.evaluateOnNewDocument(() => { window.__PRERENDER__ = true; });
+
     // A blocked or failing API call means the captured HTML is missing the
     // content we are prerendering for. Record it and fail the build.
     const failed = [];
@@ -105,12 +111,14 @@ try {
 
     const html = await page.content();
     const title = await page.title();
+    const robots = await page.$eval('meta[name="robots"]', (m) => m.content)
+      .catch(() => null);
 
     const outDir = route === '/' ? dist : path.join(dist, route);
     await mkdir(outDir, { recursive: true });
     await writeFile(path.join(outDir, 'index.html'), html, 'utf8');
 
-    results.push({ route, bytes: html.length, title, failed });
+    results.push({ route, bytes: html.length, title, robots, failed });
     await page.close();
   }
 } finally {
@@ -136,6 +144,18 @@ for (const r of results) {
 const tooSmall = results.filter((r) => r.bytes < 5000);
 if (tooSmall.length) {
   console.error(`\nFAILED: ${tooSmall.map((r) => r.route).join(', ')} rendered suspiciously small.`);
+  process.exit(1);
+}
+
+// A page with no robots tag is indexable by default, so a missing one is not
+// visibly broken - it just means the directive is no longer under our control.
+// Fail loudly instead, because the last time it slipped, all 16 articles were
+// dropped from the index and it took weeks to notice.
+const noRobots = results.filter((r) => !r.robots);
+if (noRobots.length) {
+  console.error('\nFAILED: no robots directive captured for:');
+  for (const r of noRobots) console.error(`  ${r.route}`);
+  console.error('\nwindow.__PRERENDER__ is not reaching the app.');
   process.exit(1);
 }
 

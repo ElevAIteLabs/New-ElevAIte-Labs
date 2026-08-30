@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { postsApiUrl, postImageSrc, postMeta } from '../seo/posts';
+import { IS_PRERENDER } from '../seo/prerender';
 import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '../seo/siteMeta';
 
 /**
@@ -116,12 +117,6 @@ const BlogPost = () => {
   if (state === 'loading') {
     return (
       <>
-        {/* Deliberately no robots tag here. main.jsx strips the prerendered
-            [data-seo] tags on boot, so anything emitted during loading is the
-            only directive on the page until the fetch resolves. A "noindex"
-            in that window is read by Googlebot as noindex on an article we
-            want indexed. Absence means indexable, which is what the
-            prerendered HTML said. The missing state below still noindexes. */}
         <section><div className="wrap" style={{ padding: '120px 0', textAlign: 'center', color: 'var(--muted)' }}>Loading…</div></section>
       </>
     );
@@ -131,7 +126,7 @@ const BlogPost = () => {
     return (
       <>
         <title data-seo="1">Article not found - {SITE_NAME}</title>
-        <meta data-seo="1" name="robots" content="noindex, follow" />
+        {IS_PRERENDER && <meta data-seo="1" name="robots" content="noindex, follow" />}
         <section>
           <div className="wrap" style={{ padding: '120px 0', textAlign: 'center' }}>
             <h1 className="display">We couldn't find that article</h1>
@@ -167,7 +162,7 @@ const BlogPost = () => {
       <title data-seo="1">{`${post.title} | ${SITE_NAME}`}</title>
       <meta data-seo="1" name="description" content={description} />
       <link data-seo="1" rel="canonical" href={canonical} />
-      <meta data-seo="1" name="robots" content="index, follow, max-image-preview:large" />
+      {IS_PRERENDER && <meta data-seo="1" name="robots" content="index, follow, max-image-preview:large" />}
       <meta data-seo="1" property="og:type" content="article" />
       <meta data-seo="1" property="og:title" content={post.title} />
       <meta data-seo="1" property="og:description" content={description} />
