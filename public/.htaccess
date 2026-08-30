@@ -34,6 +34,7 @@ DirectoryIndex index.html
   #     to their nearest equivalent rather than lost.
   RewriteRule ^contacts/?$ /contact [R=301,L]
   RewriteRule ^careers/?$ /about [R=301,L]
+  RewriteRule ^projects/?$ /work [R=301,L]
 
   # 0c. The old site served .html URLs. Map them onto the current routes.
   RewriteRule ^index\.html$ / [R=301,L]

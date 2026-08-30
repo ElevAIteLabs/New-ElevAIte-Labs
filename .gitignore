@@ -46,3 +46,6 @@ elevaitelabs.in-Performance-on-Search-*/
 
 # Build artefact - 91MB, and rebuildable with `npm run build:deploy`
 deploy.zip
+
+# Search Console / Analytics exports - business data, not for a public repo
+analytics/

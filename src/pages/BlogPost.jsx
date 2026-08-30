@@ -116,8 +116,12 @@ const BlogPost = () => {
   if (state === 'loading') {
     return (
       <>
-        {/* Keep this out of the index until we know the post resolves. */}
-        <meta data-seo="1" name="robots" content="noindex" />
+        {/* Deliberately no robots tag here. main.jsx strips the prerendered
+            [data-seo] tags on boot, so anything emitted during loading is the
+            only directive on the page until the fetch resolves. A "noindex"
+            in that window is read by Googlebot as noindex on an article we
+            want indexed. Absence means indexable, which is what the
+            prerendered HTML said. The missing state below still noindexes. */}
         <section><div className="wrap" style={{ padding: '120px 0', textAlign: 'center', color: 'var(--muted)' }}>Loading…</div></section>
       </>
     );
