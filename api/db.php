@@ -49,9 +49,16 @@ function handleCrud($db, $table) {
 
     $method = $_SERVER['REQUEST_METHOD'];
 
-    // Reads stay public (the site renders from them); writes require an admin session.
+    // Reads stay public (the site renders from them); writes require an admin
+    // session. Writer accounts exist to publish articles, so every table but
+    // posts needs a full admin. Enforced here rather than in each endpoint so
+    // a new table cannot be added without inheriting the restriction.
     if ($method !== 'GET') {
-        require_admin();
+        if ($table === 'posts') {
+            require_admin();
+        } else {
+            require_full_admin();
+        }
     }
 
     // An endpoint may pre-process the body (posts.php normalises the slug);

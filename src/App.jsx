@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -18,8 +18,11 @@ import WebDevelopmentHyderabad from './pages/WebDevelopmentHyderabad';
 import MobileAppDevelopmentHyderabad from './pages/MobileAppDevelopmentHyderabad';
 import RegionHint from './components/RegionHint';
 import BlogPost from './pages/BlogPost';
-import Admin from './pages/Admin';
-import AdminLogin from './pages/AdminLogin';
+// The admin panel carries the rich-text editor, which is bigger than every
+// public page combined. Split out so a visitor reading an article never
+// downloads it.
+const Admin = lazy(() => import('./pages/Admin'));
+const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 import Seo from './components/Seo';
 import StructuredData from './components/StructuredData';
 import useSiteEffects from './hooks/useSiteEffects';
@@ -58,6 +61,12 @@ const ProtectedRoute = ({ children }) => {
   return state === 'allowed' ? children : <Navigate to="/admin/login" replace />;
 };
 
+const AdminLoading = () => (
+  <div style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', background: '#f8fafc', color: '#64748b' }}>
+    Loading…
+  </div>
+);
+
 // Wrapper component to apply site effects and scroll to top on route change
 function Layout() {
   const location = useLocation();
@@ -87,8 +96,8 @@ function Layout() {
         <Route path="/blog-automation" element={<BlogAutomation />} />
         <Route path="/blog-kredoo" element={<BlogKredoo />} />
         <Route path="/blog-whatsapp" element={<BlogWhatsapp />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+        <Route path="/admin/login" element={<Suspense fallback={<AdminLoading />}><AdminLogin /></Suspense>} />
+        <Route path="/admin" element={<ProtectedRoute><Suspense fallback={<AdminLoading />}><Admin /></Suspense></ProtectedRoute>} />
       </Routes>
       {!isAdmin && <Footer />}
     </>

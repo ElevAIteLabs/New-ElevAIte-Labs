@@ -11,6 +11,7 @@ if (is_admin()) {
         'user' => [
             'id' => $_SESSION['admin_id'],
             'username' => $_SESSION['admin_username'] ?? null,
+            'role' => admin_role(),
         ],
     ]);
 } else {

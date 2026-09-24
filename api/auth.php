@@ -74,3 +74,34 @@ function require_admin() {
         exit();
     }
 }
+
+/**
+ * The signed-in account's role.
+ *
+ * Defaults to 'admin' so that a session established before the role column
+ * existed, or a database where the migration has not run yet, keeps working
+ * exactly as it did. Only accounts explicitly marked 'writer' are limited.
+ */
+function admin_role() {
+    start_admin_session();
+    return $_SESSION['admin_role'] ?? 'admin';
+}
+
+/** True for accounts that may only write blog posts. */
+function is_writer() {
+    return admin_role() === 'writer';
+}
+
+/**
+ * Abort with 403 when a writer reaches something only a full admin may
+ * change. Employees publish articles; they have no business editing the
+ * services list, the case studies, or reading customer enquiries.
+ */
+function require_full_admin() {
+    require_admin();
+    if (is_writer()) {
+        http_response_code(403);
+        echo json_encode(['status' => 'error', 'message' => 'Your account can only manage blog posts']);
+        exit();
+    }
+}

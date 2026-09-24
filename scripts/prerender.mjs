@@ -135,6 +135,24 @@ const noindexShell = SHELL.replace(
 );
 await writeFile(path.join(dist, 'app-shell.html'), noindexShell, 'utf8');
 
+// A post published from the admin panel has no prerendered file until the
+// next build, and .htaccess 404s anything it cannot find on disk - so the
+// article sat in the database while its URL was dead. api/article.php now
+// renders those, and needs the current build's asset hashes to do it. Giving
+// it the shell as a template keeps those hashes correct automatically;
+// hardcoding them in PHP would break on every build.
+const postTemplate = SHELL
+  .replace('</head>', '  <!--ELEVAITE_HEAD-->\n  </head>')
+  .replace('<div id="root"></div>', '<div id="root"><!--ELEVAITE_BODY--></div>');
+
+if (!postTemplate.includes('<!--ELEVAITE_HEAD-->') || !postTemplate.includes('<!--ELEVAITE_BODY-->')) {
+  console.error('\nFAILED: could not place the markers in post-template.html.');
+  console.error('index.html no longer has a </head> or an empty <div id="root"></div>,');
+  console.error('so every post published before the next build would 404.');
+  process.exit(1);
+}
+await writeFile(path.join(dist, 'post-template.html'), postTemplate, 'utf8');
+
 const pad = Math.max(...results.map((r) => r.route.length));
 console.log('\nPrerendered:');
 for (const r of results) {

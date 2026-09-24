@@ -51,6 +51,14 @@ DirectoryIndex index.html
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
+  # 2b. An article published from the admin panel since the last build has no
+  #     prerendered file, so rule 1 misses it and rule 4 below returned a hard
+  #     404 - the post existed in the database with a dead URL until somebody
+  #     ran a build. PHP renders those, with real metadata and body content,
+  #     until the next build takes the URL back over at rule 1.
+  RewriteCond %{DOCUMENT_ROOT}/post-template.html -f
+  RewriteRule ^learn/([A-Za-z0-9-]+)/?$ /api/article.php?slug=$1 [L,QSA]
+
   # 3. Admin is deliberately client-rendered. It gets the bare noindex shell,
   #    not index.html - that now holds the prerendered homepage, which would
   #    make every /admin URL look like a duplicate of /.

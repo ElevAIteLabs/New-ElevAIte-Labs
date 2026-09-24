@@ -30,7 +30,15 @@ if (!/^\s*VITE_GA_ID\s*=\s*G-\S/m.test(readFileSync(path.join(root, '.env'), 'ut
   console.warn('  Get it from GA4 -> Admin -> Data Streams and add it to .env.\n');
 }
 
-console.log('> vite build');
+// The PHP article renderer and its JavaScript twin have to agree, and the
+// page PHP produces has to stay indexable. Neither shows up as a broken
+// build, so they are checked before anything is packaged rather than after
+// somebody notices an article behaving differently on one URL.
+console.log('> tests');
+execSync('node scripts/test-keyword-parity.mjs', { cwd: root, stdio: 'inherit' });
+execSync('node scripts/test-article-render.mjs', { cwd: root, stdio: 'inherit' });
+
+console.log('\n> vite build');
 execSync('npx vite build', { cwd: root, stdio: 'inherit' });
 
 // Crawlers must receive populated HTML, not the empty SPA shell.

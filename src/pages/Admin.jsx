@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminLayout from '../components/AdminLayout';
+import PostEditor from '../admin/PostEditor';
 
 const IS_DEV = import.meta.env.DEV;
 const API_URL = import.meta.env.VITE_API_URL;
@@ -54,19 +55,17 @@ const schemas = {
       { name: 'image', type: 'file', note: 'Upload any product image', optional: true }
     ]
   },
+  // Posts are edited by src/admin/PostEditor.jsx rather than the generic form
+  // below. `fields` here only decides the columns in the listing table.
   posts: {
     title: 'Blog Posts',
+    editor: 'post',
     fields: [
       { name: 'title', type: 'text' },
-      { name: 'slug', type: 'text', note: 'URL under /learn/. Leave blank to generate from the title.', optional: true },
-      { name: 'excerpt', type: 'textarea', note: 'One or two lines. Used on the Learn page and as the search description.' },
-      { name: 'content', type: 'textarea', note: 'Body of the article. Basic HTML is allowed.' },
-      { name: 'tag', type: 'text', note: 'e.g. Automation, AI Agents', optional: true },
-      { name: 'author', type: 'text', optional: true },
-      { name: 'read_time', type: 'text', note: 'e.g. 6 min read', optional: true },
-      { name: 'image', type: 'file', note: 'Cover image', optional: true },
-      { name: 'published_at', type: 'date', note: 'Publish date', optional: true },
-      { name: 'status', type: 'select', options: ['draft', 'published'], note: 'Only published posts appear on the site' }
+      { name: 'status', type: 'text' },
+      { name: 'author', type: 'text' },
+      { name: 'published_at', type: 'date' },
+      { name: 'views', type: 'text' }
     ]
   },
   learn: {
@@ -97,6 +96,26 @@ export default function Admin() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
+  // 'writer' accounts only ever see Blog Posts. The API enforces the same
+  // rule, so hiding the tabs is a courtesy rather than the security boundary.
+  const [role, setRole] = useState('admin');
+
+  useEffect(() => {
+    if (IS_DEV) return;
+    fetch(`${API_URL}/session.php`, { credentials: 'include' })
+      .then((r) => r.json())
+      .then((d) => {
+        if (!d?.user?.role) return;
+        setRole(d.user.role);
+        // Writers have no access to any other tab, so do not leave them
+        // looking at one the API will refuse.
+        if (d.user.role === 'writer') setActiveTab('posts');
+      })
+      .catch(() => {});
+  }, []);
+
+  const isWriter = role === 'writer';
+  const visibleSchemas = isWriter ? { posts: schemas.posts } : schemas;
 
   // Access is enforced by ProtectedRoute (server session) and by the API itself.
   useEffect(() => {
@@ -197,6 +216,18 @@ export default function Admin() {
     throw new Error(json.message || 'Upload failed');
   };
 
+  /**
+   * Uploads for the post editor.
+   *
+   * The cover image column stores a bare filename (postImageSrc adds the
+   * /pictures/ prefix), while an image dropped into the article body has to
+   * be a real src. One uploader, two shapes.
+   */
+  const uploadImageForEditor = async (file, opts = {}) => {
+    const name = await uploadFile(file);
+    return opts.raw ? name : `/pictures/${name}`;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -222,6 +253,20 @@ export default function Admin() {
 
       if ((activeTab === 'products' || activeTab === 'services') && payload.features && typeof payload.features === 'string') {
         payload.features = payload.features.split(',').map(f => f.trim());
+      }
+
+      // The keywords column is TEXT holding JSON, so that it works on the
+      // older MySQL shared hosting runs. Sending [] rather than "[]" would
+      // store the string "Array".
+      if (activeTab === 'posts') {
+        payload.keywords = JSON.stringify(
+          Array.isArray(payload.keywords) ? payload.keywords : [],
+        );
+        // An empty date column rejects '' but accepts NULL.
+        if (!payload.published_at) payload.published_at = null;
+        // Not a column; it is derived, and sending it would be rejected by
+        // the column whitelist anyway.
+        delete payload.views;
       }
 
       if (activeTab === 'work' && payload.results && typeof payload.results === 'string') {
@@ -301,8 +346,9 @@ export default function Admin() {
     <AdminLayout
       activeTab={activeTab}
       onTabChange={handleTabChange}
-      schemas={schemas}
+      schemas={visibleSchemas}
       handleLogout={handleLogout}
+      showAdminTabs={!isWriter}
     >
       <h2 className="admin-title">
         {activeTab === 'contact' ? 'Contact Settings'
@@ -314,6 +360,17 @@ export default function Admin() {
         <LeadsPanel leads={data} loading={loading} onDelete={handleDelete} />
       ) : (
       <>
+      {schemas[activeTab]?.editor === 'post' ? (
+        <PostEditor
+          value={formData}
+          onChange={setFormData}
+          onSubmit={handleSubmit}
+          onCancel={() => { setEditingId(null); setFormData({}); }}
+          editing={Boolean(editingId)}
+          saving={loading}
+          onUploadImage={uploadImageForEditor}
+        />
+      ) : (
       <form className="admin-form" onSubmit={handleSubmit}>
         {activeTab === 'contact' ? (
           <>
@@ -362,6 +419,7 @@ export default function Admin() {
           )}
         </div>
       </form>
+      )}
 
       {activeTab !== 'contact' && !loading && (
         <div style={{ overflowX: 'auto' }}>

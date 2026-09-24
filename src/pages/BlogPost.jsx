@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { postsApiUrl, postImageSrc, postMeta } from '../seo/posts';
 import { IS_PRERENDER } from '../seo/prerender';
+import { buildBody } from '../seo/articleBody';
 import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '../seo/siteMeta';
 
 /**
@@ -11,38 +12,6 @@ import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '../seo/siteMeta';
  * the title and description come from the post itself. Tags carry data-seo
  * so main.jsx can clear the prerendered copies on boot, same as Seo.jsx.
  */
-/**
- * Adds an id to every h2 in the article body and returns the list, so the
- * sidebar can link to each section. Authors write plain HTML in the admin
- * panel and should not have to hand-write anchors.
- *
- * Runs on a detached document, so nothing is inserted into the live page
- * before React renders it.
- */
-const buildBody = (html) => {
-  if (!html) return { bodyHtml: '', headings: [] };
-  if (typeof DOMParser === 'undefined') return { bodyHtml: html, headings: [] };
-
-  const doc = new DOMParser().parseFromString(`<body>${html}</body>`, 'text/html');
-  const used = new Set();
-  const headings = [];
-
-  doc.body.querySelectorAll('h2').forEach((h) => {
-    const text = h.textContent.trim();
-    if (!text) return;
-
-    let id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'section';
-    let n = 2;
-    while (used.has(id)) id = `${id}-${n++}`;
-    used.add(id);
-
-    h.id = id;
-    headings.push({ id, text });
-  });
-
-  return { bodyHtml: doc.body.innerHTML, headings };
-};
-
 const BlogPost = () => {
   const { slug } = useParams();
 
@@ -64,7 +33,10 @@ const BlogPost = () => {
 
   // Computed before the early returns below so the scroll-spy hook that
   // depends on it stays unconditional.
-  const { bodyHtml, headings } = useMemo(() => buildBody(post?.content), [post?.content]);
+  const { bodyHtml, headings } = useMemo(
+    () => buildBody(post?.content, post?.keywords),
+    [post?.content, post?.keywords],
+  );
   const [activeId, setActiveId] = useState(null);
 
   // Highlights the section currently being read. Uses scroll position rather

@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-const AdminLayout = ({ children, activeTab, onTabChange, schemas, handleLogout }) => {
+// showAdminTabs is false for writer accounts: Enquiries is customer data and
+// Contact Settings is site configuration, neither of which a blog author
+// needs. The API refuses them regardless of what the sidebar shows.
+const AdminLayout = ({ children, activeTab, onTabChange, schemas, handleLogout, showAdminTabs = true }) => {
   return (
     <div className="admin-container" style={{ padding: '80px 5% 120px', minHeight: '100vh', background: '#f8fafc', color: '#0f172a', fontFamily: 'Inter, system-ui, sans-serif' }}>
       <style>{`
@@ -69,18 +72,22 @@ const AdminLayout = ({ children, activeTab, onTabChange, schemas, handleLogout }
               {schemas[key].title}
             </button>
           ))}
-          <button
-            className={activeTab === 'leads' ? 'active' : ''}
-            onClick={() => onTabChange('leads')}
-          >
-            Enquiries
-          </button>
-          <button
-            className={activeTab === 'contact' ? 'active' : ''}
-            onClick={() => onTabChange('contact')}
-          >
-            Contact Settings
-          </button>
+          {showAdminTabs && (
+            <>
+              <button
+                className={activeTab === 'leads' ? 'active' : ''}
+                onClick={() => onTabChange('leads')}
+              >
+                Enquiries
+              </button>
+              <button
+                className={activeTab === 'contact' ? 'active' : ''}
+                onClick={() => onTabChange('contact')}
+              >
+                Contact Settings
+              </button>
+            </>
+          )}
           
           <div style={{ height: '1px', background: '#f1f5f9', margin: '20px 0' }}></div>
           

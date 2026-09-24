@@ -10,7 +10,7 @@ require_once __DIR__ . '/db.php';
  */
 
 send_cors_headers('GET, DELETE, OPTIONS');
-require_admin();
+require_full_admin();
 
 $method = $_SERVER['REQUEST_METHOD'];
 
