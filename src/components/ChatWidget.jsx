@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { IS_PRERENDER } from '../seo/prerender';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -64,6 +65,12 @@ const ChatWidget = () => {
   });
 
   useEffect(() => {
+    // The prerenderer drives a real browser over every route and fails the
+    // build if an /api/ request errors, because a page captured without its
+    // content is worse than no page. Arkin is not content - he is chrome
+    // added after boot - so he sits the prerender out entirely rather than
+    // being special-cased in that check.
+    if (IS_PRERENDER) return undefined;
     if (available !== null) return undefined;
     let cancelled = false;
 
@@ -192,8 +199,10 @@ const ChatWidget = () => {
   };
 
   // null while the check is in flight - render nothing rather than flash a
-  // launcher that may be about to disappear.
-  if (!available) return null;
+  // launcher that may be about to disappear. Also nothing during the
+  // prerender, so the captured HTML carries no launcher for React to
+  // duplicate on boot.
+  if (IS_PRERENDER || !available) return null;
 
   return (
     <>
