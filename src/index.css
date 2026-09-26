@@ -5500,3 +5500,80 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
   .arkin-thread-inner { transition-duration: .01ms; }
   .arkin-typing i { animation: none; opacity: .6; }
 }
+
+/* Arkin conversations (admin only) -------------------------------------- */
+
+.cl-usage {
+  display: grid;
+  gap: 10px;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+}
+.cl-usage > div:first-child { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.cl-usage-label { font-size: 12px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: .05em; }
+.cl-usage strong { font-size: 22px; font-weight: 800; color: #0f172a; }
+.cl-usage em { font-style: normal; font-size: 13px; color: #64748b; }
+
+.cl-bar { height: 6px; border-radius: 999px; background: #e2e8f0; overflow: hidden; }
+.cl-bar span { display: block; height: 100%; border-radius: 999px; transition: width .4s ease; }
+
+.cl-lead {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.cl-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, .5);
+}
+
+.cl-sheet {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(720px, 100%);
+  max-height: 84vh;
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, .3);
+}
+
+.cl-sheet header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.cl-sheet header strong { font-size: 17px; font-weight: 700; color: #0f172a; }
+
+.cl-transcript { overflow-y: auto; padding: 22px; display: grid; gap: 14px; background: #f8fafc; }
+
+.cl-msg { display: grid; gap: 4px; justify-items: start; }
+.cl-msg.is-user { justify-items: end; }
+.cl-who { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: .06em; }
+.cl-msg p {
+  margin: 0;
+  max-width: 82%;
+  padding: 11px 15px;
+  border-radius: 14px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.cl-msg.is-assistant p { background: #fff; border: 1px solid #e2e8f0; color: #334155; border-radius: 14px 14px 14px 4px; }
+.cl-msg.is-user p { background: #1e88e5; color: #fff; border-radius: 14px 14px 4px 14px; }

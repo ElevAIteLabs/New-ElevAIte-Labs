@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AdminLayout from '../components/AdminLayout';
 import PostEditor from '../admin/PostEditor';
+import ChatPanel from '../admin/ChatPanel';
 
 const IS_DEV = import.meta.env.DEV;
 const API_URL = import.meta.env.VITE_API_URL;
@@ -123,6 +124,9 @@ export default function Admin() {
       fetchContact();
     } else if (activeTab === 'leads') {
       fetchLeads();
+    } else if (activeTab === 'chat') {
+      // Nothing to do: ChatPanel fetches from its own endpoint and shows its
+      // own loading state, and the spinner below already skips this tab.
     } else {
       fetchData();
     }
@@ -353,10 +357,13 @@ export default function Admin() {
       <h2 className="admin-title">
         {activeTab === 'contact' ? 'Contact Settings'
           : activeTab === 'leads' ? 'Enquiries'
+          : activeTab === 'chat' ? 'Arkin Conversations'
           : schemas[activeTab]?.title}
       </h2>
 
-      {activeTab === 'leads' ? (
+      {activeTab === 'chat' ? (
+        <ChatPanel cap={24} />
+      ) : activeTab === 'leads' ? (
         <LeadsPanel leads={data} loading={loading} onDelete={handleDelete} />
       ) : (
       <>
@@ -464,7 +471,7 @@ export default function Admin() {
       </>
       )}
 
-      {loading && activeTab !== 'leads' && (
+      {loading && activeTab !== 'leads' && activeTab !== 'chat' && (
         <div style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>Loading...</div>
       )}
     </AdminLayout>

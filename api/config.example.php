@@ -97,5 +97,12 @@ return [
         // Per visitor, by address. Generous for a real conversation and
         // useless for a script.
         'rate_limit_per_hour' => 40,
+
+        // The model's tariff, used to keep the running total that the cap
+        // above is measured against. Set these to the published rate for
+        // whichever model you chose - if they are left at zero, spend reads
+        // as zero and the cap can never trip.
+        'usd_per_m_input' => 0.0,
+        'usd_per_m_output' => 0.0,
     ],
 ];

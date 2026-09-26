@@ -1,5 +1,23 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+/**
+ * The conversation id, kept for this tab only.
+ *
+ * sessionStorage rather than localStorage: a returning visitor should get a
+ * fresh conversation rather than resume one from last week, and the server
+ * caps turns per conversation anyway. Wrapped because storage throws in
+ * private windows and when site data is blocked.
+ */
+const TOKEN_KEY = 'elevaite.arkin.token';
+const readToken = () => {
+  try { return sessionStorage.getItem(TOKEN_KEY) || null; } catch { return null; }
+};
+const writeToken = (t) => {
+  try { sessionStorage.setItem(TOKEN_KEY, t); } catch { /* not essential */ }
+};
+
 /**
  * Arkin, the site assistant.
  *
@@ -33,6 +51,9 @@ const ChatWidget = () => {
   const [messages, setMessages] = useState([GREETING]);
   const [draft, setDraft] = useState('');
   const [thinking, setThinking] = useState(false);
+  // Set when the server says this conversation is finished - a turn cap, or
+  // Arkin switched off. The composer closes rather than failing repeatedly.
+  const [ended, setEnded] = useState(false);
 
   const threadRef = useRef(null);
   const inputRef = useRef(null);
@@ -78,23 +99,50 @@ const ChatWidget = () => {
     return () => { document.body.style.overflow = prev; };
   }, [view]);
 
-  const send = useCallback((text) => {
+  const send = useCallback(async (text) => {
     const trimmed = text.trim();
-    if (!trimmed || thinking) return;
+    if (!trimmed || thinking || ended) return;
 
     setMessages((m) => [...m, { role: 'user', text: trimmed }]);
     setDraft('');
     setThinking(true);
 
-    // Placeholder until api/chat.php exists.
-    window.setTimeout(() => {
-      setThinking(false);
+    try {
+      const res = await fetch(`${API_URL}/chat.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: trimmed,
+          token: readToken(),
+          path: window.location.pathname,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        // The server writes these for a visitor to read - a cap reached, a
+        // message too long - so show them rather than a generic failure.
+        setMessages((m) => [...m, {
+          role: 'assistant',
+          text: data.error || 'Something went wrong on my end. The contact form always works.',
+        }]);
+        if (data.disabled || data.ended) setEnded(true);
+        return;
+      }
+
+      if (data.token) writeToken(data.token);
+      setMessages((m) => [...m, { role: 'assistant', text: data.reply }]);
+      if (data.turns_left === 0) setEnded(true);
+    } catch {
       setMessages((m) => [...m, {
         role: 'assistant',
-        text: "This is the design preview, so I'm not connected to anything yet. Once the server side is wired up I'll answer from everything on this site - the services, the case studies and all sixteen articles.",
+        text: "I could not reach the server just then. Try again, or use the contact form and the team will reply.",
       }]);
-    }, 1100);
-  }, [thinking]);
+    } finally {
+      setThinking(false);
+    }
+  }, [thinking, ended]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -218,12 +266,13 @@ const ChatWidget = () => {
             ref={inputRef}
             rows={1}
             value={draft}
-            placeholder="Ask about services, pricing or a project…"
+            placeholder={ended ? 'This conversation has ended' : 'Ask about services, pricing or a project…'}
+            disabled={ended}
             onChange={(e) => setDraft(e.target.value)}
             onKeyDown={onKeyDown}
             aria-label="Your message"
           />
-          <button type="submit" className="arkin-send" disabled={!draft.trim() || thinking} aria-label="Send">
+          <button type="submit" className="arkin-send" disabled={!draft.trim() || thinking || ended} aria-label="Send">
             <svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 10h12M10 4l6 6-6 6" />
             </svg>

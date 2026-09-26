@@ -81,6 +81,12 @@ const AdminLayout = ({ children, activeTab, onTabChange, schemas, handleLogout, 
                 Enquiries
               </button>
               <button
+                className={activeTab === 'chat' ? 'active' : ''}
+                onClick={() => onTabChange('chat')}
+              >
+                Arkin Conversations
+              </button>
+              <button
                 className={activeTab === 'contact' ? 'active' : ''}
                 onClick={() => onTabChange('contact')}
               >

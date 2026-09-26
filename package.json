@@ -11,7 +11,7 @@
     "build:deploy": "node scripts/build-deploy.mjs",
     "prerender": "node scripts/prerender.mjs",
     "seo:files": "node scripts/gen-seo-files.mjs",
-    "test": "node scripts/test-keyword-parity.mjs && node scripts/test-article-render.mjs"
+    "test": "node scripts/test-keyword-parity.mjs && node scripts/test-article-render.mjs && php scripts/test-chat-knowledge.php"
   },
   "dependencies": {
     "@tiptap/extension-image": "^3.31.3",
