@@ -21,6 +21,9 @@ import BlogPost from './pages/BlogPost';
 // The admin panel carries the rich-text editor, which is bigger than every
 // public page combined. Split out so a visitor reading an article never
 // downloads it.
+// Idle-loaded rather than route-split: the widget is wanted on every public
+// page, but never before the page itself has painted.
+const ChatWidget = lazy(() => import('./components/ChatWidget'));
 const Admin = lazy(() => import('./pages/Admin'));
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 import Seo from './components/Seo';
@@ -100,6 +103,13 @@ function Layout() {
         <Route path="/admin" element={<ProtectedRoute><Suspense fallback={<AdminLoading />}><Admin /></Suspense></ProtectedRoute>} />
       </Routes>
       {!isAdmin && <Footer />}
+      {/* Suspense with no fallback: nothing should flash into the corner
+          while the chunk loads. */}
+      {!isAdmin && (
+        <Suspense fallback={null}>
+          <ChatWidget />
+        </Suspense>
+      )}
     </>
   );
 }

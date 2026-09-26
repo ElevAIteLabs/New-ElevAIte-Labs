@@ -5128,3 +5128,375 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
   .pe-side { position: static; }
   .kw-fields { grid-template-columns: 1fr; }
 }
+
+/* ---------------------------------------------------------------------
+   Arkin - site chat assistant
+
+   One element tree in three states: launcher, docked panel, full page.
+   The panel is always mounted so expanding never remounts the thread.
+
+   Motion is transform and opacity only. Anything animating width, height
+   or top/left here would run on the main thread while the page behind it
+   is still scrolling.
+   --------------------------------------------------------------------- */
+
+.arkin-launcher,
+.arkin-panel,
+.arkin-scrim {
+  /* Above the sticky navbar, below nothing else on the site. */
+  z-index: 900;
+  font-family: var(--sans);
+}
+
+/* Launcher ---------------------------------------------------------- */
+
+.arkin-launcher {
+  position: fixed;
+  right: var(--sp-4);
+  bottom: var(--sp-4);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 20px 8px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--white);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(15, 15, 15, .06), 0 16px 40px rgba(15, 15, 15, .10);
+  transition:
+    transform .38s var(--ease-out),
+    opacity .24s var(--ease-out),
+    box-shadow .3s var(--ease-out);
+}
+
+.arkin-launcher:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(15, 15, 15, .08), 0 22px 50px rgba(15, 15, 15, .14);
+}
+
+.arkin-launcher.is-hidden {
+  opacity: 0;
+  transform: translateY(8px) scale(.94);
+  pointer-events: none;
+}
+
+.arkin-launcher-face {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  /* Deliberately no overflow:hidden - it clipped the status dot into a
+     crescent. The image rounds itself instead, which leaves the corner free. */
+}
+
+.arkin-launcher-face img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+  background: linear-gradient(150deg, #E8F2FD, #D3E6FA);
+}
+
+/* Availability dot, sitting on the pill rather than on Arkin's face. */
+.arkin-pulse {
+  position: absolute;
+  right: -1px;
+  bottom: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22C55E;
+  box-shadow: 0 0 0 2.5px var(--white);
+}
+
+.arkin-launcher-label { display: grid; gap: 1px; text-align: left; }
+.arkin-launcher-label strong { font-size: 14.5px; font-weight: 600; color: var(--text); letter-spacing: -.01em; }
+.arkin-launcher-label em { font-style: normal; font-size: 12px; color: var(--muted); }
+
+/* Scrim (full view only) -------------------------------------------- */
+
+.arkin-scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 15, 15, .42);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .32s var(--ease-out);
+}
+
+.arkin-scrim.is-on { opacity: 1; pointer-events: auto; }
+
+/* Panel ------------------------------------------------------------- */
+
+.arkin-panel {
+  position: fixed;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  /* The panel is a <section>, and the global `section { padding: 88px 0 }`
+     applies to it - that padding ate 176px of a 560px panel, squashing the
+     thread and pushing the greeting out of view above the scroll. */
+  padding: 0;
+  /* White, not var(--bg): the page is already var(--bg), so a panel in the
+     same colour had no edge of its own and read as part of the page. */
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card-lg);
+  box-shadow: 0 8px 20px rgba(15, 15, 15, .08), 0 32px 80px rgba(15, 15, 15, .16);
+  overflow: hidden;
+  /* Scaling from the launcher's corner makes the panel look like it grew
+     out of the button rather than appearing over it. */
+  transform-origin: 100% 100%;
+  transition:
+    opacity .3s var(--ease-out),
+    transform .42s var(--ease-out),
+    inset .42s var(--ease-out),
+    border-radius .42s var(--ease-out);
+}
+
+.arkin-panel.is-closed {
+  inset: auto var(--sp-4) var(--sp-4) auto;
+  width: min(388px, calc(100vw - 32px));
+  height: min(560px, calc(100vh - 120px));
+  opacity: 0;
+  transform: translateY(10px) scale(.96);
+  pointer-events: none;
+}
+
+.arkin-panel.is-docked {
+  inset: auto var(--sp-4) var(--sp-4) auto;
+  width: min(388px, calc(100vw - 32px));
+  height: min(560px, calc(100vh - 120px));
+  opacity: 1;
+  transform: none;
+}
+
+.arkin-panel.is-full {
+  inset: var(--sp-4);
+  width: auto;
+  height: auto;
+  opacity: 1;
+  transform: none;
+}
+
+/* Header ------------------------------------------------------------ */
+
+.arkin-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  padding: 12px 12px 12px 16px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+
+.arkin-head-who { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.arkin-head-face { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; background: #E8F2FD; flex: none; }
+.arkin-head-who > span { display: grid; gap: 1px; min-width: 0; }
+.arkin-head-who strong { font-family: var(--display); font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: -.015em; }
+.arkin-head-who em { font-style: normal; font-size: 11.5px; color: var(--muted); }
+
+.arkin-head-actions { display: flex; gap: 2px; flex: none; }
+
+.arkin-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--radius-btn);
+  background: none;
+  color: var(--body);
+  cursor: pointer;
+  transition: background .18s var(--ease-out), color .18s var(--ease-out);
+}
+
+.arkin-icon:hover { background: var(--card); color: var(--text); }
+
+/* Thread ------------------------------------------------------------ */
+
+.arkin-thread {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--sp-4) var(--sp-3);
+  background: var(--card);
+}
+
+/* In the full view the thread becomes a reading column rather than one
+   very wide line of text. */
+.arkin-thread-inner {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  margin: 0 auto;
+  transition: max-width .42s var(--ease-out);
+}
+
+.arkin-panel.is-full .arkin-thread { padding: var(--sp-5) var(--sp-4); }
+.arkin-panel.is-full .arkin-thread-inner { max-width: 680px; }
+
+/* In the full view the header, composer and footnote keep their full-bleed
+   backgrounds and dividers, but their contents line up with the same 680px
+   column as the thread. Left as-is, a 1800px-wide input sat under a 680px
+   conversation and the three parts read as unrelated layouts. */
+@media (min-width: 561px) {
+  .arkin-panel.is-full .arkin-head,
+  .arkin-panel.is-full .arkin-compose,
+  .arkin-panel.is-full .arkin-foot {
+    padding-inline: max(var(--sp-3), calc((100% - 680px) / 2));
+  }
+}
+
+.arkin-msg { display: flex; align-items: flex-end; gap: 8px; }
+.arkin-msg p { margin: 0; font-size: 14.5px; line-height: 1.55; padding: 11px 15px; max-width: 84%; }
+.arkin-msg-face { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; background: #E8F2FD; flex: none; }
+
+.arkin-msg.is-assistant p {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px 14px 14px 4px;
+  color: var(--body);
+}
+
+.arkin-msg.is-user { justify-content: flex-end; }
+.arkin-msg.is-user p {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 14px 14px 4px 14px;
+  color: #fff;
+}
+
+/* Typing indicator -------------------------------------------------- */
+
+.arkin-typing { display: flex; gap: 4px; align-items: center; }
+.arkin-typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+  animation: arkin-bounce 1.3s var(--ease-in-out) infinite;
+}
+.arkin-typing i:nth-child(2) { animation-delay: .16s; }
+.arkin-typing i:nth-child(3) { animation-delay: .32s; }
+
+@keyframes arkin-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: .45; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* Suggested prompts -------------------------------------------------- */
+
+.arkin-prompts { display: flex; flex-wrap: wrap; gap: 8px; padding-left: 36px; }
+.arkin-prompts button {
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--body);
+  border-radius: 999px;
+  padding: 8px 15px;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .2s var(--ease-out);
+}
+.arkin-prompts button:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+/* Composer ----------------------------------------------------------- */
+
+.arkin-compose {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 12px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+
+.arkin-compose textarea {
+  flex: 1;
+  min-width: 0;
+  resize: none;
+  max-height: 120px;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  font-family: inherit;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--text);
+  transition: border-color .2s var(--ease-out), box-shadow .2s var(--ease-out);
+}
+
+.arkin-compose textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, .12);
+}
+
+.arkin-send {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border: 0;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s var(--ease-out), transform .2s var(--ease-out), opacity .2s var(--ease-out);
+}
+
+.arkin-send:hover:not(:disabled) { background: var(--accent-deep); transform: translateY(-1px); }
+.arkin-send:disabled { opacity: .35; cursor: default; }
+
+.arkin-foot {
+  margin: 0;
+  padding: 9px 16px 12px;
+  background: var(--white);
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--muted);
+  text-align: center;
+}
+
+.arkin-foot a { color: var(--body); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Small screens ------------------------------------------------------ */
+
+@media (max-width: 560px) {
+  /* The launcher keeps the face and drops the label - at this width the
+     pill would otherwise span most of the viewport. */
+  .arkin-launcher { padding: 8px; right: var(--sp-3); bottom: var(--sp-3); }
+  .arkin-launcher-label { display: none; }
+
+  /* Docked is close enough to full screen here that the distinction stops
+     being useful, so it fills the viewport in both states. */
+  .arkin-panel.is-docked,
+  .arkin-panel.is-full {
+    inset: 0;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    border: 0;
+  }
+
+  .arkin-panel.is-closed { inset: auto 0 0 auto; width: 100vw; height: 100dvh; border-radius: 0; }
+  .arkin-msg p { max-width: 88%; }
+
+  /* Docked and full are the same thing at this width, so the expand control
+     would be a button that visibly does nothing. */
+  .arkin-icon-expand { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arkin-launcher,
+  .arkin-panel,
+  .arkin-scrim,
+  .arkin-thread-inner { transition-duration: .01ms; }
+  .arkin-typing i { animation: none; opacity: .6; }
+}
