@@ -62,4 +62,40 @@ return [
     // Forwarded server-side so the URL is not exposed in the JS bundle.
     // Empty string disables forwarding.
     'kredoo_webhook' => '',
+
+    /**
+     * Arkin, the site chat assistant.
+     *
+     * The key belongs HERE and nowhere else. It must never be put in .env
+     * under a VITE_ name: Vite inlines every VITE_ variable into the public
+     * JavaScript bundle at build time, so the key would be published on the
+     * site and readable by anyone who opens devtools. (The GA measurement ID
+     * is in that bundle today - that one is meant to be public; a billing
+     * credential is not.) This file is gitignored, mode 0600, and denied by
+     * .htaccess, which is why the database and SMTP passwords live here too.
+     *
+     * A public endpoint pointed at a paid API is a money tap if it is
+     * abused, so the caps below are enforced server-side on every request.
+     * Set a hard monthly limit in the provider's own dashboard as well -
+     * that is the only ceiling an application bug cannot exceed.
+     */
+    'chat' => [
+        'enabled' => false,
+        'api_key' => '',
+
+        // Chosen from what the account can actually reach - run
+        // `php scripts/list-openai-models.php` rather than guessing.
+        'model' => '',
+
+        // Hard ceilings. The widget disables itself and points visitors at
+        // the contact form rather than spending past them.
+        'monthly_usd_cap' => 24.0,
+        'max_turns_per_conversation' => 20,
+        'max_chars_per_message' => 1500,
+        'max_output_tokens' => 700,
+
+        // Per visitor, by address. Generous for a real conversation and
+        // useless for a script.
+        'rate_limit_per_hour' => 40,
+    ],
 ];
