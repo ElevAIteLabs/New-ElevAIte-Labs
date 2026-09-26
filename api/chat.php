@@ -18,13 +18,52 @@ require_once __DIR__ . '/chat-knowledge.php';
 // mailer.php pulls in PHPMailer, which most turns never need - it is
 // required inside the capture branch below, as contact.php does.
 
-send_cors_headers('POST, OPTIONS');
+send_cors_headers('GET, POST, OPTIONS');
 
 $cfg = ELEVAITE_CONFIG['chat'] ?? [];
 
 function chat_fail($status, $message, $extra = []) {
     http_response_code($status);
     echo json_encode(['error' => $message] + $extra);
+    exit();
+}
+
+$model = trim((string) ($cfg['model'] ?? ''));
+
+/**
+ * Is Arkin actually usable right now?
+ *
+ * Configured, keyed, given a model, with the tables migrated and budget
+ * left. Anything missing means the widget should not appear at all -
+ * a launcher that opens onto an error is worse than no launcher.
+ */
+function chat_ready(PDO $db, array $cfg, $model) {
+    if (empty($cfg['enabled'])) return false;
+    if (trim((string) ($cfg['api_key'] ?? '')) === '') return false;
+    if ($model === '') return false;
+
+    try {
+        $stmt = $db->prepare('SELECT usd FROM chat_usage WHERE ym = :ym');
+        $stmt->execute(['ym' => gmdate('Y-m')]);
+        $spent = (float) ($stmt->fetchColumn() ?: 0);
+    } catch (Exception $e) {
+        // Migration 005 has not run, so there is nowhere to count spend.
+        return false;
+    }
+
+    return $spent < (float) ($cfg['monthly_usd_cap'] ?? 24);
+}
+
+/**
+ * Availability check, so the widget can decide whether to render.
+ *
+ * Deliberately cheap - no model call, no writes, one indexed row read -
+ * because it runs once per visitor session. It exists so the site can be
+ * deployed before the key and the migration are in place without putting
+ * a broken chat in front of anybody.
+ */
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'GET' && isset($_GET['status'])) {
+    echo json_encode(['enabled' => chat_ready($db, $cfg, $model)]);
     exit();
 }
 
@@ -37,7 +76,6 @@ if (empty($cfg['enabled']) || trim((string) ($cfg['api_key'] ?? '')) === '') {
     chat_fail(503, 'Arkin is not available right now.', ['disabled' => true]);
 }
 
-$model = trim((string) ($cfg['model'] ?? ''));
 if ($model === '') {
     chat_fail(503, 'Arkin is not configured yet.', ['disabled' => true]);
 }

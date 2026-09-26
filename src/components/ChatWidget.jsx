@@ -11,6 +11,7 @@ const API_URL = import.meta.env.VITE_API_URL;
  * private windows and when site data is blocked.
  */
 const TOKEN_KEY = 'elevaite.arkin.token';
+const AVAILABLE_KEY = 'elevaite.arkin.available';
 const readToken = () => {
   try { return sessionStorage.getItem(TOKEN_KEY) || null; } catch { return null; }
 };
@@ -46,6 +47,39 @@ const PROMPTS = [
 ];
 
 const ChatWidget = () => {
+  // Arkin renders nothing until the server confirms he can actually answer.
+  // The site can then be deployed before the key and the migration are in
+  // place without putting a launcher in front of visitors that opens onto
+  // an error - and if the monthly cap is reached, he disappears rather
+  // than failing in front of someone.
+  // Read from the cache during initialisation, not from the effect -
+  // setting state synchronously inside an effect costs an extra render pass.
+  const [available, setAvailable] = useState(() => {
+    try {
+      const c = sessionStorage.getItem(AVAILABLE_KEY);
+      return c === null ? null : c === '1';
+    } catch {
+      return null;
+    }
+  });
+
+  useEffect(() => {
+    if (available !== null) return undefined;
+    let cancelled = false;
+
+    fetch(`${API_URL}/chat.php?status=1`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (cancelled) return;
+        const ok = d?.enabled === true;
+        setAvailable(ok);
+        try { sessionStorage.setItem(AVAILABLE_KEY, ok ? '1' : '0'); } catch { /* fine */ }
+      })
+      .catch(() => !cancelled && setAvailable(false));
+
+    return () => { cancelled = true; };
+  }, [available]);
+
   // 'closed' | 'docked' | 'full'
   const [view, setView] = useState('closed');
   const [messages, setMessages] = useState([GREETING]);
@@ -156,6 +190,10 @@ const ChatWidget = () => {
       send(draft);
     }
   };
+
+  // null while the check is in flight - render nothing rather than flash a
+  // launcher that may be about to disappear.
+  if (!available) return null;
 
   return (
     <>
