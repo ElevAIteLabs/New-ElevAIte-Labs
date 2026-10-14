@@ -29,6 +29,15 @@ api/config.php
 .env.*
 !.env.example
 
+# Credentials handed over by file rather than pasted into chat. They live in
+# the working tree for minutes at a time, which is long enough for a stray
+# `git add .` to commit one - this repo is public, so that is unrecoverable.
+openai.txt
+apppw.txt
+webhook.txt
+*-secret.txt
+*.key
+
 # Assembled upload payload produced by `npm run build:deploy`
 deploy/
 
