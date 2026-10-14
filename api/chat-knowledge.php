@@ -35,6 +35,25 @@ function kb_text($html, $limit = 0) {
 function build_chat_knowledge(PDO $db) {
     $out = [];
 
+    /* Counts and the most-asked facts go first, stated plainly.
+     *
+     * Everything below is already in the material, but a small model asked
+     * "how many projects have you done" has to count sixteen bullets buried
+     * in twenty thousand tokens, and answers "I don't have an exact number"
+     * instead. Attention is strongest at the start of the context, so the
+     * facts people actually ask for are stated here rather than left to be
+     * inferred from the lists further down. */
+    $counts = [];
+    foreach ([
+        'work' => 'SELECT COUNT(*) FROM work',
+        'services' => 'SELECT COUNT(*) FROM services',
+        'products' => 'SELECT COUNT(*) FROM products',
+        'posts' => "SELECT COUNT(*) FROM posts WHERE status = 'published'",
+    ] as $k => $sql) {
+        try { $counts[$k] = (int) $db->query($sql)->fetchColumn(); }
+        catch (Exception $e) { $counts[$k] = null; }
+    }
+
     $out[] = "# ElevAIte Labs\n";
     $out[] = "An AI automation and product studio in HITEC City, Hyderabad, India. "
         . "Founded 2025. Builds AI workflow automations, custom AI agents, lead "
@@ -43,6 +62,23 @@ function build_chat_knowledge(PDO $db) {
         . "(US, UK, Canada, Australia, Singapore).\n";
     $out[] = "Contact: contact@elevaitelabs.in | +91 75699 54054 | "
         . "https://elevaitelabs.in/contact\n";
+
+    $out[] = "\n## Quick facts - use these exact numbers when asked\n";
+    if ($counts['work'] !== null) {
+        $out[] = "- Projects delivered to date: {$counts['work']}. They are listed in full under \"Projects we have delivered\" below.";
+    }
+    if ($counts['services'] !== null) {
+        $out[] = "- Service lines: {$counts['services']}.";
+    }
+    if ($counts['posts'] !== null) {
+        $out[] = "- Published articles and guides: {$counts['posts']}, at https://elevaitelabs.in/learn";
+    }
+    if ($counts['products'] !== null && $counts['products'] > 0) {
+        $out[] = "- Own products: {$counts['products']} (Kredoo).";
+    }
+    $out[] = "- Founded 2025. Based in HITEC City, Hyderabad.";
+    $out[] = "- Works with clients in India, the US, UK, Canada, Australia and Singapore.";
+    $out[] = "";
 
     try {
         $rows = $db->query('SELECT title, description, features FROM services')->fetchAll(PDO::FETCH_ASSOC);
@@ -60,9 +96,11 @@ function build_chat_knowledge(PDO $db) {
     try {
         $rows = $db->query('SELECT title, description, industry, category FROM work')->fetchAll(PDO::FETCH_ASSOC);
         if ($rows) {
-            $out[] = "\n# Projects we have delivered\n";
+            $out[] = "\n# Projects we have delivered (" . count($rows) . " in total)\n";
+            $i = 0;
             foreach ($rows as $r) {
-                $out[] = '- ' . $r['title'] . ' (' . ($r['industry'] ?: $r['category']) . '): '
+                $i++;
+                $out[] = $i . '. ' . $r['title'] . ' (' . ($r['industry'] ?: $r['category']) . '): '
                     . kb_text($r['description'], 400);
             }
             $out[] = '';

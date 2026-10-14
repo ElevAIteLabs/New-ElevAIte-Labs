@@ -5355,12 +5355,28 @@ body[data-services="minimal"] .svc-row:hover .svc-arrow {
 .arkin-msg p { margin: 0; font-size: 14.5px; line-height: 1.55; padding: 11px 15px; max-width: 84%; }
 .arkin-msg-face { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; background: #E8F2FD; flex: none; }
 
-.arkin-msg.is-assistant p {
+/* The bubble moved from the <p> to a wrapper, because a structured reply is
+   several elements - paragraphs and a list - not one block of text. */
+.arkin-msg.is-assistant .arkin-bubble {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 14px 14px 14px 4px;
   color: var(--body);
+  padding: 11px 15px;
+  max-width: 84%;
+  font-size: 14.5px;
+  line-height: 1.55;
 }
+
+.arkin-bubble p { margin: 0; padding: 0; max-width: none; }
+.arkin-bubble p + p,
+.arkin-bubble p + .arkin-list,
+.arkin-bubble .arkin-list + p { margin-top: 8px; }
+
+.arkin-list { margin: 0; padding-left: 1.25em; display: grid; gap: 4px; }
+.arkin-list li { padding-left: 2px; }
+.arkin-bubble strong { font-weight: 600; color: var(--text); }
+.arkin-bubble a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
 
 .arkin-msg.is-user { justify-content: flex-end; }
 .arkin-msg.is-user p {

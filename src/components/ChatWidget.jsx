@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { IS_PRERENDER } from '../seo/prerender';
+import ChatMessage from './ChatMessage';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -285,7 +286,11 @@ const ChatWidget = () => {
                 {m.role === 'assistant' && (
                   <img className="arkin-msg-face" src="/pictures/arkin-avatar.webp" alt="" width="28" height="28" />
                 )}
-                <p>{m.text}</p>
+                {/* The visitor's own words are plain text; only Arkin writes
+                    the light markdown ChatMessage understands. */}
+                {m.role === 'assistant'
+                  ? <div className="arkin-bubble"><ChatMessage text={m.text} /></div>
+                  : <p>{m.text}</p>}
               </div>
             ))}
 
